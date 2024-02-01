@@ -129,7 +129,7 @@ const FormComponent = () => {
                 type="submit"
                 variant="contained"
                 color="primary"
-                sx={{ mt: 2, mb: 2 }}
+                sx={{ mt: 2, mb: 2, width: "100%" }}
               >
                 Submit
               </Button>

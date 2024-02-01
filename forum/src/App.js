@@ -8,6 +8,7 @@ import React from "react";
 import theme from "./materialUITheme";
 import ResetPassword from "./components/forms/ResetPassword";
 import routes from "./routes";
+import Jumbotron from "./components/Jumbotron";
 
 function App() {
   return (
@@ -15,10 +16,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path={"/"} element={<Layout />}>
-            <Route
-              path={"/"}
-              element={<Typography variant={"body1"}>Home</Typography>}
-            />
+            <Route path={"/"} element={<Jumbotron />} />
             <Route
               path={routes.about}
               element={<Typography variant={"body1"}>About</Typography>}

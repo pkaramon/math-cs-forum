@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import {
   AppBar,
+  Box,
   Button,
   Drawer,
   IconButton,
   List,
   ListItemButton,
   ListItemText,
+  Paper,
   Toolbar,
   Typography,
   useMediaQuery,
@@ -15,6 +17,7 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import routes from "../routes";
+import SearchBar from "./SearchBar";
 
 function Navbar() {
   const [_, setMobileMoreAnchorEl] = useState(null);
@@ -53,9 +56,14 @@ function Navbar() {
     </Drawer>
   );
 
+  const appBarSx = {
+    paddingLeft: { xs: 0, md: 15 },
+    paddingRight: { xs: 0, md: 15 },
+  };
+
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="fixed" sx={appBarSx}>
         <Toolbar>
           {isMobile && (
             <IconButton
@@ -67,9 +75,11 @@ function Navbar() {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" noWrap style={{ flexGrow: 1 }}>
-            My Website
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
+            &pi; and bytes
           </Typography>
+
+          {!isMobile && <SearchBar />}
           {!isMobile && (
             <div>
               {pageProps.map(({ text, to }) => (
@@ -92,7 +102,20 @@ function Navbar() {
           )}
         </Toolbar>
       </AppBar>
+
+      <Paper></Paper>
+
       {renderMobileMenu}
+      {isMobile && (
+        <Box
+          sx={{
+            borderRadius: 0,
+            backgroundColor: "primary.main",
+          }}
+        >
+          <SearchBar />
+        </Box>
+      )}
     </div>
   );
 }

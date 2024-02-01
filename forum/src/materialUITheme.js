@@ -3,17 +3,17 @@ import { LinkBehavior } from "./router";
 
 const theme = createTheme({
   shape: {
-    borderRadius: 8, // Adjust for more or less rounded corners
+    borderRadius: 8,
   },
   palette: {
     primary: {
-      main: "#5E35B1", // A deep purple
+      main: "#242428",
     },
     secondary: {
-      main: "#FF4081", // A vibrant pink
+      main: "#FF4081",
     },
     background: {
-      default: "#f5f5f5", // A light gray background
+      default: "#f5f5f5",
       paper: "#ffffff",
     },
     text: {
