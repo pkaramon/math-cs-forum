@@ -1,18 +1,15 @@
 import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "../materialUITheme";
 import { Box } from "@mui/material";
+import React from "react";
 
 function Layout() {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Navbar />
-        <Box component="footer" p={3}>
-          <Outlet />
-        </Box>
-      </ThemeProvider>
+      <Navbar />
+      <Box component="main" p={3}>
+        <Outlet />
+      </Box>
     </>
   );
 }

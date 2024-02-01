@@ -4,13 +4,9 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
-  CardActions,
-  CardContent,
   Checkbox,
   FormControlLabel,
-  Grid,
-  Paper,
+  Link,
   Slider,
   Typography,
 } from "@mui/material";
@@ -24,6 +20,9 @@ import RegistrationSchema, {
   initialValues,
 } from "./RegistrationSchema";
 import FormField from "./FormField";
+import Container from "@mui/material/Container";
+import routes from "../../routes";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const FormComponent = () => {
   const onSubmit = (values, { setSubmitting }) => {
@@ -34,128 +33,115 @@ const FormComponent = () => {
   };
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      alignItems={"center"}
-      sx={{ height: "100vh" }}
-    >
-      <Grid item xs={12} sm={8} md={6} lg={4}>
-        <Paper elevation={24}>
-          <Card raised>
-            <Box m={3}>
-              <Formik
-                initialValues={initialValues}
-                validationSchema={RegistrationSchema}
-                onSubmit={onSubmit}
+    <Container component={"main"} maxWidth={"xs"} sx={{ height: "100vh" }}>
+      <CssBaseline />
+      <Box mt={4}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={RegistrationSchema}
+          onSubmit={onSubmit}
+        >
+          {({ setFieldValue, isValid, dirty, values }) => (
+            <Form>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
-                {({ setFieldValue, isValid, dirty, values }) => (
-                  <Form>
-                    <CardContent>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                          <PersonRounded />
-                        </Avatar>
-                        <Typography
-                          variant="h5"
-                          component="h2"
-                          gutterBottom
-                          align={"center"}
-                        >
-                          Register
-                        </Typography>
-                      </Box>
+                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                  <PersonRounded />
+                </Avatar>
+                <Typography
+                  variant="h5"
+                  component="h1"
+                  gutterBottom
+                  align={"center"}
+                >
+                  Register
+                </Typography>
+              </Box>
 
-                      <FormField property={"firstName"} label={"First name"} />
-                      <FormField property={"lastName"} label={"Last Name"} />
-                      <FormField property={"email"} label={"Email"} />
-                      <FormField
-                        property={"password"}
-                        label={"Password"}
-                        type={"password"}
-                      />
+              <FormField property={"firstName"} label={"First name"} />
+              <FormField property={"lastName"} label={"Last Name"} />
+              <FormField property={"email"} label={"Email"} />
+              <FormField
+                property={"password"}
+                label={"Password"}
+                type={"password"}
+              />
 
-                      {values.password && (
-                        <>
-                          <Typography>Password Strength</Typography>
-                          <Slider
-                            value={calculatePasswordStrength(values.password)}
-                            color={getPasswordStrengthColor(
-                              calculatePasswordStrength(values.password),
-                            )}
-                            sx={{
-                              height: 8,
-                              "& .MuiSlider-thumb": { display: "none" },
-                            }}
-                            margin="normal"
-                          />
-                        </>
-                      )}
+              {values.password && (
+                <>
+                  <Typography>Password Strength</Typography>
+                  <Slider
+                    value={calculatePasswordStrength(values.password)}
+                    color={getPasswordStrengthColor(
+                      calculatePasswordStrength(values.password),
+                    )}
+                    sx={{
+                      height: 8,
+                      "& .MuiSlider-thumb": { display: "none" },
+                    }}
+                    margin="normal"
+                  />
+                </>
+              )}
 
-                      <FormField
-                        property={"repeatPassword"}
-                        type={"password"}
-                        label={"Repeat Password"}
-                      />
+              <FormField
+                property={"repeatPassword"}
+                type={"password"}
+                label={"Repeat Password"}
+              />
 
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <Field name="birthday" fullWidth margin={"normal"}>
-                          {() => (
-                            <DatePicker
-                              label="Birthday"
-                              value={values.birthday}
-                              onChange={(date) =>
-                                setFieldValue("birthday", date)
-                              }
-                              slotProps={{
-                                textField: {
-                                  variant: "outlined",
-                                  margin: "normal",
-                                  fullWidth: true,
-                                },
-                              }}
-                            />
-                          )}
-                        </Field>
-                      </LocalizationProvider>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Field name="birthday" fullWidth margin={"normal"}>
+                  {() => (
+                    <DatePicker
+                      label="Birthday"
+                      value={values.birthday}
+                      onChange={(date) => setFieldValue("birthday", date)}
+                      slotProps={{
+                        textField: {
+                          variant: "outlined",
+                          margin: "normal",
+                          fullWidth: true,
+                        },
+                      }}
+                    />
+                  )}
+                </Field>
+              </LocalizationProvider>
 
-                      <Field name="acceptTerms" type="checkbox">
-                        {({ field }) => (
-                          <FormControlLabel
-                            control={
-                              <Checkbox {...field} checked={field.value} />
-                            }
-                            label="I accept the terms and conditions"
-                            margin={"normal"}
-                          />
-                        )}
-                      </Field>
-                    </CardContent>
-                    <CardActions>
-                      <Button
-                        disabled={!(isValid && dirty)}
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                      >
-                        Submit
-                      </Button>
-                    </CardActions>
-                  </Form>
+              <Field name="acceptTerms" type="checkbox">
+                {({ field }) => (
+                  <FormControlLabel
+                    control={<Checkbox {...field} checked={field.value} />}
+                    label="I accept the terms and conditions"
+                    margin={"normal"}
+                  />
                 )}
-              </Formik>
-            </Box>
-          </Card>
-        </Paper>
-      </Grid>
-    </Grid>
+              </Field>
+              <Button
+                disabled={!(isValid && dirty)}
+                type="submit"
+                variant="contained"
+                color="primary"
+                sx={{ mt: 2, mb: 2 }}
+              >
+                Submit
+              </Button>
+            </Form>
+          )}
+        </Formik>
+
+        <Link href={routes.login} variant="body2">
+          {"Already have an account? Sign in here."}
+        </Link>
+      </Box>
+    </Container>
   );
 };
 

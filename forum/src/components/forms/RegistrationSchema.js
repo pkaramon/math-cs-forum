@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-const RegistrationFormSchema = Yup.object().shape({
+const RegistrationSchema = Yup.object().shape({
   firstName: Yup.string().required("Required"),
   lastName: Yup.string().required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
@@ -36,4 +36,4 @@ export const initialValues = {
   acceptTerms: false,
 };
 
-export default RegistrationFormSchema;
+export default RegistrationSchema;
