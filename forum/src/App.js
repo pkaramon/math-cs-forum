@@ -21,8 +21,9 @@ function App() {
             path={"/login"}
             element={<Typography variant={"body1"}>Login</Typography>}
           />
-          <Route path={"/register"} element={<RegistrationForm />} />
         </Route>
+
+        <Route path={"/register"} element={<RegistrationForm />} />
       </Routes>
     </BrowserRouter>
   );
