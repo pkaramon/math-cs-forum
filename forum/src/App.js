@@ -9,6 +9,7 @@ import theme from "./materialUITheme";
 import ResetPassword from "./components/forms/ResetPassword";
 import routes from "./routes";
 import Jumbotron from "./components/Jumbotron";
+import AskQuestionForm from "./components/forms/AskQuestionForm";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               path={routes.about}
               element={<Typography variant={"body1"}>About</Typography>}
             />
+            <Route path={routes.askQuestion} element={<AskQuestionForm />} />
           </Route>
           <Route path={routes.login} element={<LoginForm />} />
           <Route path={routes.register} element={<RegistrationForm />} />

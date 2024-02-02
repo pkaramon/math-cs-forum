@@ -1,19 +1,43 @@
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import SimpleMDE from "react-simplemde-editor";
 
-const MarkdownEditor = ({ onContentChange, initial }) => {
-  const [value, setValue] = useState(initial ?? "");
-
-  const handleChange = (value) => {
-    setValue(value);
-    onContentChange(value);
-  };
+const MarkdownEditor = ({ value, setValue, onClickedPreview }) => {
+  const options = useMemo(
+    () => ({
+      spellChecker: true,
+      autofocus: true,
+      toolbar: [
+        {
+          name: "render",
+          action: (editor) => {
+            onClickedPreview(editor.value());
+          },
+          className: "fa fa-eye",
+          title: "Preview",
+        },
+        "bold",
+        "italic",
+        "heading",
+        "|",
+        "quote",
+        "unordered-list",
+        "ordered-list",
+        "|",
+        "link",
+        "image",
+        "|",
+        "guide",
+      ],
+    }),
+    [],
+  );
 
   return (
     <SimpleMDE
       value={value}
-      onChange={handleChange}
-      style={{ zIndex: 1000, maxWidth: "700px" }}
+      onChange={(v) => setValue(v)}
+      style={{ zIndex: 1000, width: "100%" }}
+      options={options}
     />
   );
 };

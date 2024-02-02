@@ -21,7 +21,6 @@ const questions = [
 ];
 
 const QuestionList = () => {
-  return <></>;
   return (
     <List>
       {questions.map((question) => (

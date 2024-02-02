@@ -3,16 +3,16 @@ import { marked } from "marked";
 import DOMPurify from "dompurify";
 import katex from "katex";
 
-const RenderMarkdown = ({ markdown }) => {
+const RenderMarkdown = ({ content }) => {
   const [renderedContent, setRenderedContent] = useState("");
 
   useEffect(() => {
-    if (markdown) {
-      const html = marked(markdown);
+    if (content) {
+      const html = marked(content);
       const sanitizedHtml = DOMPurify.sanitize(html);
       setRenderedContent(sanitizedHtml);
     }
-  }, [markdown]);
+  }, [content]);
 
   const renderLatex = (text) => {
     let renderedText = text.replace(/\$\$([\s\S]+?)\$\$/g, (match, p1) => {
@@ -26,7 +26,7 @@ const RenderMarkdown = ({ markdown }) => {
       }
     });
 
-    renderedText = renderedText.replace(/\$([^\$]+?)\$/g, (match, p1) => {
+    renderedText = renderedText.replace(/\$([^$]+?)\$/g, (match, p1) => {
       try {
         return katex.renderToString(p1, {
           throwOnError: false,

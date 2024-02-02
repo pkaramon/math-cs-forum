@@ -6,6 +6,7 @@ const FormField = ({ property, label, children, ...other }) => {
   const { errors, touched } = useFormikContext();
   return (
     <Field
+      id={`input-${property}`}
       name={property}
       as={TextField}
       label={label}

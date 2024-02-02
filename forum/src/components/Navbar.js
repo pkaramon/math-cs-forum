@@ -41,6 +41,7 @@ function Navbar() {
     { to: routes.about, text: "About" },
     { to: routes.login, text: "Login" },
     { to: routes.register, text: "Register" },
+    { to: routes.askQuestion, text: "Ask a Question" },
   ];
 
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -76,7 +77,7 @@ function Navbar() {
             </IconButton>
           )}
           <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
-            &pi; and bytes
+            Math CS Forum
           </Typography>
 
           {!isMobile && <SearchBar />}

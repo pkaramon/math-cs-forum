@@ -19,7 +19,7 @@ const Jumbotron = () => {
   return (
     <Box
       sx={{
-        height: isMobile ? "50vh" : "80vh",
+        height: isMobile ? "50vh" : "93.34vh",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -29,7 +29,7 @@ const Jumbotron = () => {
         backgroundAttachment: { lg: "fixed" },
       }}
     >
-      <Card sx={{ maxWidth: 500, backgroundColor: "white" }}>
+      <Card sx={{ maxWidth: 500, backgroundColor: "white" }} elevation={24}>
         <CardContent>
           <Typography variant="h4" component="h1">
             Welcome to the Computer Science and Mathematics Forum
