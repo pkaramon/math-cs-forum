@@ -4,7 +4,6 @@ import React from "react";
 
 const FormField = ({ property, label, children, ...other }) => {
   const { errors, touched } = useFormikContext();
-  console.log(errors, touched);
   return (
     <Field
       id={`input-${property}`}

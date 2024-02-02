@@ -71,7 +71,10 @@ const AskQuestionForm = () => {
               )}
               <MarkdownEditor
                 value={values.question}
-                setValue={(v) => setFieldValue("question", v)}
+                setValue={(v) => {
+                  touched.question = true;
+                  setFieldValue("question", v).then((r) => {});
+                }}
                 onClickedPreview={(content) => {
                   setPreviewContent(content);
                   setPreviewModalOpen((open) => !open);
@@ -98,11 +101,9 @@ const AskQuestionForm = () => {
                         onChange={(e) =>
                           setFieldValue("tagInput", e.target.value)
                         }
-                        onKeyDown={(e) => {
-                          handleKeyDownInTagInput(e, values, setFieldValue);
-                          console.log(errors.tags);
-                          console.log(touched.tags);
-                        }}
+                        onKeyDown={(e) =>
+                          handleKeyDownInTagInput(e, values, setFieldValue)
+                        }
                         placeholder="Add tags"
                         variant="outlined"
                         size="small"

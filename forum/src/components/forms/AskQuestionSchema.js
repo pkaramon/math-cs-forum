@@ -1,5 +1,4 @@
 import * as Yup from "yup";
-import { markdownSample } from "../sampledata";
 
 const AskQuestionSchema = Yup.object({
   title: Yup.string().required("Title is required"),
@@ -9,7 +8,7 @@ const AskQuestionSchema = Yup.object({
 
 export const initialValues = {
   title: "",
-  question: markdownSample,
+  question: "",
   tags: [],
   tagInput: "",
 };
