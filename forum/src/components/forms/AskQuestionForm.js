@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FieldArray, Form, Formik } from "formik";
 import {
+  Alert,
   Box,
   Button,
   Chip,
@@ -14,14 +15,7 @@ import FormField from "./FormField";
 import MarkdownEditor from "../MarkdownEditor";
 import RenderMarkdown from "../RenderMarkdown";
 import InfoModal from "../InfoModal";
-import { markdownSample } from "../sampledata";
-
-const initialValues = {
-  title: "",
-  question: markdownSample,
-  tags: [],
-  tagInput: "",
-};
+import AskQuestionSchema, { initialValues } from "./AskQuestionSchema";
 
 const AskQuestionForm = () => {
   const [previewContent, setPreviewContent] = useState("");
@@ -60,14 +54,21 @@ const AskQuestionForm = () => {
       </InfoModal>
       <CssBaseline />
       <Paper elevation={3} sx={{ p: 3 }}>
-        <Formik initialValues={initialValues} onSubmit={onSubmit}>
-          {({ values, setFieldValue }) => (
+        <Formik
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          validationSchema={AskQuestionSchema}
+        >
+          {({ isValid, dirty, values, setFieldValue, errors, touched }) => (
             <Form>
               <Typography variant="h6" gutterBottom>
                 Ask a Question
               </Typography>
               <FormField property={"title"} label={"Title"} />
               <Typography variant="body1">Question</Typography>
+              {touched.question && errors.question && (
+                <Alert severity={"error"}>{errors.question}</Alert>
+              )}
               <MarkdownEditor
                 value={values.question}
                 setValue={(v) => setFieldValue("question", v)}
@@ -97,19 +98,28 @@ const AskQuestionForm = () => {
                         onChange={(e) =>
                           setFieldValue("tagInput", e.target.value)
                         }
-                        onKeyDown={(e) =>
-                          handleKeyDownInTagInput(e, values, setFieldValue)
-                        }
+                        onKeyDown={(e) => {
+                          handleKeyDownInTagInput(e, values, setFieldValue);
+                          console.log(errors.tags);
+                          console.log(touched.tags);
+                        }}
                         placeholder="Add tags"
                         variant="outlined"
                         size="small"
+                        error={touched.tagInput && Boolean(errors.tags)}
+                        helperText={touched.tagInput ? errors.tags : null}
                         sx={{ width: "auto", flexGrow: 1 }}
                       />
                     </Box>
                   )}
                 />
               </Box>
-              <Button type="submit" variant="contained" sx={{ mt: 2, mb: 2 }}>
+              <Button
+                disabled={!(isValid && dirty)}
+                type="submit"
+                variant="contained"
+                sx={{ mt: 2, mb: 2 }}
+              >
                 Submit
               </Button>
             </Form>

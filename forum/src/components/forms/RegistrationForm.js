@@ -138,7 +138,7 @@ const FormComponent = () => {
         </Formik>
 
         <Link href={routes.login} variant="body2">
-          {"Already have an account? Sign in here."}
+          Already have an account? Sign in here.
         </Link>
       </Box>
     </Container>
