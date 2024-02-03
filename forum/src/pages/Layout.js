@@ -6,7 +6,7 @@ import React from "react";
 function Layout() {
   const mainBoxStyles = {
     width: "100%",
-    marginTop: { md: 8, sm: 3 }, // Default AppBar height for Material UI
+    marginTop: { md: 8, sm: 3, xs: 4 }, // Default AppBar height for Material UI
   };
   return (
     <>

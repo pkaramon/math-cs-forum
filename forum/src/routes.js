@@ -5,6 +5,7 @@ const routes = {
   register: "/register",
   resetPassword: "/reset-password",
   askQuestion: "/ask-question",
+  searchQuestion: "/search",
 };
 
 export default routes;

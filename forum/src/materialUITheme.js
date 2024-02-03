@@ -10,7 +10,7 @@ const theme = createTheme({
       main: "#242428",
     },
     secondary: {
-      main: "#FF4081",
+      main: "#1976d2",
     },
     background: {
       default: "#f5f5f5",
@@ -36,6 +36,7 @@ const theme = createTheme({
     MuiLink: {
       defaultProps: {
         component: LinkBehavior,
+        underline: "hover",
       },
     },
     MuiButtonBase: {
