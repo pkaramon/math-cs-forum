@@ -20,7 +20,6 @@ const SearchQuestionForm = ({ onSearch, popularTags }) => {
   return (
     <Formik
       onSubmit={(values) => {
-        alert(JSON.stringify(values, null, 2));
         onSearch(values);
       }}
       initialValues={initialValues}

@@ -9,6 +9,7 @@ class FakeQuestionService {
     }));
   }
   async getNumberOfQuestionsMatching({ query, tags }) {
+    await this.wait(300);
     const searched = await this.search({
       query,
       tags,
@@ -21,6 +22,7 @@ class FakeQuestionService {
   }
 
   async search({ query, tags, sortBy, sortOrder, skip, limit }) {
+    await this.wait(500);
     let filteredQuestions = this.questions;
     if (query) {
       const queryLowerCase = query.toLowerCase();
@@ -39,7 +41,13 @@ class FakeQuestionService {
 
     if (tags.length > 0) {
       filteredQuestions = filteredQuestions.filter((question) => {
-        return tags.every((tag) => question.tags.includes(tag));
+        return tags
+          .map((t) => t.toLowerCase())
+          .every((tag) =>
+            question.tags
+              .map((t) => t.toLowerCase())
+              .includes(tag.toLowerCase()),
+          );
       });
     }
 
@@ -54,6 +62,14 @@ class FakeQuestionService {
     });
 
     return filteredQuestions.slice(skip, skip + limit);
+  }
+
+  async wait(miliSeconds) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, miliSeconds);
+    });
   }
 }
 

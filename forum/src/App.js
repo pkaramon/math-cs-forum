@@ -10,15 +10,7 @@ import ResetPassword from "./components/forms/ResetPassword";
 import routes from "./routes";
 import Jumbotron from "./components/Jumbotron";
 import AskQuestionForm from "./components/forms/AskQuestionForm";
-import SearchQuestionForm from "./components/forms/SearchQuestionForm";
-
-const tagsOptions = [
-  { value: "c", label: "c" },
-  { value: "cpp", label: "cpp" },
-  { value: "java", label: "java" },
-  { value: "python", label: "python" },
-  // Add more tags here as needed
-];
+import Questions from "./components/Questions";
 
 function App() {
   return (
@@ -27,15 +19,7 @@ function App() {
         <Routes>
           <Route path={"/"} element={<Layout />}>
             <Route path={"/"} element={<Jumbotron />} />
-            <Route
-              path={routes.searchQuestion}
-              element={
-                <SearchQuestionForm
-                  popularTags={tagsOptions}
-                  onSearch={() => {}}
-                />
-              }
-            />
+            <Route path={routes.searchQuestion} element={<Questions />} />
             <Route
               path={routes.about}
               element={<Typography variant={"body1"}>About</Typography>}

@@ -10,7 +10,7 @@ export const initialValues = {
 export const sortOptions = [
   { value: "addedAt", label: "Added At" },
   { value: "modifiedAt", label: "Modified At" },
-  { value: "votes", label: "Votes" },
+  { value: "likes", label: "Likes" },
   { value: "answers", label: "Answers" },
   { value: "views", label: "Views" },
 ];
@@ -21,7 +21,7 @@ export const sortOrderOptions = [
 ];
 
 const SearchQuestionSchema = Yup.object().shape({
-  search: Yup.string().required("Required"),
+  search: Yup.string(),
   tags: Yup.array(),
   sortBy: Yup.string()
     .required("Required")
