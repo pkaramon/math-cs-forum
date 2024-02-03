@@ -1,6 +1,13 @@
 import { createTheme } from "@mui/material/styles";
 import { LinkBehavior } from "./router";
 
+export const appBarHeight = {
+  xs: "56px",
+  sm: "64px",
+  md: "64px",
+  lg: "64px",
+};
+
 const theme = createTheme({
   shape: {
     borderRadius: 8,
@@ -42,6 +49,13 @@ const theme = createTheme({
     MuiButtonBase: {
       defaultProps: {
         LinkComponent: LinkBehavior,
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          height: appBarHeight.lg,
+        },
       },
     },
   },

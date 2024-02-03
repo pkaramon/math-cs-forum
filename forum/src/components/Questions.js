@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -13,7 +13,6 @@ import QuestionsList from "./QuestionsList/QuestionsList";
 import { Form, Formik } from "formik";
 import FormField from "./forms/FormField";
 
-// Assuming you have a predefined list of tags and sort options
 const sortOptions = [
   { value: "addedAt", label: "Added Date" },
   { value: "modifiedAt", label: "Modified Date" },
@@ -23,91 +22,79 @@ const pageSize = 10; // Define how many items per page you want
 
 const QuestionsComponent = () => {
   const [questions, setQuestions] = useState([]);
-  const [query, setQuery] = useState("");
-  const [tags, setTags] = useState([]);
-  const [sortBy, setSortBy] = useState("addedAt");
-  const [sortOrder, setSortOrder] = useState("asc");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
   const questionService = new FakeQuestionService();
 
-  const fetchQuestionCount = async () => {
+  const fetchQuestionCount = async ({ query, tags }) => {
     const total = await questionService.getNumberOfQuestionsMatching({
       query,
       tags,
     });
     console.log(total);
     setTotalPages(Math.ceil(total / pageSize));
-    setPage(1);
   };
 
-  const fetchQuestions = async () => {
+  const fetchQuestions = async (searchObj) => {
     const questions = await questionService.search({
-      query,
-      tags,
-      sortBy,
-      sortOrder,
+      ...searchObj,
       skip: (page - 1) * pageSize,
       limit: pageSize,
     });
     setQuestions(questions);
   };
 
-  useEffect(() => {
-    fetchQuestionCount().then(() => {});
-  }, [query, tags]);
-
-  useEffect(() => {
-    fetchQuestions().then(() => {});
-  }, [page, query, tags, sortBy, sortOrder]);
-
   return (
     <Box sx={{ maxWidth: "800px", margin: "auto", padding: 2 }}>
       <Formik
-        onSubmit={(values) => {
-          setQuery(values.search);
+        onSubmit={async (values) => {
           setPage(1);
         }}
-        initialValues={{ search: " " }}
+        initialValues={{
+          search: " ",
+          tags: [],
+          sortBy: "addedAt",
+          sortOrder: "asc",
+        }}
       >
-        <Form>
-          <Box sx={{ display: "flex", gap: 2, marginBottom: 2 }}>
-            <FormField property="search" label="Search" variant="outlined" />
-            <Button type="submit" variant="contained">
-              Search
-            </Button>
-          </Box>
-        </Form>
+        {({}) => (
+          <>
+            <Form>
+              <Box sx={{ display: "flex", gap: 2, marginBottom: 2 }}>
+                <FormField
+                  property="search"
+                  label="Search"
+                  variant="outlined"
+                />
+                <Button type="submit" variant="contained">
+                  Search
+                </Button>
+              </Box>
+            </Form>
+            <Box sx={{ display: "flex", gap: 2, marginBottom: 2 }}>
+              <FormControl fullWidth>
+                <InputLabel>Sort By</InputLabel>
+                <FormField property={"sortBy"} label="Sort By" as={Select}>
+                  {sortOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </FormField>
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel>Order</InputLabel>
+                <FormField property={"sortOrder"} label="Order" as={Select}>
+                  <MenuItem value="asc">Ascending</MenuItem>
+                  <MenuItem value="desc">Descending</MenuItem>
+                </FormField>
+              </FormControl>
+              {/* Add Tag Selection UI Here */}
+            </Box>
+          </>
+        )}
       </Formik>
-      <Box sx={{ display: "flex", gap: 2, marginBottom: 2 }}>
-        <FormControl fullWidth>
-          <InputLabel>Sort By</InputLabel>
-          <Select
-            value={sortBy}
-            label="Sort By"
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            {sortOptions.map((option) => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl fullWidth>
-          <InputLabel>Order</InputLabel>
-          <Select
-            value={sortOrder}
-            label="Order"
-            onChange={(e) => setSortOrder(e.target.value)}
-          >
-            <MenuItem value="asc">Ascending</MenuItem>
-            <MenuItem value="desc">Descending</MenuItem>
-          </Select>
-        </FormControl>
-        {/* Add Tag Selection UI Here */}
-      </Box>
+
       <QuestionsList questions={questions} />
       <Pagination
         count={totalPages}

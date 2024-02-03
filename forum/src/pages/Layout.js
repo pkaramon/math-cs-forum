@@ -2,11 +2,12 @@ import Navbar from "../components/Navbar";
 import { Outlet } from "react-router-dom";
 import { Box } from "@mui/material";
 import React from "react";
+import { appBarHeight } from "../materialUITheme";
 
 function Layout() {
   const mainBoxStyles = {
     width: "100%",
-    marginTop: { md: 8, sm: 3, xs: 4 }, // Default AppBar height for Material UI
+    marginTop: appBarHeight,
   };
   return (
     <>
