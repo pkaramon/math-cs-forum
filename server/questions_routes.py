@@ -216,3 +216,104 @@ def dislike_question(question_id):
     db.session.commit()
 
     return jsonify({"message": "Question disliked successfully"}), 200
+
+@jwt_required()
+def like_answer(answer_id):
+    current_user_id = get_jwt_identity()
+    answer = Answer.query.get(answer_id)
+
+    if not answer:
+        return jsonify({"message": "Answer not found"}), 404
+
+    existing_like = AnswerLike.query.filter_by(
+        user_id=current_user_id, answer_id=answer_id
+    ).first()
+
+    if existing_like:
+        if existing_like.is_like:
+            return jsonify({"message": "You have already liked this answer"}), 400
+        else:
+            existing_like.is_like = True
+            answer.likes += 1
+            answer.dislikes -=1
+    else:
+        db.session.add(
+            AnswerLike(user_id=current_user_id, answer_id=answer_id, is_like=True)
+        )
+        answer.likes += 1
+
+    db.session.commit()
+
+    return jsonify({"message": "Answer liked successfully"}), 200
+
+
+@jwt_required()
+def dislike_answer(answer_id):
+    current_user_id = get_jwt_identity()
+    answer = Answer.query.get(answer_id)
+
+    if not answer:
+        return jsonify({"message": "Answer not found"}), 404
+
+    existing_like = AnswerLike.query.filter_by(
+        user_id=current_user_id, answer_id=answer_id
+    ).first()
+
+    if existing_like:
+        if not existing_like.is_like:
+            return jsonify({"message": "You have already disliked this answer"}), 400
+        else:
+            existing_like.is_like = False
+            answer.dislikes += 1
+            answer.likes -= 1
+    else:
+        db.session.add(
+            AnswerLike(user_id=current_user_id, answer_id=answer_id, is_like=False)
+        )
+        answer.dislikes += 1
+
+    db.session.commit()
+
+    return jsonify({"message": "Answer disliked successfully"}), 200
+
+
+@jwt_required()
+def delete_question(question_id):
+    current_user_id = get_jwt_identity()
+    question = Question.query.get(question_id)
+
+    if not question:
+        return jsonify({"message": "Question not found"}), 404
+
+    # Check if the current user is either the author of the question or an admin
+    if (
+        question.author_id != current_user_id
+        and not User.query.get(current_user_id).role == "admin"
+    ):
+        return jsonify({"message": "Unauthorized action"}), 403
+
+    db.session.delete(question)
+    db.session.commit()
+
+    return jsonify({"message": "Question deleted successfully"}), 200
+
+
+@jwt_required()
+def delete_answer(answer_id):
+    current_user_id = get_jwt_identity()
+    answer = Answer.query.get(answer_id)
+
+    if not answer:
+        return jsonify({"message": "Answer not found"}), 404
+
+    # Check if the current user is either the author of the answer or an admin
+    if (
+        answer.author_id != current_user_id
+        and not User.query.get(current_user_id).role == "admin"
+    ):
+        return jsonify({"message": "Unauthorized action"}), 403
+
+    db.session.delete(answer)
+    db.session.commit()
+
+    return jsonify({"message": "Answer deleted successfully"}), 200
