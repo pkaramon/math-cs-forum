@@ -49,6 +49,39 @@ class FakeUserService {
     });
   }
 
+  async authenticate(email, password) {
+    await this.wait(1000);
+    const user = this.users.find(
+      (user) => user.email === email && user.password === password,
+    );
+    if (!user) {
+      return null;
+    }
+
+    return {
+      userId: user.userId,
+      role: user.role,
+      token: "1234",
+    };
+  }
+
+  async getUserDetails(userId) {
+    await this.wait(1000);
+    const user = this.users.find((user) => user.userId === userId);
+    if (!user) {
+      return null;
+    }
+    return {
+      userId: user.userId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+      birthDate: new Date(user.birthDate),
+      about: user.about,
+    };
+  }
+
   async wait(milliseconds) {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   }

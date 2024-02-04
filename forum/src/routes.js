@@ -7,7 +7,8 @@ const routes = {
   askQuestion: "/ask-question",
   searchQuestion: "/search",
   question: "/question/:id",
-  profile: "/profile/:userId",
+  publicUserProfile: "/profile/:userId",
+  profile: "/profile",
   notFound: "*",
 };
 
@@ -19,8 +20,8 @@ export const createQuestionRoute = (id) => {
   return routes.question.replace(":id", id);
 };
 
-export const createProfileRoute = (userId) => {
-  return routes.profile.replace(":userId", userId);
+export const createPublicProfileRoute = (userId) => {
+  return routes.publicUserProfile.replace(":userId", userId);
 };
 
 export default routes;

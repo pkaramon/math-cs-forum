@@ -96,19 +96,20 @@ function Navbar() {
                   {text}
                 </Button>
               ))}
-
-              <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
             </div>
           )}
+
+          <IconButton
+            href={routes.profile}
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={mobileMenuId}
+            aria-haspopup="true"
+            onClick={handleMobileMenuOpen}
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
         </Toolbar>
       </AppBar>
 

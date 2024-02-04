@@ -12,14 +12,9 @@ import routes from "../../routes";
 import { Form, Formik } from "formik";
 import LoginSchema, { initialValues } from "./LoginSchema";
 import FormField from "./FormField";
+import { Alert } from "@mui/material";
 
-function SignIn() {
-  const handleSubmit = (values) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-    }, 400);
-  };
-
+function LoginForm({ handleSubmit, alert }) {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -46,6 +41,7 @@ function SignIn() {
           >
             {({ isValid, dirty }) => (
               <Form>
+                {alert && <Alert severity={"error"}>{alert}</Alert>}
                 <FormField property={"email"} label={"Email"} />
                 <FormField
                   type={"password"}
@@ -83,4 +79,4 @@ function SignIn() {
   );
 }
 
-export default SignIn;
+export default LoginForm;

@@ -14,7 +14,7 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import { ThumbDownAltOutlined } from "@mui/icons-material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { createProfileRoute } from "../routes";
+import { createPublicProfileRoute } from "../routes";
 
 const AnswerCard = ({ answer }) => {
   const navigate = useNavigate();
@@ -37,7 +37,9 @@ const AnswerCard = ({ answer }) => {
             </Typography>
           </IconButton>
           <Chip
-            onClick={() => navigate(createProfileRoute(answer.author.authorId))}
+            onClick={() =>
+              navigate(createPublicProfileRoute(answer.author.authorId))
+            }
             avatar={
               <Avatar sx={{ marginLeft: "auto", width: 24, height: 24 }}>
                 {answer.author.firstName.charAt(0)}

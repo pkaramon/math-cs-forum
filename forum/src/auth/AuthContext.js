@@ -3,7 +3,7 @@ import * as roles from "./roles";
 
 export const AuthContext = createContext({});
 
-export const AuthProvider = ({ children }) => {
+export const AuthContextProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const isAuthenticated = typeof auth?.token === "string";
   const role = auth?.role ?? roles.GUEST;
@@ -13,7 +13,14 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ auth, role, isAuthenticated, setAuth, clearAuthData }}
+      value={{
+        auth,
+        role,
+        userId: auth.userId,
+        isAuthenticated,
+        setAuth,
+        clearAuthData,
+      }}
     >
       {children}
     </AuthContext.Provider>
@@ -21,5 +28,3 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
-
-export default AuthProvider;

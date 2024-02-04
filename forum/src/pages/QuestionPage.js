@@ -18,7 +18,7 @@ import NothingFound from "../components/NothingFound";
 import RenderMarkdown from "../components/RenderMarkdown";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import AnswersList from "../components/AnswersList";
-import { createProfileRoute } from "../routes";
+import { createPublicProfileRoute } from "../routes";
 
 const QuestionPage = () => {
   const navigate = useNavigate();
@@ -98,7 +98,7 @@ const QuestionPage = () => {
 
             <Chip
               onClick={() =>
-                navigate(createProfileRoute(questionData.author.authorId))
+                navigate(createPublicProfileRoute(questionData.author.authorId))
               }
               avatar={
                 <Avatar sx={{ marginLeft: "auto", width: 24, height: 24 }}>

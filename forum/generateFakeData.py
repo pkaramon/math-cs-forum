@@ -31,11 +31,13 @@ def generate_users():
 
 
 def generate_user(index):
+    firstName = generate_name().split()[0]
     return {
         "userId": index,
-        "firstName": generate_name().split()[0],
+        "firstName": firstName,
         "lastName": generate_name().split()[1],
-        "email": f"{generate_name().split()[0].lower()}@example.com",
+        "password": "password123",
+        "email": f"{firstName}{index}@example.com",
         "birthDate": f"{random.randint(1950, 2000)}-{random.randint(1,12)}-01",
         "role": "user",
         "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
