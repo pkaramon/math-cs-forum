@@ -8,8 +8,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from flask import jsonify
 from flask_jwt_extended import exceptions, JWTManager, create_access_token
-from jwt import encode
-import datetime
 
 
 jwt_manager = JWTManager()
@@ -59,7 +57,7 @@ def register_error_handlers(app):
     app.errorhandler(exceptions.NoAuthorizationError)(handle_missing_authorization_header)
 
 
-def generate_token(email, user_id):
+def generate_reset_token(email, user_id):
     additional_claims = {"email": email}
     return create_access_token(identity=user_id, expires_delta=timedelta(minutes=5), additional_claims=additional_claims)
     

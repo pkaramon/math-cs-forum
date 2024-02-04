@@ -1,11 +1,11 @@
 # routes.py
 from flask import jsonify, request
 from models import db, User
-from utils import generate_token, verify_password, ph, generate_random_password, send_email
+from utils import generate_token, verify_password, ph, generate_random_password, send_email, generate_reset_token
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime 
 from flask_mail import Mail
-from jwt import encode 
+
 mail = Mail()
 
 def register():
@@ -186,7 +186,7 @@ def get_all_users():
 def reset_password_request(email):
     user = User.query.filter_by(email=email).first()
 
-    token = generate_token(email, user.id)
+    token = generate_reset_token(email, user.id)
 
 
     # ten url najprawdopodobniej do zmiany
