@@ -1,18 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Backdrop,
-  Box,
-  CircularProgress,
-  Pagination,
-  Paper,
-} from "@mui/material";
-import FakeQuestionService from "../services/FakeQuestionService";
+import { Box, Pagination, Paper } from "@mui/material";
 import SearchQuestionForm from "../components/forms/SearchQuestionForm";
 import QuestionsList from "../components/QuestionsList/QuestionsList";
 import NothingFound from "../components/NothingFound";
 import { initialValues as initialSearchParams } from "../components/forms/SearchQuestionSchema";
 import { useLocation, useNavigate } from "react-router-dom";
 import qs from "qs";
+import { useQuestionService } from "../context/questionServiceContext";
+import LoadingIndicator from "../components/LoadingIndicator";
 
 const SearchQuestionsPage = () => {
   const [questions, setQuestions] = useState([]);
@@ -20,7 +15,7 @@ const SearchQuestionsPage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [searchParams, setSearchParams] = useState(initialSearchParams);
-  const questionService = new FakeQuestionService();
+  const questionService = useQuestionService();
   const formikRef = useRef();
 
   const location = useLocation();
@@ -75,11 +70,13 @@ const SearchQuestionsPage = () => {
     const queryParams = new URLSearchParams(location.search);
     const search = queryParams.get("search") || initialSearchParams.search;
     const tags =
-      queryParams
-        .get("tags")
-        ?.split(",")
-        ?.map((tag) => ({ value: tag, label: tag })) ||
-      initialSearchParams.tags;
+      queryParams.get("tags")?.trim() === "" || !queryParams.get("tags")
+        ? initialSearchParams.tags
+        : queryParams
+            .get("tags")
+            .split(",")
+            .map((tag) => ({ value: tag, label: tag }));
+
     const sortBy = queryParams.get("sortBy") || initialSearchParams.sortBy;
     const sortOrder =
       queryParams.get("sortOrder") || initialSearchParams.sortOrder;
@@ -105,12 +102,7 @@ const SearchQuestionsPage = () => {
         />
       </Paper>
       <QuestionsList questions={questions} />
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isLoading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <LoadingIndicator isLoading={isLoading} />
 
       {someQuestionsFound && (
         <Pagination

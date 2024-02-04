@@ -6,6 +6,10 @@ class FakeQuestionService {
       ...question,
       addedAt: new Date(question.addedAt),
       modifiedAt: new Date(question.modifiedAt),
+      answers: question.answers.map((answer) => ({
+        ...answer,
+        addedAt: new Date(answer.addedAt),
+      })),
     }));
   }
   async getNumberOfQuestionsMatching({ query, tags }) {
@@ -64,11 +68,16 @@ class FakeQuestionService {
     return filteredQuestions.slice(skip, skip + limit);
   }
 
-  async wait(miliSeconds) {
+  async getQuestionById(id) {
+    await this.wait(200);
+    return this.questions.find((question) => question.id === id);
+  }
+
+  async wait(milliseconds) {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve();
-      }, miliSeconds);
+      }, milliseconds);
     });
   }
 }

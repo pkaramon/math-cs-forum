@@ -6,6 +6,7 @@ const routes = {
   resetPassword: "/reset-password",
   askQuestion: "/ask-question",
   searchQuestion: "/search",
+  question: "/question/:id",
 };
 
 export const createSearchQuestionRoute = (query) => {

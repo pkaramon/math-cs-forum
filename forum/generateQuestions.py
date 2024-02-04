@@ -31,7 +31,10 @@ def generate_question(index):
     languages = ["Python", "JavaScript", "C#", "Java", "Go"]
     latex_snippet = generate_latex()
 
+    numberOfAnswers = random.randint(0, 10)
+
     return {
+        "id": index,
         "title": f"Question {index}",
         "question": question_template.format(action=random.choice(actions), language=random.choice(languages), latex=latex_snippet),
         "tags": random.sample(["Programming", "Web Development", "Data Analysis", "Machine Learning", "Software Engineering"], 3),
@@ -41,14 +44,31 @@ def generate_question(index):
         "author": {
             "firstName": generate_name().split()[0],
             "lastName": generate_name().split()[1],
-            "id": str(index)  # Simplified ID generation for demonstration
+            "authorId": index
         },
         "views": random.randint(0, 1000),
-        "answers": random.randint(0, 10),
+        "numberOfAnswers": numberOfAnswers,
+        "answers": [generate_answer(index, str(index)) for _ in range(numberOfAnswers)],
     }
 
 def generate_questions(n):
     return [generate_question(i) for i in range(1, n + 1)]
+
+
+def generate_answer(question_id, author_id):
+    return {
+        "author": {
+            "authorId": author_id,
+            "firstName": generate_name().split()[0],
+            "lastName": generate_name().split()[1]
+        },
+        "answer": generate_latex(),
+        "answerId": str(random.randint(1, 10000)),
+        "addedAt": (datetime.now() - timedelta(days=random.randint(0, 365))).strftime('%Y-%m-%d %H:%M:%S'),
+        "modifiedAt": (datetime.now() - timedelta(days=random.randint(0, 365))).strftime('%Y-%m-%d %H:%M:%S'),
+        "questionId": question_id,
+        "likes": random.randint(0, 100),
+    }
 
 # Generate 100 questions
 questions = generate_questions(100)
@@ -56,3 +76,4 @@ questions = generate_questions(100)
 # Convert the list of questions to a JSON-formatted string
 json_output = json.dumps(questions, indent=4)
 print(json_output)
+

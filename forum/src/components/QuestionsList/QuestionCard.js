@@ -17,9 +17,9 @@ import React from "react";
 
 const QuestionCard = ({ question }) => {
   const navigate = useNavigate();
-  const formatDate = (dateString) => {
+  const formatDate = (date) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
+    return date.toLocaleDateString(undefined, options);
   };
 
   return (
@@ -61,7 +61,7 @@ const QuestionCard = ({ question }) => {
           <IconButton aria-label="comments" size="small">
             <CommentOutlinedIcon fontSize="inherit" />
             <Typography variant="body2" sx={{ marginLeft: 0.5 }}>
-              {question.answers}
+              {question.numberOfAnswers}
             </Typography>
           </IconButton>
           <IconButton aria-label="views" size="small">
