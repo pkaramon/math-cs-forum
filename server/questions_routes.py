@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from models import db, Question, Answer, QuestionLike
+from models import db, Question, Answer, QuestionLike, User, AnswerLike
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from datetime import datetime
 
