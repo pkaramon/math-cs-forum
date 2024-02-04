@@ -9,7 +9,7 @@ class FakeQuestionService {
     }));
   }
   async getNumberOfQuestionsMatching({ query, tags }) {
-    await this.wait(300);
+    await this.wait(100);
     const searched = await this.search({
       query,
       tags,
@@ -22,7 +22,7 @@ class FakeQuestionService {
   }
 
   async search({ query, tags, sortBy, sortOrder, skip, limit }) {
-    await this.wait(500);
+    await this.wait(200);
     let filteredQuestions = this.questions;
     if (query) {
       const queryLowerCase = query.toLowerCase();

@@ -10,7 +10,7 @@ import ResetPassword from "./components/forms/ResetPassword";
 import routes from "./routes";
 import Jumbotron from "./components/Jumbotron";
 import AskQuestionForm from "./components/forms/AskQuestionForm";
-import Questions from "./components/Questions";
+import SearchQuestionsPage from "./pages/SearchQuestionsPage";
 
 function App() {
   return (
@@ -19,7 +19,10 @@ function App() {
         <Routes>
           <Route path={"/"} element={<Layout />}>
             <Route path={"/"} element={<Jumbotron />} />
-            <Route path={routes.searchQuestion} element={<Questions />} />
+            <Route
+              path={routes.searchQuestion}
+              element={<SearchQuestionsPage />}
+            />
             <Route
               path={routes.about}
               element={<Typography variant={"body1"}>About</Typography>}

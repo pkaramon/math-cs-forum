@@ -16,13 +16,14 @@ import SearchQuestionSchema, {
 import FormField from "./FormField";
 import TagsField from "./TagsField";
 
-const SearchQuestionForm = ({ onSearch, popularTags }) => {
+const SearchQuestionForm = ({ onSearch, popularTags, formikRef }) => {
   return (
     <Formik
       onSubmit={(values) => {
         onSearch(values);
       }}
       initialValues={initialValues}
+      innerRef={formikRef}
       validationSchema={SearchQuestionSchema}
     >
       {({ dirty, isValid }) => (
