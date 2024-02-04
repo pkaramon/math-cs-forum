@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import {
   AppBar,
+  Box,
   Button,
   Drawer,
   IconButton,
+  Link,
   List,
   ListItemButton,
   ListItemText,
   Toolbar,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -17,6 +18,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import routes from "../routes";
 import SearchBar from "./SearchBar";
 import { appBarHeight } from "../materialUITheme";
+import logoImage from "../img/logo192.png";
 
 function Navbar() {
   const [_, setMobileMoreAnchorEl] = useState(null);
@@ -76,13 +78,15 @@ function Navbar() {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography
-            variant="h6"
-            noWrap
-            sx={{ flexGrow: 1, minWidth: "80px" }}
-          >
-            MCS
-          </Typography>
+          <Box sx={{ flexGrow: 1, minWidth: "80px" }}>
+            <Link href={routes.home}>
+              <img
+                src={logoImage}
+                alt="logo"
+                style={{ width: "40px", height: "40px" }}
+              />
+            </Link>
+          </Box>
 
           <SearchBar />
           {!isMobile && (

@@ -14,6 +14,7 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import React from "react";
+import { createQuestionRoute } from "../../routes";
 
 const QuestionCard = ({ question }) => {
   const navigate = useNavigate();
@@ -29,7 +30,10 @@ const QuestionCard = ({ question }) => {
           {formatDate(question.addedAt)}
         </Typography>
 
-        <Link href={"/about"} sx={{ color: "secondary.main" }}>
+        <Link
+          href={createQuestionRoute(question.id)}
+          sx={{ color: "secondary.main" }}
+        >
           <Typography
             variant="h6"
             component="div"

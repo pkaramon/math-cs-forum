@@ -44,7 +44,7 @@ function SignIn() {
             onSubmit={handleSubmit}
             validationSchema={LoginSchema}
           >
-            {({}) => (
+            {({ isValid, dirty }) => (
               <Form>
                 <FormField property={"email"} label={"Email"} />
                 <FormField
@@ -57,6 +57,7 @@ function SignIn() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  disabled={!isValid || !dirty}
                 >
                   Sign In
                 </Button>

@@ -10,16 +10,17 @@ import {
   useTheme,
 } from "@mui/material";
 import backgroundImage from "../img/pi.png";
-import routes from "../routes"; // adjust the path as needed
+import routes from "../routes";
 
-const Jumbotron = () => {
+const HomePage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Box
       sx={{
-        height: isMobile ? "50vh" : "93.34vh",
+        height: "100vh",
+        width: "100vw",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -27,6 +28,9 @@ const Jumbotron = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: { lg: "fixed" },
+        position: "absolute",
+        top: 0,
+        right: 0,
       }}
     >
       <Card sx={{ maxWidth: 500, backgroundColor: "white" }} elevation={24}>
@@ -59,4 +63,4 @@ const Jumbotron = () => {
   );
 };
 
-export default Jumbotron;
+export default HomePage;

@@ -1,5 +1,5 @@
 import "./App.css";
-import { ThemeProvider, Typography } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
 import RegistrationForm from "./components/forms/RegistrationForm";
@@ -8,11 +8,12 @@ import React from "react";
 import theme from "./materialUITheme";
 import ResetPassword from "./components/forms/ResetPassword";
 import routes from "./routes";
-import Jumbotron from "./components/Jumbotron";
+import HomePage from "./pages/HomePage";
 import AskQuestionForm from "./components/forms/AskQuestionForm";
 import SearchQuestionsPage from "./pages/SearchQuestionsPage";
 import QuestionPage from "./pages/QuestionPage";
 import { QuestionServiceProvider } from "./context/questionServiceContext";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   return (
@@ -21,15 +22,12 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path={"/"} element={<Layout />}>
-              <Route path={"/"} element={<Jumbotron />} />
+              <Route path={"/"} element={<HomePage />} />
               <Route
                 path={routes.searchQuestion}
                 element={<SearchQuestionsPage />}
               />
-              <Route
-                path={routes.about}
-                element={<Typography variant={"body1"}>About</Typography>}
-              />
+              <Route path={routes.about} element={<AboutPage />} />
               <Route path={routes.askQuestion} element={<AskQuestionForm />} />
               <Route path={routes.question} element={<QuestionPage />} />
             </Route>

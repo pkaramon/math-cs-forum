@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import AnswerCard from "./AnswerCard";
 import {
   Box,
+  Divider,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
   Typography,
 } from "@mui/material";
+import AnswerForm from "./forms/AnswerForm";
 
 const sortOptions = [
   { value: "likes", label: "Highest rated" },
@@ -55,6 +57,9 @@ const AnswersList = ({ answers }) => {
       {answers.map((answer) => (
         <AnswerCard key={answer.answerId} answer={answer} />
       ))}
+
+      <Divider sx={{ my: 2 }} />
+      <AnswerForm />
     </Box>
   );
 };

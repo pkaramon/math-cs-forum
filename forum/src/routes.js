@@ -13,4 +13,8 @@ export const createSearchQuestionRoute = (query) => {
   return `${routes.searchQuestion}?search=${query}`;
 };
 
+export const createQuestionRoute = (id) => {
+  return routes.question.replace(":id", id);
+};
+
 export default routes;

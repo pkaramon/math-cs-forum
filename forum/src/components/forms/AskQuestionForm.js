@@ -38,7 +38,7 @@ const AskQuestionForm = () => {
   };
 
   return (
-    <Container component="main" maxWidth="md" sx={{ mt: 4 }}>
+    <Container component="main" maxWidth="md" sx={{ mt: 10 }}>
       <CssBaseline />
       <Paper elevation={3} sx={{ p: 3 }}>
         <Formik
