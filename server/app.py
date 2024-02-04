@@ -2,7 +2,7 @@
 from flask import Flask
 from models import db
 from users_routes import register, login, protected_route, delete_user, modify_user, get_user_data, get_all_users, reset_password, mail
-from questions_routes import add_question, add_answer, modify_question, modify_answer, search_questions, get_all_questions, get_all_answers, like_question, dislike_question
+from questions_routes import add_question, add_answer, modify_question, modify_answer, search_questions, get_all_questions, get_all_answers, like_question, dislike_question, like_answer, dislike_answer, delete_question, delete_answer
 from utils import register_error_handlers, jwt_manager, SECRET_KEY
 import os
 
@@ -43,6 +43,10 @@ app.add_url_rule('/get_all_questions', 'get_all_questions', get_all_questions, m
 app.add_url_rule('/get_all_answers/<int:question_id>', 'get_all_answers', get_all_answers, methods=['GET'])
 app.add_url_rule('/like_question/<int:question_id>', 'like_question', like_question, methods=['POST'])
 app.add_url_rule('/dislike_question/<int:question_id>', 'dislike_question', dislike_question, methods=['POST'])
+app.add_url_rule("/like_answer/<int:answer_id>", "like_answer", like_answer, methods=["POST"])
+app.add_url_rule('/dislike_answer/<int:answer_id>', 'dislike_answer', dislike_answer, methods=['POST'])
+app.add_url_rule('/delete_question/<int:question_id>', 'delete_question', delete_question, methods=['DELETE'])
+app.add_url_rule('/delete_answer/<int:answer_id>', 'delete_answer', delete_answer, methods=['DELETE'])
 
 if __name__ == '__main__':
     if not os.path.exists(f"{app.root_path}/database/database.db"):
