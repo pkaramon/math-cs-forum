@@ -81,7 +81,7 @@ function Navbar() {
             noWrap
             sx={{ flexGrow: 1, minWidth: "80px" }}
           >
-            MCSF
+            MCS
           </Typography>
 
           <SearchBar />

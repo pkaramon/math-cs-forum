@@ -8,4 +8,8 @@ const routes = {
   searchQuestion: "/search",
 };
 
+export const createSearchQuestionRoute = (query) => {
+  return `${routes.searchQuestion}?search=${query}`;
+};
+
 export default routes;

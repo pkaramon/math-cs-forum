@@ -74,18 +74,24 @@ const SearchQuestionsPage = () => {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const search = queryParams.get("search") || initialSearchParams.search;
-    const tags = queryParams.get("tags") || initialSearchParams.tags;
+    const tags =
+      queryParams
+        .get("tags")
+        ?.split(",")
+        ?.map((tag) => ({ value: tag, label: tag })) ||
+      initialSearchParams.tags;
     const sortBy = queryParams.get("sortBy") || initialSearchParams.sortBy;
     const sortOrder =
       queryParams.get("sortOrder") || initialSearchParams.sortOrder;
+
     const searchParams = {
       search,
-      tags: tags.split(",").map((tag) => ({ value: tag, label: tag })),
+      tags,
       sortBy,
       sortOrder,
     };
     formikRef.current.setValues(searchParams);
-    handleSearch(searchParams).then((r) => {});
+    handleSearch(searchParams).then(() => {});
   }, [location.search]);
 
   const someQuestionsFound = questions.length > 0;
