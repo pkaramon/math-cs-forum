@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { FieldArray, Form, Formik } from "formik";
 import {
-  Alert,
   Box,
   Button,
   Chip,
@@ -12,15 +11,10 @@ import {
   Typography,
 } from "@mui/material";
 import FormField from "./FormField";
-import MarkdownEditor from "../MarkdownEditor";
-import RenderMarkdown from "../RenderMarkdown";
-import InfoModal from "../InfoModal";
 import AskQuestionSchema, { initialValues } from "./AskQuestionSchema";
+import MarkdownField from "./MarkdownField";
 
 const AskQuestionForm = () => {
-  const [previewContent, setPreviewContent] = useState("");
-  const [previewModalOpen, setPreviewModalOpen] = useState(false);
-
   const onSubmit = (values, { setSubmitting }) => {
     setTimeout(() => {
       alert(JSON.stringify(values, null, 2));
@@ -45,13 +39,6 @@ const AskQuestionForm = () => {
 
   return (
     <Container component="main" maxWidth="md" sx={{ mt: 4 }}>
-      <InfoModal
-        title={"Preview"}
-        open={previewModalOpen}
-        setOpen={setPreviewModalOpen}
-      >
-        <RenderMarkdown content={previewContent} />
-      </InfoModal>
       <CssBaseline />
       <Paper elevation={3} sx={{ p: 3 }}>
         <Formik
@@ -66,20 +53,8 @@ const AskQuestionForm = () => {
               </Typography>
               <FormField property={"title"} label={"Title"} />
               <Typography variant="body1">Question</Typography>
-              {touched.question && errors.question && (
-                <Alert severity={"error"}>{errors.question}</Alert>
-              )}
-              <MarkdownEditor
-                value={values.question}
-                setValue={(v) => {
-                  touched.question = true;
-                  setFieldValue("question", v).then((r) => {});
-                }}
-                onClickedPreview={(content) => {
-                  setPreviewContent(content);
-                  setPreviewModalOpen((open) => !open);
-                }}
-              />
+
+              <MarkdownField fieldName={"question"} />
               <Box sx={{ my: 2 }}>
                 <Typography variant="body1">Tags</Typography>
                 <FieldArray
