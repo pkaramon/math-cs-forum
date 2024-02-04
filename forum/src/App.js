@@ -17,6 +17,8 @@ import AboutPage from "./pages/AboutPage";
 import PublicProfilePage from "./pages/PublicProfilePage";
 import { UserServiceProvider } from "./context/UserServiceContext";
 import NotFoundPage from "./pages/NotFoundPage";
+import RequireAuth from "./auth/RequireAuth";
+import * as roles from "./auth/roles";
 
 function App() {
   return (
@@ -36,10 +38,17 @@ function App() {
                   element={<SearchQuestionsPage />}
                 />
                 <Route path={routes.about} element={<AboutPage />} />
+
                 <Route
-                  path={routes.askQuestion}
-                  element={<AskQuestionForm />}
-                />
+                  path={"/"}
+                  element={<RequireAuth roles={[roles.USER]} />}
+                >
+                  <Route
+                    path={routes.askQuestion}
+                    element={<AskQuestionForm />}
+                  />
+                </Route>
+
                 <Route path={routes.question} element={<QuestionPage />} />
                 <Route path={routes.profile} element={<PublicProfilePage />} />
 
