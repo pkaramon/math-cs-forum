@@ -1,8 +1,8 @@
 # routes.py
 from flask import jsonify, request
 from models import db, User
-from utils import generate_token, verify_password, SECRET_KEY, ph, generate_random_password, send_email
-import jwt
+from utils import generate_token, verify_password, ph, generate_random_password, send_email
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime 
 from flask_mail import Mail
 
@@ -31,10 +31,6 @@ def register():
             birthday=birthday
         )
         
-        if data.get('role') == 'admin':
-            new_user.role = 'admin';
-
-
         db.session.add(new_user)
         db.session.commit()
 
@@ -50,54 +46,42 @@ def login():
     auth = request.json
     email = auth.get('email')
     password = auth.get('password')
-
     user = User.query.filter_by(email=email).first()
+    try:
+        if verify_password(user.password, password):
+            token = generate_token(user.id, user.role)
+            return jsonify(token=token), 200
+    except Exception as e:
+        return jsonify(message='Wrong email or password'), 401
 
-    if not user:
-        return jsonify(message='User not found'), 404
-
-    if verify_password(user.password, password):
-        token = generate_token(user.id, user.role)
-        return jsonify(token=token), 200
-
-    return jsonify(message='Wrong email or password'), 401
-
+@jwt_required()
 def protected_route():
-    # To w jsonie dostaje token i zwraca zwiazane z nim id oraz role
-    # Jak dobrze rozumiem, to za pomoca tego bedzie decydowane kto co ma zobaczyc
+    user_id = get_jwt_identity()
+    role = get_jwt().get('role')
 
-    token = request.json.get('token')
+    if not user_id or not role:
+        return jsonify(message='Invalid token payload'), 401
 
-    if not token:
-        return jsonify(message='Token is missing'), 401
+    return jsonify({'user_id': user_id, 'role': role}), 200
 
-    try:
-        data = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-        user_id = data.get('user_id')
-        role = data.get('role')
+@jwt_required()
+def delete_user(user_to_delete_id):
+    role = get_jwt().get('role')
 
-        if not user_id or not role:
-            return jsonify(message='Invalid token payload'), 401
+    if role != 'admin':
+        return jsonify(message="You must be an admin to perform this action"), 403
 
-        return jsonify({'user_id': user_id, 'role': role}), 200
-    except jwt.ExpiredSignatureError:
-        return jsonify(message='Token has expired'), 401
-    except jwt.InvalidTokenError:
-        return jsonify(message='Invalid token'), 401
-
-def delete_user():
-    # Tu zakladam, ze tylko u admina bedzie to wykorzystywane 
-    data = request.json
-    user_id = data.get('to_delete_id')
+    if not user_to_delete_id:
+        return jsonify(message='User ID to delete is missing'), 400
 
     try:
-        user_to_delete = User.query.get(user_id)
+        user_to_delete = User.query.get(user_to_delete_id)
 
         if not user_to_delete:
             return jsonify(message='User not found'), 404
         
         if user_to_delete.role == 'admin':
-            return jsonify(message="Can not delete admin"), 404
+            return jsonify(message="Can not delete admin"), 403
 
         db.session.delete(user_to_delete)
         db.session.commit()
@@ -107,34 +91,20 @@ def delete_user():
         db.session.rollback()  
         return jsonify({'message': str(e)}), 500
 
-def modify_user():
+@jwt_required()
+def modify_user(user_to_modify_id):   
+    modifier = get_jwt_identity()
+    modifier_role = get_jwt().get('role')
     data = request.json
-    # Nwm czy dobrze, ale zakladam, ze potrzebne dane zostana wyslane w w jsonie
-    # Jezeli nie ma to_modify_id przeslanego to zalozenie jest takie, 
-    # ze to nie admin chce cos zmienic, tylko zwykly uzytkownik
+    user_to_modify = User.query.get(user_to_modify_id)
 
-    print(data)
-
+    if not modifier:
+        return jsonify({'message': 'Modifier not found'}), 404
+    
+    if modifier_role != 'admin' and user_to_modify_id != modifier:
+        return jsonify({'message': 'You can only modify your own account'}), 403
+    
     try:
-        user_id = data.get('user_id')
-        to_modify_id = data.get('to_modify_id')  
-
-        modifier = User.query.get(user_id)
-       
-        if not modifier:
-            return jsonify({'message': 'Modifier not found'}), 404
-        
-        if modifier.role != 'admin' and to_modify_id:
-            if to_modify_id != user_id:
-                return jsonify({'message': 'You can only modify your own account'}), 403
-
-
-        if to_modify_id:
-            user_to_modify = User.query.get(to_modify_id)
-        else:
-            user_to_modify = modifier
-            
-
         fields_to_update = {
             'firstname': data.get('firstname'),
             'lastname': data.get('lastname'),
@@ -157,11 +127,10 @@ def modify_user():
         db.session.rollback()
         return jsonify({'message': str(e)}), 500
 
-def get_user_data():
+def get_user_data(user_id):
+
     # Tutaj dane poszczegolnego usera
     # Mozliwe, ze jakiegos pole tutaj nie musi byc
-
-    user_id = request.json.get('user_id')
 
     try:
         if not user_id:
@@ -208,20 +177,13 @@ def get_all_users():
             }
             all_users_data.append(user_data)
 
-        # Return the list of user data dictionaries as JSON
         return jsonify(all_users_data), 200
 
     except Exception as e:
         return jsonify(message=str(e)), 500
 
-    return jsonify(message='Failed to reset password. Please try again.'), 500
-
-def reset_password():
-    data = request.json
-    email = data.get('email')
+def reset_password(email):
     user = User.query.filter_by(email=email).first()
-    if not user:
-        return jsonify(message='Email not found'), 404
 
     new_password = generate_random_password()
     hashed_password = ph.hash(new_password)
@@ -244,3 +206,5 @@ def reset_password():
     except Exception as e:
         db.session.rollback()
         return jsonify(message='Failed to reset password. Please try again.'), 500
+    
+
