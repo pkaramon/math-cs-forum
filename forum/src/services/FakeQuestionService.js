@@ -80,6 +80,20 @@ class FakeQuestionService {
       }, milliseconds);
     });
   }
+
+  async findAllQuestionsForUser(userId) {
+    await this.wait(200);
+    return this.questions.filter((question) => question.author.id === userId);
+  }
+
+  async findAllAnswersForUser(userId) {
+    await this.wait(200);
+    return this.questions
+      .map((question) =>
+        question.answers.filter((answer) => answer.author.id === userId),
+      )
+      .flat();
+  }
 }
 
 export default FakeQuestionService;

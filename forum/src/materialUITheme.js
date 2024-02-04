@@ -45,6 +45,11 @@ const theme = createTheme({
         component: LinkBehavior,
         underline: "hover",
       },
+      styleOverrides: {
+        root: {
+          color: "#1976d2",
+        },
+      },
     },
     MuiButtonBase: {
       defaultProps: {

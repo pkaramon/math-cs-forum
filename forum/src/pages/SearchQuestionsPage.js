@@ -6,7 +6,7 @@ import NothingFound from "../components/NothingFound";
 import { initialValues as initialSearchParams } from "../components/forms/SearchQuestionSchema";
 import { useLocation, useNavigate } from "react-router-dom";
 import qs from "qs";
-import { useQuestionService } from "../context/questionServiceContext";
+import { useQuestionService } from "../context/QuestionServiceContext";
 import LoadingIndicator from "../components/LoadingIndicator";
 
 const SearchQuestionsPage = () => {

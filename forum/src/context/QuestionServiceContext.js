@@ -1,14 +1,14 @@
 import { createContext, useContext } from "react";
 import FakeQuestionService from "../services/FakeQuestionService";
 
-export const questionServiceContext = createContext({});
-export const useQuestionService = () => useContext(questionServiceContext);
+export const QuestionServiceContext = createContext({});
+export const useQuestionService = () => useContext(QuestionServiceContext);
 
 export const QuestionServiceProvider = ({ children }) => {
   const questionService = new FakeQuestionService();
   return (
-    <questionServiceContext.Provider value={questionService}>
+    <QuestionServiceContext.Provider value={questionService}>
       {children}
-    </questionServiceContext.Provider>
+    </QuestionServiceContext.Provider>
   );
 };

@@ -6,16 +6,11 @@ import {
   CardContent,
   Divider,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import backgroundImage from "../img/pi.png";
 import routes from "../routes";
 
 const HomePage = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
   return (
     <Box
       sx={{
