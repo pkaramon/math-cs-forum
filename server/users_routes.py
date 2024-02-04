@@ -5,7 +5,7 @@ from utils import generate_token, verify_password, ph, generate_random_password,
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime 
 from flask_mail import Mail
-
+from jwt import encode 
 mail = Mail()
 
 def register():
@@ -182,6 +182,55 @@ def get_all_users():
     except Exception as e:
         return jsonify(message=str(e)), 500
 
+# NOWA WERSJA 
+def reset_password_request(email):
+    user = User.query.filter_by(email=email).first()
+
+    token = generate_token(email, user.id)
+
+
+    # ten url najprawdopodobniej do zmiany
+    # Tez nie wiedzialem czy dokladnie to miales na mysli
+    # Ale no wysyla to maila do konkretnej strony wraz z tokenem 
+    # I za pomoca tego tokenu mozna potem w change password zmienic haslo
+    reset_url = f'localhost:3000/reset_password?token={token}'
+
+    message = f'Click the following link to reset your password: {reset_url}'
+  
+    try:
+
+        success, error = send_email(email, message)
+
+        if success:
+            return jsonify(message = 'Password reset email sent successfully'), 200
+        else:
+            return jsonify(message = f'Failed to send email: {error}'), 500
+
+    except Exception as e:
+        return jsonify(message = str(e)), 500
+
+@jwt_required()
+def change_password():
+    new_password = request.json.get('new_password')
+    user_to_modify = User.query.filter_by(email=get_jwt().get('email')).first()
+
+    if not new_password:
+        return jsonify(message = 'New password is required'), 400
+
+    hashed_password = ph.hash(new_password)
+
+   
+    try:
+        user_to_modify.password = hashed_password
+        db.session.commit()
+        return jsonify(message = 'Password changed successfully'), 200
+    
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'message': str(e)}), 500
+
+
+# STARA WERSJA
 def reset_password(email):
     user = User.query.filter_by(email=email).first()
 
@@ -206,5 +255,3 @@ def reset_password(email):
     except Exception as e:
         db.session.rollback()
         return jsonify(message='Failed to reset password. Please try again.'), 500
-    
-
