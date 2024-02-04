@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuestionService } from "../context/QuestionServiceContext";
 import {
   Avatar,
@@ -18,8 +18,10 @@ import NothingFound from "../components/NothingFound";
 import RenderMarkdown from "../components/RenderMarkdown";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import AnswersList from "../components/AnswersList";
+import { createProfileRoute } from "../routes";
 
 const QuestionPage = () => {
+  const navigate = useNavigate();
   const questionService = useQuestionService();
   const { id: idStr } = useParams();
   const id = Number.parseInt(idStr, 10);
@@ -95,9 +97,9 @@ const QuestionPage = () => {
             </IconButton>
 
             <Chip
-              onClick={() => {
-                // navigate("/ask-question");
-              }}
+              onClick={() =>
+                navigate(createProfileRoute(questionData.author.authorId))
+              }
               avatar={
                 <Avatar sx={{ marginLeft: "auto", width: 24, height: 24 }}>
                   {questionData.author.firstName.charAt(0)}

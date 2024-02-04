@@ -13,8 +13,11 @@ import { CalendarIcon } from "@mui/x-date-pickers";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import { ThumbDownAltOutlined } from "@mui/icons-material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { createProfileRoute } from "../routes";
 
 const AnswerCard = ({ answer }) => {
+  const navigate = useNavigate();
   return (
     <Card elevation={2} sx={{ mt: 2 }}>
       <CardContent>
@@ -34,7 +37,7 @@ const AnswerCard = ({ answer }) => {
             </Typography>
           </IconButton>
           <Chip
-            onClick={() => {}}
+            onClick={() => navigate(createProfileRoute(answer.author.authorId))}
             avatar={
               <Avatar sx={{ marginLeft: "auto", width: 24, height: 24 }}>
                 {answer.author.firstName.charAt(0)}

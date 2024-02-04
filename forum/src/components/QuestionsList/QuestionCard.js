@@ -14,7 +14,7 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import React from "react";
-import { createQuestionRoute } from "../../routes";
+import { createProfileRoute, createQuestionRoute } from "../../routes";
 
 const QuestionCard = ({ question }) => {
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ const QuestionCard = ({ question }) => {
           </IconButton>
           <Chip
             onClick={() => {
-              navigate("/ask-question");
+              navigate(createProfileRoute(question.author.authorId));
             }}
             avatar={
               <Avatar sx={{ marginLeft: "auto", width: 24, height: 24 }}>
