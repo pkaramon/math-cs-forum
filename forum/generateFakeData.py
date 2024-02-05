@@ -59,6 +59,7 @@ def generate_question(index, author, allAuthors):
         "addedAt": (datetime.now() - timedelta(days=random.randint(0, 365))).strftime('%Y-%m-%d %H:%M:%S'),
         "modifiedAt": (datetime.now() - timedelta(days=random.randint(0, 365))).strftime('%Y-%m-%d %H:%M:%S'),
         "likes": random.randint(0, 100),
+        "dislikes": random.randint(0, 100),
         "author": {
             "firstName": author['firstName'],
             "lastName": author['lastName'],
@@ -86,6 +87,7 @@ def generate_answer(question_id, author):
         "modifiedAt": (datetime.now() - timedelta(days=random.randint(0, 365))).strftime('%Y-%m-%d %H:%M:%S'),
         "questionId": question_id,
         "likes": random.randint(0, 100),
+        "dislikes": random.randint(0, 100),
     }
 
 users = generate_users()

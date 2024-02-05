@@ -35,7 +35,7 @@ const EditUserDetailsForm = ({ initialValues, onSubmit }) => {
             validationSchema={EditUserDetailsSchema}
             onSubmit={onSubmit}
           >
-            {({ setFieldValue, isValid, dirty, values }) => (
+            {({ setFieldValue, isValid, values }) => (
               <Form>
                 <Box
                   sx={{
@@ -57,10 +57,8 @@ const EditUserDetailsForm = ({ initialValues, onSubmit }) => {
 
                 <FormField property={"firstName"} label={"First name"} />
                 <FormField property={"lastName"} label={"Last Name"} />
-                <FormField
-                  property={"about"}
-                  label={"About"}
-                  render={({ field, form, ...other }) => (
+                <FormField property={"about"} label={"About"} as={undefined}>
+                  {({ field, form, ...other }) => (
                     <TextField
                       {...field}
                       {...other}
@@ -70,7 +68,7 @@ const EditUserDetailsForm = ({ initialValues, onSubmit }) => {
                       variant={"outlined"}
                     />
                   )}
-                />
+                </FormField>
 
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Field name="birthDate" fullWidth margin={"normal"}>

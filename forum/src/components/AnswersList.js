@@ -53,7 +53,7 @@ const AnswersList = ({ answers }) => {
       </Box>
 
       {answers.map((answer) => (
-        <AnswerCard key={answer.answerId} answer={answer} />
+        <AnswerCard key={answer.answerId} answerData={answer} />
       ))}
     </Box>
   );

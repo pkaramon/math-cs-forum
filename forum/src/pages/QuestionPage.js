@@ -29,10 +29,37 @@ const QuestionPage = () => {
   const questionService = useQuestionService();
   const { id: idStr } = useParams();
   const id = Number.parseInt(idStr, 10);
-  const { SnackbarComponent, showSnackbarThenRedirect } = useSnackbar();
+  const { SnackbarComponent, showSnackbar, showSnackbarThenRedirect } =
+    useSnackbar();
 
   const [questionData, setQuestionData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+
+  const likeQuestion = () => {
+    if (!isAuthenticated) {
+      showSnackbar("You need to login in order to like a question.");
+      return;
+    }
+    questionService.likeQuestion(token, userId, id).then((change) => {
+      setQuestionData((prev) => ({
+        ...prev,
+        likes: prev.likes + change,
+      }));
+    });
+  };
+
+  const dislikeQuestion = () => {
+    if (!isAuthenticated) {
+      showSnackbar("You need to login in order to dislike a question.");
+      return;
+    }
+    questionService.dislikeQuestion(token, userId, id).then((change) => {
+      setQuestionData((prev) => ({
+        ...prev,
+        dislikes: prev.dislikes + change,
+      }));
+    });
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -101,14 +128,14 @@ const QuestionPage = () => {
             alignItems="center"
             sx={{ marginTop: 2 }}
           >
-            <IconButton aria-label="likes" size="small">
+            <IconButton aria-label="views" size="small">
               <VisibilityOutlinedIcon fontSize="inherit" />
               <Typography variant="body2" sx={{ marginLeft: 0.5 }}>
                 {questionData.views}
               </Typography>
             </IconButton>
 
-            <IconButton aria-label="likes" size="small">
+            <IconButton aria-label="number of answers" size="small">
               <CommentOutlined fontSize="inherit" />
               <Typography variant="body2" sx={{ marginLeft: 0.5 }}>
                 {questionData.numberOfAnswers}
@@ -129,14 +156,23 @@ const QuestionPage = () => {
           </Stack>
 
           <Stack direction="row" spacing={1} sx={{ marginTop: 2 }}>
-            <IconButton aria-label="like question">
+            <IconButton
+              aria-label="like question"
+              onClick={() => likeQuestion()}
+            >
               <ThumbUp />
               <Typography sx={{ marginLeft: 1 }}>
                 {questionData.likes}
               </Typography>
             </IconButton>
-            <IconButton aria-label="dislike question">
+            <IconButton
+              aria-label="dislike question"
+              onClick={() => dislikeQuestion()}
+            >
               <ThumbDown />
+              <Typography sx={{ marginLeft: 1 }}>
+                {questionData.dislikes}
+              </Typography>
             </IconButton>
           </Stack>
         </CardContent>

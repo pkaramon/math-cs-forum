@@ -12,14 +12,48 @@ import RenderMarkdown from "./RenderMarkdown";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import { ThumbDownAltOutlined } from "@mui/icons-material";
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createPublicProfileRoute } from "../routes";
+import { useQuestionService } from "../context/QuestionServiceContext";
+import { useAuth } from "../auth/AuthContext";
+import useSnackbar from "../hooks/useSnackbar";
 
-const AnswerCard = ({ answer }) => {
+const AnswerCard = ({ answerData }) => {
+  const [answer, setAnswer] = useState(answerData);
+
   const navigate = useNavigate();
+  const { isAuthenticated, userId, token } = useAuth();
+  const questionService = useQuestionService();
+  const { showSnackbar, SnackbarComponent } = useSnackbar();
+
+  const likeAnswer = () => {
+    if (!isAuthenticated) {
+      showSnackbar("You need to login in order to like an answer.");
+      return;
+    }
+    questionService
+      .likeAnswer(token, userId, answer.answerId)
+      .then((answer) => {
+        setAnswer({ ...answer });
+      });
+  };
+
+  const dislikeAnswer = () => {
+    if (!isAuthenticated) {
+      showSnackbar("You need to login in order to dislike an answer.");
+      return;
+    }
+    questionService
+      .dislikeAnswer(token, userId, answer.answerId)
+      .then((answer) => {
+        setAnswer({ ...answer });
+      });
+  };
+
   return (
     <Card elevation={2} sx={{ mt: 2 }}>
+      <SnackbarComponent />
       <CardContent>
         <RenderMarkdown content={answer.answer} />
         <Divider />
@@ -50,12 +84,24 @@ const AnswerCard = ({ answer }) => {
         </Stack>
 
         <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
-          <IconButton aria-label="like answer" onClick={() => {}}>
+          <IconButton
+            aria-label="like answer"
+            onClick={() => {
+              likeAnswer();
+            }}
+          >
             <ThumbUpAltOutlinedIcon />
             <Typography sx={{ marginLeft: 1 }}>{answer.likes}</Typography>
           </IconButton>
-          <IconButton aria-label="dislike answer" onClick={() => {}}>
+          <IconButton
+            aria-label="dislike answer"
+            onClick={() => {
+              dislikeAnswer();
+            }}
+          >
             <ThumbDownAltOutlined />
+
+            <Typography sx={{ marginLeft: 1 }}>{answer.dislikes}</Typography>
           </IconButton>
         </Stack>
       </CardContent>

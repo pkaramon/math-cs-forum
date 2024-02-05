@@ -12,6 +12,11 @@ export const questions = questionsJson.map((question) => ({
   })),
 }));
 
+export let questionLikes = [];
+export let questionDislikes = [];
+export let answerLikes = [];
+export let answerDislikes = [];
+
 class FakeQuestionService {
   async getNumberOfQuestionsMatching({ query, tags }) {
     await this.wait(100);
@@ -98,7 +103,10 @@ class FakeQuestionService {
 
   async getQuestionById(id) {
     await this.wait(200);
-    return questions.find((question) => question.id === id);
+    const questionData = questions.find((question) => question.id === id);
+    return {
+      ...questionData,
+    };
   }
 
   async addQuestion(token, userId, questionData) {
@@ -136,6 +144,7 @@ class FakeQuestionService {
       addedAt: new Date(),
       modifiedAt: new Date(),
       likes: 0,
+      dislikes: 0,
       author: {
         authorId: userId,
         firstName: userData.firstName,
@@ -165,6 +174,94 @@ class FakeQuestionService {
         question.answers.filter((answer) => answer.author.id === userId),
       )
       .flat();
+  }
+
+  async likeQuestion(token, userId, questionId) {
+    await this.wait(200);
+    const like = questionLikes.find(
+      (like) => like.userId === userId && like.questionId === questionId,
+    );
+
+    if (like) {
+      questionLikes = questionLikes.filter(
+        (like) => like.userId !== userId || like.questionId !== questionId,
+      );
+      questions.filter((question) => question.id === questionId)[0].likes--;
+      return -1;
+    }
+    questionLikes.push({ userId, questionId });
+
+    questions.filter((question) => question.id === questionId)[0].likes++;
+    return 1;
+  }
+
+  async dislikeQuestion(token, userId, questionId) {
+    await this.wait(200);
+    const dislike = questionDislikes.find(
+      (dislike) =>
+        dislike.userId === userId && dislike.questionId === questionId,
+    );
+
+    if (dislike) {
+      questionDislikes = questionDislikes.filter(
+        (dislike) =>
+          dislike.userId !== userId || dislike.questionId !== questionId,
+      );
+      questions.filter((question) => question.id === questionId)[0].dislikes--;
+      return -1;
+    }
+    questionDislikes.push({ userId, questionId });
+
+    questions.filter((question) => question.id === questionId)[0].dislikes++;
+    return 1;
+  }
+
+  async likeAnswer(token, userId, answerId) {
+    await this.wait(200);
+    const like = answerLikes.find(
+      (like) => like.userId === userId && like.answerId === answerId,
+    );
+
+    const answer = questions
+      .map((question) => question.answers)
+      .flat()
+      .filter((answer) => answer.answerId === answerId)[0];
+
+    if (like) {
+      answerLikes = answerLikes.filter(
+        (like) => like.userId !== userId || like.answerId !== answerId,
+      );
+      answer.likes--;
+      return answer;
+    }
+    answerLikes.push({ userId, answerId });
+
+    answer.likes++;
+    return answer;
+  }
+
+  async dislikeAnswer(token, userId, answerId) {
+    await this.wait(200);
+    const dislike = answerDislikes.find(
+      (dislike) => dislike.userId === userId && dislike.answerId === answerId,
+    );
+
+    const answer = questions
+      .map((question) => question.answers)
+      .flat()
+      .filter((answer) => answer.answerId === answerId)[0];
+
+    if (dislike) {
+      answerDislikes = answerDislikes.filter(
+        (dislike) => dislike.userId !== userId || dislike.answerId !== answerId,
+      );
+      answer.dislikes--;
+      return answer;
+    }
+    answerDislikes.push({ userId, answerId });
+
+    answer.dislikes++;
+    return answer;
   }
 }
 
