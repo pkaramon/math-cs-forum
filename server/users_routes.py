@@ -135,6 +135,55 @@ def modify_user(user_to_modify_id):
         return jsonify({'message': str(e)}), 500
 
 
+@jwt_required()
+def modify_user_details():
+    modifier = get_jwt_identity()
+    data = request.json
+    user_to_modify_id = get_jwt().get('user_id')
+    user_to_modify = User.query.get(user_to_modify_id)
+
+    if user_to_modify_id != modifier:
+        return jsonify({'message': 'You can only modify your own account'}), 403
+
+    try:
+        fields_to_update = {
+            'firstname': data.get('firstname'),
+            'lastname': data.get('lastname'),
+            'about': data.get('about'),
+            'birthday': datetime.strptime(data.get('birthday'), '%m/%d/%Y') if data.get('birthday') else None
+        }
+
+        for field, value in fields_to_update.items():
+            if value is not None:
+                setattr(user_to_modify, field, value)
+
+        db.session.commit()
+
+        return jsonify({'message': 'User modified successfully'}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'message': str(e)}), 500
+
+
+@jwt_required()
+def get_user_details():
+    user_id = get_jwt_identity()
+    user = User.query.get(user_id)
+
+    user_data = {
+        'user_id': user.id,
+        'firstname': user.firstname,
+        'lastname': user.lastname,
+        'email': user.email,
+        'role': user.role,
+        'avatar': user.avatar or "",
+        'about': user.about or "",
+        'birthday': str(user.birthday)
+    }
+
+    return jsonify(user_data), 200
+
+
 def get_user_data(user_id):
     # Tutaj dane poszczegolnego usera
     # Mozliwe, ze jakiegos pole tutaj nie musi byc

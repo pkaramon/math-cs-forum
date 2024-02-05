@@ -1,7 +1,8 @@
 # app.py
 from flask import Flask
 from models import db
-from users_routes import register, login, protected_route, delete_user, modify_user, get_user_data, get_all_users, reset_password, mail, reset_password_request, change_password
+from users_routes import register, login, protected_route, delete_user, modify_user, get_user_data, get_all_users, \
+    reset_password, mail, reset_password_request, change_password, modify_user_details, get_user_details
 from questions_routes import add_question, add_answer, modify_question, modify_answer, search_questions, get_all_questions, get_all_answers, like_question, dislike_question, like_answer, dislike_answer, delete_question, delete_answer
 from utils import register_error_handlers, jwt_manager, SECRET_KEY
 from flask_cors import CORS
@@ -31,6 +32,8 @@ app.add_url_rule('/login', 'login', login, methods=['POST'])
 app.add_url_rule('/protected', 'protected_route', protected_route, methods=['GET'])
 app.add_url_rule('/delete_user/<int:user_to_delete_id>', 'delete_user', delete_user, methods=['DELETE'])
 app.add_url_rule('/modify_user/<int:user_to_modify_id>', 'modify_user', modify_user, methods=['PUT'])
+app.add_url_rule('/modify_user_details', 'modify_user_details', modify_user_details, methods=['PUT'])
+app.add_url_rule('/get_user_details', 'get_user_details', get_user_details, methods=['GET'])
 app.add_url_rule('/get_user_data/<int:user_id>', 'get_user_data', get_user_data, methods=['GET'])
 app.add_url_rule('/get_all_users', 'get_all_users', get_all_users, methods=['GET'])
 

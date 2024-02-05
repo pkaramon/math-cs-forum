@@ -14,7 +14,7 @@ const EditUserDetailsPage = () => {
   const { showSnackbarThenRedirect, SnackbarComponent } = useSnackbar();
 
   useEffect(() => {
-    userService.getUserDetails(token, userId).then((userDetails) => {
+    userService.getUserDetails(token).then((userDetails) => {
       if (userDetails) {
         setUserDetails(userDetails);
       }
@@ -22,14 +22,17 @@ const EditUserDetailsPage = () => {
   }, [userId, token, userService]);
 
   const onSubmit = (values) => {
-    userService.updateUserDetails(token, userId, values).then((success) => {
-      if (success) {
+    userService
+      .updateUserDetails(token, values)
+      .then(() => {
         showSnackbarThenRedirect(
           "User details updated successfully.",
           routes.profile,
         );
-      }
-    });
+      })
+      .catch((err) => {
+        showSnackbarThenRedirect(err.message, routes.profile);
+      });
   };
 
   if (!userDetails) {

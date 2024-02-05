@@ -87,7 +87,8 @@ class FakeUserService {
     };
   }
 
-  async getUserDetails(token, userId) {
+  async getUserDetails(token) {
+    const userId = Number.parseInt(token, 10);
     await this.wait(1000);
     const user = users.find((user) => user.userId === userId);
     if (!user) {
@@ -104,7 +105,8 @@ class FakeUserService {
     };
   }
 
-  async updateUserDetails(token, userId, userDetails) {
+  async updateUserDetails(token, userDetails) {
+    const userId = Number.parseInt(token, 10);
     await this.wait(1000);
     const user = users.find((user) => user.userId === userId);
     if (!user) {

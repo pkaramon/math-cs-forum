@@ -11,7 +11,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 const EditUserDetailsSchema = Yup.object().shape({
   firstName: Yup.string().required("Required"),
   lastName: Yup.string().required("Required"),
-  about: Yup.string().required("Required"),
+  about: Yup.string().nullable(),
   birthDate: Yup.date().required("Required").nullable(),
 });
 
@@ -65,6 +65,8 @@ const EditUserDetailsForm = ({ initialValues, onSubmit }) => {
                       fullWidth
                       rows={6}
                       multiline
+                      label={"About"}
+                      placeholder={"Tell us about yourself"}
                       variant={"outlined"}
                     />
                   )}

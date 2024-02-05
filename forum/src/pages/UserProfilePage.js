@@ -38,7 +38,7 @@ export const UserProfilePage = () => {
 
   useEffect(() => {
     if (userId) {
-      userService.getUserDetails(token, userId).then((user) => {
+      userService.getUserDetails(token).then((user) => {
         setUserDetails(user);
       });
       questionsService.search({ userId: userId }).then((questions) => {
