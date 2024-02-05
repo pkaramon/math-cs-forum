@@ -4,16 +4,14 @@ import { useUserService } from "../context/UserServiceContext";
 import LoadingIndicator from "../components/LoadingIndicator";
 import EditUserDetailsForm from "../components/forms/EditUserDetailsForm";
 import dayjs from "dayjs";
-import { useNavigate } from "react-router-dom";
-import { Snackbar } from "@mui/material";
 import routes from "../routes";
+import useSnackbar from "../hooks/useSnackbar";
 
 const EditUserDetailsPage = () => {
   const { userId, token } = useAuth();
   const userService = useUserService();
   const [userDetails, setUserDetails] = useState(null);
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const navigate = useNavigate();
+  const { showSnackbarThenRedirect, SnackbarComponent } = useSnackbar();
 
   useEffect(() => {
     userService.getUserDetails(token, userId).then((userDetails) => {
@@ -26,8 +24,10 @@ const EditUserDetailsPage = () => {
   const onSubmit = (values) => {
     userService.updateUserDetails(token, userId, values).then((success) => {
       if (success) {
-        setOpenSnackbar(true);
-        setTimeout(() => navigate(routes.profile), 2000);
+        showSnackbarThenRedirect(
+          "User details updated successfully.",
+          routes.profile,
+        );
       }
     });
   };
@@ -38,12 +38,7 @@ const EditUserDetailsPage = () => {
 
   return (
     <>
-      <Snackbar
-        open={openSnackbar}
-        autoHideDuration={6000}
-        onClose={() => setOpenSnackbar(false)}
-        message="User details updated successfully."
-      />
+      <SnackbarComponent />
 
       <EditUserDetailsForm
         initialValues={{

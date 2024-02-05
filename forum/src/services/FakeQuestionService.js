@@ -1,18 +1,18 @@
 import questionsJson from "../questions.json";
+import { users } from "./FakeUserService";
+
+export const questions = questionsJson.map((question) => ({
+  ...question,
+  addedAt: new Date(question.addedAt),
+  modifiedAt: new Date(question.modifiedAt),
+  authorId: question.author.authorId,
+  answers: question.answers.map((answer) => ({
+    ...answer,
+    addedAt: new Date(answer.addedAt),
+  })),
+}));
 
 class FakeQuestionService {
-  constructor() {
-    this.questions = questionsJson.map((question) => ({
-      ...question,
-      addedAt: new Date(question.addedAt),
-      modifiedAt: new Date(question.modifiedAt),
-      authorId: question.author.authorId,
-      answers: question.answers.map((answer) => ({
-        ...answer,
-        addedAt: new Date(answer.addedAt),
-      })),
-    }));
-  }
   async getNumberOfQuestionsMatching({ query, tags }) {
     await this.wait(100);
     const searched = await this.search({
@@ -28,8 +28,7 @@ class FakeQuestionService {
 
   async searchAnswers({ userId }) {
     await this.wait(200);
-    return this.questions
-
+    return questions
       .map((question) =>
         question.answers
           .map((a) => ({ ...a, questionTitle: question.title }))
@@ -48,7 +47,7 @@ class FakeQuestionService {
     userId,
   }) {
     await this.wait(200);
-    let filteredQuestions = this.questions;
+    let filteredQuestions = questions;
     if (query) {
       const queryLowerCase = query.toLowerCase();
       filteredQuestions = filteredQuestions.filter((question) => {
@@ -99,13 +98,15 @@ class FakeQuestionService {
 
   async getQuestionById(id) {
     await this.wait(200);
-    return this.questions.find((question) => question.id === id);
+    return questions.find((question) => question.id === id);
   }
 
   async addQuestion(token, userId, questionData) {
     await this.wait(200);
+    const userData = users.find((user) => user.userId === userId);
+
     const newQuestion = {
-      id: 100 * this.questions.length + 1,
+      id: 100 * questions.length + 1,
       title: questionData.title,
       question: questionData.question,
       addedAt: new Date(),
@@ -114,15 +115,34 @@ class FakeQuestionService {
       authorId: userId,
       author: {
         authorId: userId,
-        firstName: "John", // TODO FIX
-        lastName: "Doe", // TODO FIX
+        firstName: userData.firstName,
+        lastName: userData.lastName,
       },
       views: 0,
       numberOfAnswers: 0,
       answers: [],
     };
-    this.questions.push(newQuestion);
+    questions.push(newQuestion);
     return newQuestion;
+  }
+
+  async addAnswer(token, questionId, userId, answerData) {
+    await this.wait(200);
+    const question = questions.find((q) => q.id === questionId);
+    const userData = users.find((user) => user.userId === userId);
+    const newAnswer = {
+      answerId: 100 * question.answers.length + 1,
+      answer: answerData.answer,
+      addedAt: new Date(),
+      modifiedAt: new Date(),
+      likes: 0,
+      author: {
+        authorId: userId,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+      },
+    };
+    question.answers.push(newAnswer);
   }
 
   async wait(milliseconds) {
@@ -135,12 +155,12 @@ class FakeQuestionService {
 
   async findAllQuestionsForUser(userId) {
     await this.wait(200);
-    return this.questions.filter((question) => question.author.id === userId);
+    return questions.filter((question) => question.author.id === userId);
   }
 
   async findAllAnswersForUser(userId) {
     await this.wait(200);
-    return this.questions
+    return questions
       .map((question) =>
         question.answers.filter((answer) => answer.author.id === userId),
       )

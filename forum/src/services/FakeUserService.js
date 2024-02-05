@@ -1,15 +1,15 @@
-import users from "../users.json";
-import questions from "../questions.json";
+import initialUserData from "../users.json";
+import { questions } from "./FakeQuestionService";
 import UserProfileData from "../entities/UserProfileData";
 
-class FakeUserService {
-  constructor() {
-    this.users = users;
-  }
+export const users = initialUserData.map((user) => ({
+  ...user,
+}));
 
+class FakeUserService {
   async findByIdForPublicProfile(id) {
     await this.wait(1000);
-    const user = this.users.find((user) => user.userId === id);
+    const user = users.find((user) => user.userId === id);
     if (!user) {
       return null;
     }
@@ -52,7 +52,7 @@ class FakeUserService {
 
   async authenticate(email, password) {
     await this.wait(1000);
-    const user = this.users.find(
+    const user = users.find(
       (user) => user.email === email && user.password === password,
     );
     if (!user) {
@@ -69,7 +69,7 @@ class FakeUserService {
   async register({ firstName, lastName, email, password, birthDate }) {
     await this.wait(500);
     const user = {
-      userId: this.users.length + 1,
+      userId: users.length + 1,
       firstName,
       lastName,
       email,
@@ -78,7 +78,7 @@ class FakeUserService {
       role: "user",
       about: "",
     };
-    this.users.push(user);
+    users.push(user);
 
     return {
       userId: user.userId,
@@ -89,7 +89,7 @@ class FakeUserService {
 
   async getUserDetails(token, userId) {
     await this.wait(1000);
-    const user = this.users.find((user) => user.userId === userId);
+    const user = users.find((user) => user.userId === userId);
     if (!user) {
       return null;
     }
@@ -106,7 +106,7 @@ class FakeUserService {
 
   async updateUserDetails(token, userId, userDetails) {
     await this.wait(1000);
-    const user = this.users.find((user) => user.userId === userId);
+    const user = users.find((user) => user.userId === userId);
     if (!user) {
       return null;
     }

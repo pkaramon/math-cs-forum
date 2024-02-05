@@ -18,16 +18,18 @@ import NothingFound from "../components/NothingFound";
 import RenderMarkdown from "../components/RenderMarkdown";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import AnswersList from "../components/AnswersList";
-import { createPublicProfileRoute } from "../routes";
+import { createPublicProfileRoute, createQuestionRoute } from "../routes";
 import { useAuth } from "../auth/AuthContext";
 import AnswerForm from "../components/forms/AnswerForm";
+import useSnackbar from "../hooks/useSnackbar";
 
 const QuestionPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, token, userId } = useAuth();
   const questionService = useQuestionService();
   const { id: idStr } = useParams();
   const id = Number.parseInt(idStr, 10);
+  const { SnackbarComponent, showSnackbarThenRedirect } = useSnackbar();
 
   const [questionData, setQuestionData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -55,8 +57,22 @@ const QuestionPage = () => {
   const addedAt = questionData.addedAt.toLocaleString();
   const modifiedAt = questionData.modifiedAt.toLocaleString();
 
+  const handleAddingAnswer = (values) => {
+    questionService
+      .addAnswer(token, questionData.id, userId, {
+        answer: values.answer,
+      })
+      .then(() => {
+        showSnackbarThenRedirect(
+          "Answer added successfully.",
+          createQuestionRoute(questionData.id),
+        );
+      });
+  };
+
   return (
     <Box sx={{ margin: "auto", maxWidth: "800px", p: 2 }}>
+      <SnackbarComponent />
       <Card raised sx={{ mb: 5 }}>
         <CardContent>
           <Typography variant="h5" component="div" gutterBottom>
@@ -129,7 +145,7 @@ const QuestionPage = () => {
 
       <Divider sx={{ my: 2 }} />
       {isAuthenticated ? (
-        <AnswerForm />
+        <AnswerForm onSubmit={handleAddingAnswer} />
       ) : (
         <Typography paragraph>
           You need to login in order to post an answer.
