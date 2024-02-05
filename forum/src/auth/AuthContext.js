@@ -5,10 +5,7 @@ import { jwtDecode } from "jwt-decode";
 export const AuthContext = createContext({});
 
 export const AuthContextProvider = ({ children }) => {
-  const [auth, setAuthState] = useState(() => {
-    const storedAuth = localStorage.getItem("auth");
-    return storedAuth ? JSON.parse(storedAuth) : {};
-  });
+  const [auth, setAuthState] = useState(tryToGetAuthStateFromLocalStorage());
 
   useEffect(() => {
     localStorage.setItem("auth", JSON.stringify(auth));
@@ -19,18 +16,24 @@ export const AuthContextProvider = ({ children }) => {
 
   const setAuth = (authData) => {
     const decodedPayload = jwtDecode(authData.token);
+    const currentTime = Date.now() / 1000;
 
-    setAuthState({
-      token: authData.token,
-      userId: decodedPayload["user_id"],
-      role: decodedPayload["role"],
-    });
+    if (decodedPayload.exp < currentTime) {
+      clearAuthData();
+    } else {
+      setAuthState({
+        token: authData.token,
+        userId: decodedPayload.user_id,
+        role: decodedPayload.role,
+      });
+    }
   };
 
   const clearAuthData = () => {
     setAuthState({});
     localStorage.removeItem("auth"); // Clear auth data from localStorage
   };
+
   return (
     <AuthContext.Provider
       value={{
@@ -50,3 +53,25 @@ export const AuthContextProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+
+function tryToGetAuthStateFromLocalStorage() {
+  const storedAuth = localStorage.getItem("auth");
+  if (storedAuth) {
+    const { token } = JSON.parse(storedAuth);
+    if (token && !isTokenExpired(token)) {
+      const decodedPayload = jwtDecode(token);
+      return {
+        token,
+        userId: decodedPayload.user_id,
+        role: decodedPayload.role,
+      };
+    }
+  }
+  return {};
+}
+
+function isTokenExpired(token) {
+  const decodedPayload = jwtDecode(token);
+  const currentTime = Date.now() / 1000;
+  return decodedPayload.exp < currentTime;
+}

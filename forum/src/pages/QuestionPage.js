@@ -18,10 +18,7 @@ import NothingFound from "../components/NothingFound";
 import RenderMarkdown from "../components/RenderMarkdown";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import AnswersList from "../components/AnswersList";
-import routes, {
-  createPublicProfileRoute,
-  createQuestionRoute,
-} from "../routes";
+import { createPublicProfileRoute, createQuestionRoute } from "../routes";
 import { useAuth } from "../auth/AuthContext";
 import AnswerForm from "../components/forms/AnswerForm";
 import useSnackbar from "../hooks/useSnackbar";
@@ -29,7 +26,7 @@ import DeleteButton from "../components/DeleteButton";
 
 const QuestionPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, token, userId, isAdmin } = useAuth();
+  const { isAuthenticated, token, isAdmin } = useAuth();
   const questionService = useQuestionService();
   const { id: idStr } = useParams();
   const id = Number.parseInt(idStr, 10);
@@ -40,42 +37,46 @@ const QuestionPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const likeQuestion = () => {
-    if (!isAuthenticated) {
-      showSnackbar("You need to login in order to like a question.");
-      return;
-    }
-    questionService.likeQuestion(token, userId, id).then((change) => {
-      setQuestionData((prev) => ({
-        ...prev,
-        likes: prev.likes + change,
-      }));
-    });
+    // if (!isAuthenticated) {
+    //   showSnackbar("You need to login in order to like a question.");
+    //   return;
+    // }
+    // questionService.likeQuestion(token, userId, id).then((change) => {
+    //   setQuestionData((prev) => ({
+    //     ...prev,
+    //     likes: prev.likes + change,
+    //   }));
+    // });
   };
 
   const dislikeQuestion = () => {
-    if (!isAuthenticated) {
-      showSnackbar("You need to login in order to dislike a question.");
-      return;
-    }
-    questionService.dislikeQuestion(token, userId, id).then((change) => {
-      setQuestionData((prev) => ({
-        ...prev,
-        dislikes: prev.dislikes + change,
-      }));
-    });
+    // if (!isAuthenticated) {
+    //   showSnackbar("You need to login in order to dislike a question.");
+    //   return;
+    // }
+    // questionService.dislikeQuestion(token, userId, id).then((change) => {
+    //   setQuestionData((prev) => ({
+    //     ...prev,
+    //     dislikes: prev.dislikes + change,
+    //   }));
+    // });
   };
 
   useEffect(() => {
     setIsLoading(true);
-    questionService.getQuestionById(id).then((question) => {
-      if (!question) {
-        setQuestionData(null);
-      } else {
-        setQuestionData(question);
-      }
-
-      setIsLoading(false);
-    });
+    questionService
+      .getQuestionById(id)
+      .then((question) => {
+        if (question) {
+          setQuestionData(question);
+        } else {
+          setQuestionData(null);
+        }
+      })
+      .catch((err) => {
+        showSnackbar(err.message);
+      })
+      .finally(() => setIsLoading(false));
   }, [id, questionService]);
 
   if (isLoading) {
@@ -90,21 +91,22 @@ const QuestionPage = () => {
 
   const handleAddingAnswer = (values) => {
     questionService
-      .addAnswer(token, questionData.id, userId, {
+      .addAnswer(token, {
+        questionId: questionData.id,
         answer: values.answer,
       })
       .then(() => {
-        showSnackbarThenRedirect(
-          "Answer added successfully.",
-          createQuestionRoute(questionData.id),
-        );
+        showSnackbarThenRedirect("Answer added successfully.", 0);
+      })
+      .catch((err) => {
+        showSnackbar(err.message);
       });
   };
 
   const deleteQuestion = () => {
-    questionService.deleteQuestion(token, userId, questionData.id).then(() => {
-      showSnackbarThenRedirect("Question deleted.", routes.searchQuestion);
-    });
+    // questionService.deleteQuestion(token, userId, questionData.id).then(() => {
+    //   showSnackbarThenRedirect("Question deleted.", routes.searchQuestion);
+    // });
   };
 
   return (

@@ -19,6 +19,54 @@ def add_question():
     return jsonify({'message': 'Question added successfully', 'question_id': question.id}), 201
 
 
+def get_question(question_id):
+    question = Question.query.get(question_id)
+    if question is None:
+        return jsonify({'message': 'Question not found'}), 404
+
+    author = User.query.get(question.author_id)
+
+    answers = Answer.query.filter_by(question_id=question_id).all()
+
+
+    questionData ={
+        "id": question.id,
+        "title": question.title,
+        "question": question.question,
+        "tags": question.tags,
+        "added_at": str(question.added_at),
+        "modified_at": str(question.modified_at),
+        "likes": question.likes,
+        "dislikes": question.dislikes,
+        "author_id": question.author_id,
+        "views": question.views,
+        "author": {
+            "author_id": author.id,
+            "firstname": author.firstname,
+            "lastname": author.lastname,
+        },
+        "answers": [
+            {
+                "answer_id": answer.id,
+                "answer": answer.answer,
+                "added_at": str(answer.added_at),
+                "modified_at": str(answer.modified_at),
+                "question_id": answer.question_id,
+                "likes": answer.likes,
+                "dislikes": answer.dislikes,
+                "author": {
+                    "author_id": answer.author_id,
+                    "firstname": User.query.get(answer.author_id).firstname,
+                    "lastname": User.query.get(answer.author_id).lastname,
+                }
+            } for answer in answers
+        ],
+        "total_answers": Answer.query.filter_by(question_id=question_id).count()
+    }
+    return jsonify(questionData), 200
+
+
+
 @jwt_required()
 def add_answer(question_id):
     current_user_id = get_jwt_identity()

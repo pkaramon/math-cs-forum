@@ -1,38 +1,22 @@
 import AskQuestionForm from "../components/forms/AskQuestionForm";
 import { useAuth } from "../auth/AuthContext";
 import { useQuestionService } from "../context/QuestionServiceContext";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { createQuestionRoute } from "../routes";
-import { Snackbar } from "@mui/material";
+import useSnackbar from "../hooks/useSnackbar";
 
 export const AskQuestionPage = () => {
-  const { token, userId } = useAuth();
+  const { token } = useAuth();
   const questionService = useQuestionService();
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const navigate = useNavigate();
+  const { showSnackbar, SnackbarComponent } = useSnackbar();
 
   const onSubmit = (values) => {
-    questionService.addQuestion(token, userId, values).then((question) => {
-      if (question) {
-        setOpenSnackbar(true);
-        setTimeout(() => {
-          setOpenSnackbar(false);
-          navigate(createQuestionRoute(question.id));
-        }, 2000);
-      }
+    questionService.addQuestion(token, values).then((questionId) => {
+      // TODO change to showSnackbarThenRedirect
+      showSnackbar("Successfully created question");
     });
   };
   return (
     <>
-      {openSnackbar && (
-        <Snackbar
-          message={"Question added successfully"}
-          severity="success"
-          open={openSnackbar}
-          autoHideDuration={2000}
-        />
-      )}
+      <SnackbarComponent />
       <AskQuestionForm onSubmit={onSubmit} />
     </>
   );

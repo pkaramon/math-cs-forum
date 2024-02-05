@@ -4,19 +4,19 @@ import { useNavigate } from "react-router-dom";
 
 const useSnackbar = () => {
   const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
+  const [snackBarProps, setSnackBarProps] = useState({});
+
   const navigate = useNavigate();
 
-  const showSnackbar = (msg) => {
-    setMessage(msg);
-    setOpen(true);
+  const showSnackbar = (msg, options = {}) => {
+    setSnackBarProps({ open: true, message: msg, ...options });
   };
 
-  const showSnackbarThenRedirect = (msg, path) => {
-    setMessage(msg);
+  const showSnackbarThenRedirect = (msg, path, options = {}) => {
+    setSnackBarProps({ open: true, message: msg, ...options });
     setOpen(true);
     setTimeout(() => {
-      setOpen(false);
+      setSnackBarProps((props) => ({ ...props, open: false }));
       navigate(path);
     }, 2000);
   };
@@ -26,7 +26,7 @@ const useSnackbar = () => {
       open={open}
       autoHideDuration={6000}
       onClose={() => setOpen(false)}
-      message={message}
+      {...snackBarProps}
     />
   );
 

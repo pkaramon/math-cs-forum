@@ -108,7 +108,8 @@ class FakeQuestionService {
     };
   }
 
-  async addQuestion(token, userId, questionData) {
+  async addQuestion(token, questionData) {
+    const userId = Number.parseInt(token, 10);
     await this.wait(200);
     const userData = users.find((user) => user.userId === userId);
 
@@ -133,7 +134,9 @@ class FakeQuestionService {
     return newQuestion;
   }
 
-  async addAnswer(token, questionId, userId, answerData) {
+  async addAnswer(token, answerData) {
+    const userId = Number.parseInt(token, 10);
+    const questionId = answerData.questionId;
     await this.wait(200);
     const question = questions.find((q) => q.id === questionId);
     const userData = users.find((user) => user.userId === userId);

@@ -17,7 +17,6 @@ const LoginPage = () => {
       .then((userAuthData) => {
         setAuth({ token: userAuthData.token });
         navigate(routes.profile);
-        console.log("User authenticated", userAuthData);
       })
       .catch((err) => setAlert(err.message));
   };
