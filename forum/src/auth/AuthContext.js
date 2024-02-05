@@ -5,9 +5,9 @@ export const AuthContext = createContext({});
 
 export const AuthContextProvider = ({ children }) => {
   const [auth, setAuth] = useState({
-    token: "1234",
-    userId: 100,
-    role: "admin",
+    // token: "1234",
+    // userId: 100,
+    // role: "admin",
   });
   const isAuthenticated = typeof auth?.token === "string";
   const role = auth?.role ?? roles.GUEST;

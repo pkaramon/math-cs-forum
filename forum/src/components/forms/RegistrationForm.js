@@ -1,6 +1,7 @@
 import React from "react";
 import { Field, Form, Formik } from "formik";
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -24,7 +25,7 @@ import Container from "@mui/material/Container";
 import routes from "../../routes";
 import CssBaseline from "@mui/material/CssBaseline";
 
-const FormComponent = ({ onSubmit }) => {
+const FormComponent = ({ onSubmit, alert }) => {
   return (
     <Container component={"main"} maxWidth={"xs"} sx={{ height: "100vh" }}>
       <CssBaseline />
@@ -55,6 +56,8 @@ const FormComponent = ({ onSubmit }) => {
                 >
                   Register
                 </Typography>
+
+                {alert && <Alert severity={"error"}>{alert}</Alert>}
               </Box>
 
               <FormField property={"firstName"} label={"First name"} />

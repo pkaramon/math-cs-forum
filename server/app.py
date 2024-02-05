@@ -4,9 +4,11 @@ from models import db
 from users_routes import register, login, protected_route, delete_user, modify_user, get_user_data, get_all_users, reset_password, mail, reset_password_request, change_password
 from questions_routes import add_question, add_answer, modify_question, modify_answer, search_questions, get_all_questions, get_all_answers, like_question, dislike_question, like_answer, dislike_answer, delete_question, delete_answer
 from utils import register_error_handlers, jwt_manager, SECRET_KEY
+from flask_cors import CORS
 import os
 
 app = Flask(__name__)
+CORS(app)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{app.root_path}/database/database.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False

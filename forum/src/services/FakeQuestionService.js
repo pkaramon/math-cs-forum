@@ -87,7 +87,6 @@ class FakeQuestionService {
     }
 
     sortBy = sortBy || "addedAt";
-    console.log(filteredQuestions);
     filteredQuestions = filteredQuestions.sort((a, b) => {
       if (a[sortBy] < b[sortBy]) {
         return sortOrder === "asc" ? -1 : 1;
@@ -280,7 +279,6 @@ class FakeQuestionService {
         (answer) => answer.answerId !== answerId,
       ).length,
     }));
-    console.log(questions.filter((q) => q.id === 99));
   }
 }
 

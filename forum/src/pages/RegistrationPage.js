@@ -9,6 +9,7 @@ export const RegistrationPage = () => {
   const userService = useUserService();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const navigate = useNavigate();
+  const [alert, setAlert] = useState(null);
 
   const onSubmit = (values) => {
     userService
@@ -24,6 +25,9 @@ export const RegistrationPage = () => {
           setOpenSnackbar(true);
           setTimeout(() => navigate(routes.login), 2000);
         }
+      })
+      .catch((err) => {
+        setAlert(err.message);
       });
   };
   return (
@@ -34,7 +38,7 @@ export const RegistrationPage = () => {
         onClose={() => setOpenSnackbar(false)}
         message="Successfully registered, you can now login."
       />
-      <RegistrationForm onSubmit={onSubmit} />
+      <RegistrationForm onSubmit={onSubmit} alert={alert} />
     </>
   );
 };
