@@ -1,5 +1,6 @@
 from flask import jsonify, request
 from models import db, Question, Answer, QuestionLike, User, AnswerLike
+from sqlalchemy.sql import func
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from datetime import datetime
 
@@ -24,46 +25,7 @@ def get_question(question_id):
     if question is None:
         return jsonify({'message': 'Question not found'}), 404
 
-    author = User.query.get(question.author_id)
-
-    answers = Answer.query.filter_by(question_id=question_id).all()
-
-
-    questionData ={
-        "id": question.id,
-        "title": question.title,
-        "question": question.question,
-        "tags": question.tags,
-        "added_at": str(question.added_at),
-        "modified_at": str(question.modified_at),
-        "likes": question.likes,
-        "dislikes": question.dislikes,
-        "author_id": question.author_id,
-        "views": question.views,
-        "author": {
-            "author_id": author.id,
-            "firstname": author.firstname,
-            "lastname": author.lastname,
-        },
-        "answers": [
-            {
-                "answer_id": answer.id,
-                "answer": answer.answer,
-                "added_at": str(answer.added_at),
-                "modified_at": str(answer.modified_at),
-                "question_id": answer.question_id,
-                "likes": answer.likes,
-                "dislikes": answer.dislikes,
-                "author": {
-                    "author_id": answer.author_id,
-                    "firstname": User.query.get(answer.author_id).firstname,
-                    "lastname": User.query.get(answer.author_id).lastname,
-                }
-            } for answer in answers
-        ],
-        "total_answers": Answer.query.filter_by(question_id=question_id).count()
-    }
-    return jsonify(questionData), 200
+    return jsonify(create_question_data(question)), 200
 
 
 
@@ -123,47 +85,78 @@ def modify_answer(answer_id):
 
 
 def search_questions():
-    query = request.args.get("text", "")
-    tags = request.args.getlist("tags")
-    sort_by = request.args.get("sortedBy", "added_at")
-    skip = int(request.args.get("skip", 0))
-    limit = int(request.args.get("limit", 100))
+    query = request.args.get('query', '')
+    user_id = request.args.get('user_id', None)
+    tags = request.args.get('tags', '').split(',') if request.args.get('tags') else []
+    sort_by = request.args.get('sort_by', 'added_at')
+    sort_order = request.args.get('sort_order', 'desc')
+    skip = int(request.args.get('skip', 0))
+    limit = int(request.args.get('limit', 100))
 
-    questions_query = Question.query
+    questions_query = db.session.query(
+        Question, func.count(Answer.id).label('answers_count')
+    ).outerjoin(Answer, Answer.question_id == Question.id)
+
+    if user_id:
+        questions_query = questions_query.filter(Question.author_id == user_id)
 
     if query:
         questions_query = questions_query.filter(
             Question.title.contains(query) | Question.question.contains(query)
         )
+
     if tags:
         for tag in tags:
             questions_query = questions_query.filter(Question.tags.contains(tag))
 
+    # Group by Question fields to ensure correct answer count calculation
+    questions_query = questions_query.group_by(Question.id)
+
     # Sortowanie wyników
-    if sort_by == "addedAt":
-        questions_query = questions_query.order_by(Question.added_at.desc())
-    elif sort_by == "modifiedAt":
-        questions_query = questions_query.order_by(Question.modified_at.desc())
-    elif sort_by == "likes":
-        questions_query = questions_query.order_by(Question.likes.desc())
+    if sort_order == "asc":
+        if sort_by == "added_at":
+            questions_query = questions_query.order_by(Question.added_at.asc())
+        elif sort_by == "modified_at":
+            questions_query = questions_query.order_by(Question.modified_at.asc())
+        elif sort_by == "likes":
+            questions_query = questions_query.order_by(Question.likes.asc())
+        elif sort_by == "views":
+            questions_query = questions_query.order_by(Question.views.asc())
+        elif sort_by == "answers":
+            questions_query = questions_query.order_by("answers_count")
+    else:
+        if sort_by == "added_at":
+            questions_query = questions_query.order_by(Question.added_at.desc())
+        elif sort_by == "modified_at":
+            questions_query = questions_query.order_by(Question.modified_at.desc())
+        elif sort_by == "likes":
+            questions_query = questions_query.order_by(Question.likes.desc())
+        elif sort_by == "views":
+            questions_query = questions_query.order_by(Question.views.desc())
+        elif sort_by == "answers":
+            questions_query = questions_query.order_by(func.count(Answer.id).desc())
 
     questions_page = questions_query.offset(skip).limit(limit).all()
 
     questions_data = [
-        {
-            "id": question.id,
-            "title": question.title,
-            "question": question.question,
-            "tags": question.tags,
-            "added_at": question.added_at,
-            "modified_at": question.modified_at,
-            "likes": question.likes,
-            "author_id": question.author_id,
-        }
-        for question in questions_page
+        create_question_data(question) for question, answers_count in questions_page
     ]
 
     return jsonify(questions_data), 200
+
+
+def search_answers():
+    user_id = request.args.get('user_id', None)
+    answers_query = Answer.query
+
+    if user_id:
+        answers_query = answers_query.filter_by(author_id=user_id)
+
+    answers_query = answers_query.order_by(Answer.added_at.desc())
+
+    answers_data = [create_answer_data(answer) for answer in answers_query.all()]
+    return jsonify(answers_data), 200
+
 
 
 def get_all_questions():
@@ -365,3 +358,49 @@ def delete_answer(answer_id):
     db.session.commit()
 
     return jsonify({"message": "Answer deleted successfully"}), 200
+
+
+def create_question_data(question):
+    author = User.query.get(question.author_id)
+    answers = Answer.query.filter_by(question_id=question.id).all()
+    question_data = {
+        "id": question.id,
+        "title": question.title,
+        "question": question.question,
+        "tags": question.tags,
+        "added_at": str(question.added_at),
+        "modified_at": str(question.modified_at),
+        "likes": question.likes,
+        "dislikes": question.dislikes,
+        "author_id": question.author_id,
+        "views": question.views,
+        "author": {
+            "author_id": author.id,
+            "firstname": author.firstname,
+            "lastname": author.lastname,
+        },
+        "answers": [
+            create_answer_data(answer) for answer in answers
+        ],
+        "total_answers": Answer.query.filter_by(question_id=question.id).count()
+    }
+    return question_data
+
+def create_answer_data(answer):
+    author = User.query.get(answer.author_id)
+    answer_data = {
+        "id": answer.id,
+        "answer": answer.answer,
+        "added_at": str(answer.added_at),
+        "modified_at": str(answer.modified_at),
+        "question_id": answer.question_id,
+        "likes": answer.likes,
+        "dislikes": answer.dislikes,
+        "question_title": Question.query.get(answer.question_id).title,
+        "author": {
+            "author_id": author.id,
+            "firstname": author.firstname,
+            "lastname": author.lastname,
+        },
+    }
+    return answer_data

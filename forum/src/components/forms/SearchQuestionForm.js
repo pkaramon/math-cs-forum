@@ -41,7 +41,7 @@ const SearchQuestionForm = ({ onSearch, popularTags, formikRef }) => {
               type="submit"
               variant="contained"
               sx={{ height: 56 }}
-              disabled={!isValid || !dirty}
+              disabled={!isValid}
             >
               Search
             </Button>

@@ -3,7 +3,7 @@ from flask import Flask
 from models import db
 from users_routes import register, login, protected_route, delete_user, modify_user, get_user_data, get_all_users, \
     reset_password, mail, reset_password_request, change_password, modify_user_details, get_user_details
-from questions_routes import add_question, add_answer, modify_question, modify_answer, search_questions, get_all_questions, get_all_answers, like_question, dislike_question, like_answer, dislike_answer, delete_question, delete_answer, get_question
+from questions_routes import add_question, add_answer, modify_question, modify_answer, search_questions, get_all_questions, get_all_answers, like_question, dislike_question, like_answer, dislike_answer, delete_question, delete_answer, get_question, search_answers
 from utils import register_error_handlers, jwt_manager, SECRET_KEY
 from flask_cors import CORS
 import os
@@ -51,6 +51,8 @@ app.add_url_rule('/questions/<int:question_id>/add_answer', 'add_answer', add_an
 app.add_url_rule('/modify_question/<int:question_id>', 'modify_question', modify_question, methods=['PUT'])
 app.add_url_rule('/modify_answer/<int:answer_id>', 'modify_answer', modify_answer, methods=['PUT'])
 app.add_url_rule('/search_questions', 'search_questions', search_questions, methods=['GET'])
+app.add_url_rule('/search_answers', 'search_answers', search_answers, methods=['GET'])
+
 app.add_url_rule('/get_all_questions', 'get_all_questions', get_all_questions, methods=['GET'])
 app.add_url_rule('/get_all_answers/<int:question_id>', 'get_all_answers', get_all_answers, methods=['GET'])
 app.add_url_rule('/like_question/<int:question_id>', 'like_question', like_question, methods=['POST'])

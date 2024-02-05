@@ -1,5 +1,5 @@
 import axios from "axios";
-import FakeQuestionService from "./FakeQuestionService";
+import FakeQuestionService, { questions } from "./FakeQuestionService";
 
 class ServerQuestionService extends FakeQuestionService {
   constructor() {
@@ -32,43 +32,55 @@ class ServerQuestionService extends FakeQuestionService {
     try {
       const response = await this.http.get(`/get_question/${questionId}`);
       const data = response.data;
-      const tags = data["tags"].trim() === "" ? [] : data["tags"].split(",");
-      return {
-        id: data["id"],
-        title: data["title"],
-        question: data["question"],
-        tags: tags,
-        likes: data["likes"],
-        dislikes: data["dislikes"],
-        views: data["views"],
-        modifiedAt: new Date(data["modified_at"]),
-        addedAt: new Date(data["added_at"]),
-        numberOfAnswers: data["total_answers"],
-        author: {
-          authorId: data["author"]["author_id"],
-          firstName: data["author"]["firstname"],
-          lastName: data["author"]["lastname"],
-        },
-        answers: data["answers"].map((answer) => ({
-          answerId: answer["answer_id"],
-          answer: answer["answer"],
-          likes: answer["likes"],
-          dislikes: answer["dislikes"],
-          modifiedAt: new Date(answer["modified_at"]),
-          addedAt: new Date(answer["added_at"]),
-          author: {
-            authorId: answer["author"]["author_id"],
-            firstName: answer["author"]["firstname"],
-            lastName: answer["author"]["lastname"],
-          },
-        })),
-      };
+      return this.fromQuestionResponseData(data);
     } catch (err) {
       if (err?.response?.status === 404) {
         return null;
       }
       throw new Error(err.response.data.message);
     }
+  }
+
+  fromQuestionResponseData(data) {
+    const tags = data["tags"].trim() === "" ? [] : data["tags"].split(",");
+    return {
+      id: data["id"],
+      title: data["title"],
+      question: data["question"],
+      tags: tags,
+      likes: data["likes"],
+      dislikes: data["dislikes"],
+      views: data["views"],
+      modifiedAt: new Date(data["modified_at"]),
+      addedAt: new Date(data["added_at"]),
+      numberOfAnswers: data["total_answers"],
+      author: {
+        authorId: data["author"]["author_id"],
+        firstName: data["author"]["firstname"],
+        lastName: data["author"]["lastname"],
+      },
+      answers: data["answers"].map((answer) =>
+        this.fromAnswersResponseData(answer),
+      ),
+    };
+  }
+
+  fromAnswersResponseData(data) {
+    return {
+      answerId: data["answer_id"],
+      answer: data["answer"],
+      likes: data["likes"],
+      dislikes: data["dislikes"],
+      modifiedAt: new Date(data["modified_at"]),
+      addedAt: new Date(data["added_at"]),
+      questionId: data["question_id"],
+      questionTitle: data["question_title"],
+      author: {
+        authorId: data["author"]["author_id"],
+        firstName: data["author"]["firstname"],
+        lastName: data["author"]["lastname"],
+      },
+    };
   }
 
   async addAnswer(token, answerData) {
@@ -82,6 +94,71 @@ class ServerQuestionService extends FakeQuestionService {
         headers: { Authorization: `Bearer ${token}` },
       });
     } catch (err) {
+      throw new Error(err.response.data.message);
+    }
+  }
+
+  async search({
+    query = "",
+    tags = [],
+    sortBy = "addedAt",
+    sortOrder = "asc",
+    skip = 0,
+    limit = 10000000,
+    userId,
+  }) {
+    switch (sortBy) {
+      case "addedAt":
+        sortBy = "added_at";
+        break;
+      case "modifiedAt":
+        sortBy = "modified_at";
+        break;
+      case "answers":
+        sortBy = "answers";
+        break;
+      case "views":
+        sortBy = "views";
+        break;
+      case "likes":
+        sortBy = "likes";
+        break;
+      default:
+        sortBy = "added_at";
+    }
+
+    try {
+      const response = await this.http.get("/search_questions", {
+        params: {
+          query,
+          tags: tags.join(","),
+          sort_by: sortBy,
+          sort_order: sortOrder,
+          skip,
+          limit,
+          user_id: userId,
+        },
+      });
+      return response.data.map((questionData) =>
+        this.fromQuestionResponseData(questionData),
+      );
+    } catch (err) {
+      console.log(err);
+      throw new Error(err.response.data.message);
+    }
+  }
+
+  async searchAnswers({ userId }) {
+    try {
+      const response = await this.http.get("/search_answers", {
+        params: { user_id: userId },
+      });
+
+      return response.data.map((answerData) =>
+        this.fromAnswersResponseData(answerData),
+      );
+    } catch (err) {
+      console.log(err);
       throw new Error(err.response.data.message);
     }
   }
