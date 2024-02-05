@@ -26,7 +26,7 @@ const SearchQuestionForm = ({ onSearch, popularTags, formikRef }) => {
       innerRef={formikRef}
       validationSchema={SearchQuestionSchema}
     >
-      {({ dirty, isValid }) => (
+      {({ isValid }) => (
         <Form>
           <Box
             sx={{

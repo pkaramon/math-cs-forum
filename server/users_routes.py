@@ -5,7 +5,8 @@ from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from flask_mail import Mail
 
-from models import db, User
+from models import db, User, Question, Answer
+from models_util import create_question_data, create_answer_data
 from utils import generate_token, verify_password, ph, generate_random_password, send_email, generate_reset_token
 
 mail = Mail()
@@ -68,6 +69,28 @@ def protected_route():
         return jsonify(message='Invalid token payload'), 401
 
     return jsonify({'user_id': user_id, 'role': role}), 200
+
+
+def get_public_profile_info(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify(message='User not found'), 404
+
+    newest_questions = Question.query.filter_by(author_id=user.id).order_by(Question.added_at.desc()).limit(5).all()
+    newest_answers = Answer.query.filter_by(author_id=user.id).order_by(Answer.added_at.desc()).limit(5).all()
+
+    user_data = {
+        'user_id': user.id,
+        'firstname': user.firstname,
+        'lastname': user.lastname,
+        'about': user.about or "",
+        'total_questions': Question.query.filter_by(author_id=user.id).count(),
+        'total_answers': Answer.query.filter_by(author_id=user.id).count(),
+        'newest_questions': [create_question_data(question) for question in newest_questions],
+        'newest_answers': [create_answer_data(answer) for answer in newest_answers]
+    }
+
+    return jsonify(user_data), 200
 
 
 @jwt_required()
@@ -285,30 +308,3 @@ def change_password():
     except Exception as e:
         db.session.rollback()
         return jsonify({'message': str(e)}), 500
-
-
-# STARA WERSJA
-def reset_password(email):
-    user = User.query.filter_by(email=email).first()
-
-    new_password = generate_random_password()
-    hashed_password = ph.hash(new_password)
-
-    try:
-        user.password = hashed_password
-        db.session.commit()
-
-        email_message = f'Your new password is: {new_password}'
-
-        receiver_email = email
-
-        success, error_message = send_email(receiver_email, email_message)
-
-        if success:
-            return jsonify(message='Password reset successful. Check your email for the new password.'), 200
-        else:
-            return jsonify(message=f'Failed to reset password. Error: {error_message}'), 500
-
-    except Exception as e:
-        db.session.rollback()
-        return jsonify(message='Failed to reset password. Please try again.'), 500

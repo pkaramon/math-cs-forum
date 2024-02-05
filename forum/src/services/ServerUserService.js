@@ -1,4 +1,6 @@
 import axios from "axios";
+import { fromAnswersResponseData, fromQuestionResponseData } from "./util";
+import UserProfileData from "../entities/UserProfileData";
 
 class ServerUserService {
   constructor() {
@@ -83,6 +85,35 @@ class ServerUserService {
 
   convertDate(date) {
     return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  }
+
+  async findByIdForPublicProfile(userId) {
+    try {
+      const response = await this.http.get(
+        `/get_public_profile_info/${userId}`,
+      );
+      const user = response.data;
+      console.log("user", user);
+      return new UserProfileData({
+        userId: user["user_id"],
+        firstName: user["firstname"],
+        lastName: user["lastname"],
+        newestQuestions: user["newest_questions"].map((question) =>
+          fromQuestionResponseData(question),
+        ),
+        newestAnswers: user["newest_answers"].map((answer) =>
+          fromAnswersResponseData(answer),
+        ),
+        totalQuestions: user["total_questions"],
+        totalAnswers: user["total_answers"],
+        about: user["about"],
+      });
+    } catch (err) {
+      if (err?.response?.status === 404) {
+        return null;
+      }
+      throw new Error(err.response.data.message);
+    }
   }
 }
 
