@@ -9,6 +9,7 @@ class UserProfileData {
     newestAnswers,
     totalQuestions,
     totalAnswers,
+    about,
   }) {
     try {
       userProfileSchema.validateSync({
@@ -19,6 +20,7 @@ class UserProfileData {
         newestAnswers,
         totalQuestions,
         totalAnswers,
+        about,
       });
     } catch (error) {
       console.log("Invalid user profile data", error.message);
@@ -32,6 +34,7 @@ class UserProfileData {
     this.newestAnswers = newestAnswers;
     this.totalQuestions = totalQuestions;
     this.totalAnswers = totalAnswers;
+    this.about = about ?? "";
   }
 }
 
@@ -62,6 +65,7 @@ const userProfileSchema = Yup.object().shape({
   newestAnswers: Yup.array().of(userProfileAnswerData),
   totalQuestions: Yup.number().required(),
   totalAnswers: Yup.number().required(),
+  about: Yup.string().nullable(),
 });
 
 export default UserProfileData;

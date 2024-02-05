@@ -46,6 +46,7 @@ class FakeUserService {
       newestAnswers: newestAnswers,
       totalQuestions: totalQuestions,
       totalAnswers: totalAnswers,
+      about: user.about,
     });
   }
 
@@ -65,7 +66,7 @@ class FakeUserService {
     };
   }
 
-  async getUserDetails(userId) {
+  async getUserDetails(token, userId) {
     await this.wait(1000);
     const user = this.users.find((user) => user.userId === userId);
     if (!user) {
@@ -80,6 +81,19 @@ class FakeUserService {
       birthDate: new Date(user.birthDate),
       about: user.about,
     };
+  }
+
+  async updateUserDetails(token, userId, userDetails) {
+    await this.wait(1000);
+    const user = this.users.find((user) => user.userId === userId);
+    if (!user) {
+      return null;
+    }
+    user.firstName = userDetails.firstName;
+    user.lastName = userDetails.lastName;
+    user.about = userDetails.about;
+    user.birthDate = userDetails.birthDate.toISOString();
+    return true;
   }
 
   async wait(milliseconds) {

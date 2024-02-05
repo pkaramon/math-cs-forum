@@ -15,26 +15,40 @@ import {
 } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import LoadingIndicator from "../components/LoadingIndicator";
+import routes, { createPublicProfileRoute } from "../routes";
+import { useQuestionService } from "../context/QuestionServiceContext";
+import QuestionsList from "../components/QuestionsList/QuestionsList";
+import ProfileAnswersList from "../components/ProfileAnswersList";
 
 export const UserProfilePage = () => {
-  const { userId, role } = useAuth();
+  const { userId, role, token } = useAuth();
   const userService = useUserService();
+  const questionsService = useQuestionService();
   const [userDetails, setUserDetails] = useState(null);
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     if (userId) {
-      userService.getUserDetails(userId).then((user) => {
+      userService.getUserDetails(token, userId).then((user) => {
         setUserDetails(user);
       });
+      questionsService.search({ userId: userId }).then((questions) => {
+        setQuestions(questions);
+      });
+      questionsService.searchAnswers({ userId }).then((answers) => {
+        setAnswers(answers);
+      });
     }
-  }, [userId, userService]);
+  }, [userId, userService, token]);
 
+  console.log(answers);
   if (!userDetails) {
     return <LoadingIndicator isLoading={true} />;
   }
 
   return (
-    <Card sx={{ maxWidth: "md", mx: "auto", mt: 10 }} elevation={12}>
+    <Card sx={{ maxWidth: "md", mx: "auto", mt: 10, mb: 2 }} elevation={12}>
       <CardContent>
         <Grid container spacing={2} alignItems="center">
           <Grid item>
@@ -51,7 +65,13 @@ export const UserProfilePage = () => {
             </Typography>
           </Grid>
           <Grid item>
-            <Button variant="contained" onClick={() => {}}>
+            <Button variant="outlined" href={createPublicProfileRoute(userId)}>
+              Public Profile
+            </Button>
+          </Grid>
+
+          <Grid item>
+            <Button variant="contained" href={routes.editUserDetails}>
               Edit
             </Button>
           </Grid>
@@ -77,6 +97,22 @@ export const UserProfilePage = () => {
             />
           </ListItem>
         </List>
+      </CardContent>
+
+      <Divider sx={{ my: 2 }} />
+      <CardContent>
+        <Typography variant={"h5"} sx={{ my: 2 }}>
+          Questions
+        </Typography>
+        <QuestionsList questions={questions} />
+      </CardContent>
+
+      <Divider sx={{ my: 2 }} />
+      <CardContent>
+        <Typography variant={"h5"} sx={{ my: 2 }}>
+          Answers
+        </Typography>
+        <ProfileAnswersList answersData={answers} />
       </CardContent>
     </Card>
   );

@@ -25,7 +25,27 @@ class FakeQuestionService {
     return searched.length;
   }
 
-  async search({ query, tags, sortBy, sortOrder, skip, limit }) {
+  async searchAnswers({ userId }) {
+    await this.wait(200);
+    return this.questions
+
+      .map((question) =>
+        question.answers
+          .map((a) => ({ ...a, questionTitle: question.title }))
+          .filter((answer) => answer.author.authorId === userId),
+      )
+      .flat();
+  }
+
+  async search({
+    query,
+    tags,
+    sortBy = "addedAt",
+    sortOrder = "asc",
+    skip = 0,
+    limit = 10000000,
+    userId,
+  }) {
     await this.wait(200);
     let filteredQuestions = this.questions;
     if (query) {
@@ -43,7 +63,7 @@ class FakeQuestionService {
       });
     }
 
-    if (tags.length > 0) {
+    if (tags && tags.length > 0) {
       filteredQuestions = filteredQuestions.filter((question) => {
         return tags
           .map((t) => t.toLowerCase())
@@ -55,6 +75,14 @@ class FakeQuestionService {
       });
     }
 
+    if (userId) {
+      filteredQuestions = filteredQuestions.filter(
+        (question) => question.author.authorId === userId,
+      );
+    }
+
+    sortBy = sortBy || "addedAt";
+    console.log(filteredQuestions);
     filteredQuestions = filteredQuestions.sort((a, b) => {
       if (a[sortBy] < b[sortBy]) {
         return sortOrder === "asc" ? -1 : 1;

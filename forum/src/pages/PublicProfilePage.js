@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import LoadingIndicator from "../components/LoadingIndicator";
+import ProfileAnswersList from "../components/ProfileAnswersList";
 
 const PublicProfilePage = () => {
   const { userId: userIdStr } = useParams();
@@ -56,6 +57,12 @@ const PublicProfilePage = () => {
           </Typography>
           <Divider sx={{ mb: 2 }} />
           <Typography variant="h6" gutterBottom>
+            About
+          </Typography>
+          <Typography paragraph>{userProfileData.about}</Typography>
+
+          <Divider sx={{ mb: 2 }} />
+          <Typography variant="h6" gutterBottom>
             Newest Questions
           </Typography>
           {userProfileData.newestQuestions.length > 0 ? (
@@ -77,27 +84,12 @@ const PublicProfilePage = () => {
             <Typography color="textSecondary">No recent questions.</Typography>
           )}
           <Divider sx={{ my: 2 }} />
+
           <Typography variant="h6" gutterBottom>
             Newest Answers
           </Typography>
           {userProfileData.newestAnswers.length > 0 ? (
-            <List>
-              {userProfileData.newestAnswers.map((answer) => (
-                <ListItem key={answer.answerId} divider>
-                  <ListItemText
-                    primary={
-                      <>
-                        Answer to{" "}
-                        <Link href={createQuestionRoute(answer.questionId)}>
-                          {answer.questionTitle}
-                        </Link>
-                      </>
-                    }
-                    secondary={`Likes: ${answer.likes}`}
-                  />
-                </ListItem>
-              ))}
-            </List>
+            <ProfileAnswersList answersData={userProfileData.newestAnswers} />
           ) : (
             <Typography color="textSecondary">No recent answers.</Typography>
           )}

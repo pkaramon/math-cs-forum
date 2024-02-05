@@ -21,6 +21,7 @@ import * as roles from "./auth/roles";
 import UserProfilePage from "./pages/UserProfilePage";
 import LoginPage from "./pages/LoginPage";
 import { AuthContextProvider } from "./auth/AuthContext";
+import EditUserDetailsPage from "./pages/EditUserDetailsPage";
 
 function App() {
   return (
@@ -56,6 +57,10 @@ function App() {
                     <Route
                       path={routes.profile}
                       element={<UserProfilePage />}
+                    />
+                    <Route
+                      path={routes.editUserDetails}
+                      element={<EditUserDetailsPage />}
                     />
                   </Route>
 

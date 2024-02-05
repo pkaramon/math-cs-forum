@@ -9,6 +9,7 @@ const routes = {
   question: "/question/:id",
   publicUserProfile: "/profile/:userId",
   profile: "/profile",
+  editUserDetails: "/edit-user-details",
   notFound: "*",
 };
 
