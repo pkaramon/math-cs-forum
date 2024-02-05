@@ -43,7 +43,7 @@ const QuestionPage = () => {
 
       setIsLoading(false);
     });
-  }, []);
+  }, [id, questionService]);
 
   if (isLoading) {
     return <LoadingIndicator isLoading={true} />;

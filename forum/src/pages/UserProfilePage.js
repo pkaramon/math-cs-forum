@@ -48,7 +48,7 @@ export const UserProfilePage = () => {
         setAnswers(answers);
       });
     }
-  }, [userId, userService, token]);
+  }, [userId, userService, token, questionsService]);
 
   if (!userDetails) {
     return <LoadingIndicator isLoading={true} />;

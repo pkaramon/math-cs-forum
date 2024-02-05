@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Box, Pagination, Paper } from "@mui/material";
 import SearchQuestionForm from "../components/forms/SearchQuestionForm";
 import QuestionsList from "../components/QuestionsList/QuestionsList";
@@ -21,50 +21,51 @@ const SearchQuestionsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const fetchQuestionCount = async () => {
-    const total =
-      await questionService.getNumberOfQuestionsMatching(searchParams);
-    setTotalPages(Math.ceil(total / PAGE_SIZE));
-  };
+  const handleSearch = useCallback(
+    async (values) => {
+      setSearchParams({
+        query: values.search,
+        tags: values.tags.map((tag) => tag.value),
+        sortBy: values.sortBy,
+        sortOrder: values.sortOrder,
+      });
 
-  const fetchQuestions = async () => {
-    setIsLoading(true);
-    const questions = await questionService.search({
-      ...searchParams,
-      skip: (page - 1) * PAGE_SIZE,
-      limit: PAGE_SIZE,
-    });
-    setIsLoading(false);
-    window.scrollTo(0, 0);
-    setQuestions(questions);
-  };
+      const queryString = qs.stringify({
+        search: values.search,
+        tags: values.tags.map((tag) => tag.value).join(","),
+        sortBy: values.sortBy,
+        sortOrder: values.sortOrder,
+      });
 
-  const handleSearch = async (values) => {
-    setSearchParams({
-      query: values.search,
-      tags: values.tags.map((tag) => tag.value),
-      sortBy: values.sortBy,
-      sortOrder: values.sortOrder,
-    });
-
-    const queryString = qs.stringify({
-      search: values.search,
-      tags: values.tags.map((tag) => tag.value).join(","),
-      sortBy: values.sortBy,
-      sortOrder: values.sortOrder,
-    });
-
-    navigate(`/search?${queryString}`);
-    setPage(1);
-  };
+      navigate(`/search?${queryString}`);
+      setPage(1);
+    },
+    [navigate],
+  );
 
   useEffect(() => {
+    const fetchQuestionCount = async () => {
+      const total =
+        await questionService.getNumberOfQuestionsMatching(searchParams);
+      setTotalPages(Math.ceil(total / PAGE_SIZE));
+    };
     fetchQuestionCount().then(() => {});
-  }, [searchParams]);
+  }, [searchParams, questionService]);
 
   useEffect(() => {
+    const fetchQuestions = async () => {
+      setIsLoading(true);
+      const questions = await questionService.search({
+        ...searchParams,
+        skip: (page - 1) * PAGE_SIZE,
+        limit: PAGE_SIZE,
+      });
+      setIsLoading(false);
+      window.scrollTo(0, 0);
+      setQuestions(questions);
+    };
     fetchQuestions().then(() => {});
-  }, [page, searchParams]);
+  }, [page, searchParams, questionService]);
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -89,7 +90,7 @@ const SearchQuestionsPage = () => {
     };
     formikRef.current.setValues(searchParams);
     handleSearch(searchParams).then(() => {});
-  }, [location.search]);
+  }, [location.search, handleSearch]);
 
   const someQuestionsFound = questions.length > 0;
   return (

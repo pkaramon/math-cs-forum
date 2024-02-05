@@ -21,7 +21,7 @@ import { appBarHeight } from "../materialUITheme";
 import logoImage from "../img/logo192.png";
 
 function Navbar() {
-  const [_, setMobileMoreAnchorEl] = useState(null);
+  const [, setMobileMoreAnchorEl] = useState(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));

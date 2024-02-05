@@ -1,6 +1,6 @@
 import InfoModal from "../InfoModal";
 import RenderMarkdown from "../RenderMarkdown";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Alert } from "@mui/material";
 import MarkdownEditor from "../MarkdownEditor";
 import { useField } from "formik";
@@ -9,6 +9,11 @@ const MarkdownField = ({ fieldName }) => {
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
   const [previewContent, setPreviewContent] = useState("");
   const [field, meta, helpers] = useField(fieldName);
+
+  const onClickedPreview = useCallback((content) => {
+    setPreviewContent(content);
+    setPreviewModalOpen((open) => !open);
+  }, []);
 
   return (
     <>
@@ -29,10 +34,7 @@ const MarkdownField = ({ fieldName }) => {
           helpers.setTouched(true).then(() => {});
           helpers.setValue(v).then(() => {});
         }}
-        onClickedPreview={(content) => {
-          setPreviewContent(content);
-          setPreviewModalOpen((open) => !open);
-        }}
+        onClickedPreview={onClickedPreview}
       />
     </>
   );

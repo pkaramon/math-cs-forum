@@ -5,6 +5,7 @@ const MarkdownEditor = ({ value, setValue, onClickedPreview }) => {
   const options = useMemo(
     () => ({
       spellChecker: true,
+      autofocus: false,
       toolbar: [
         {
           name: "render",
@@ -28,7 +29,7 @@ const MarkdownEditor = ({ value, setValue, onClickedPreview }) => {
         "guide",
       ],
     }),
-    [],
+    [onClickedPreview],
   );
 
   return (
