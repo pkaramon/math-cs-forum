@@ -5,12 +5,11 @@ import {
   Button,
   Drawer,
   IconButton,
+  Link,
   List,
   ListItemButton,
   ListItemText,
-  Paper,
   Toolbar,
-  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
@@ -18,6 +17,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import routes from "../routes";
 import SearchBar from "./SearchBar";
+import { appBarHeight } from "../materialUITheme";
+import logoImage from "../img/logo192.png";
 
 function Navbar() {
   const [_, setMobileMoreAnchorEl] = useState(null);
@@ -39,8 +40,6 @@ function Navbar() {
   const pageProps = [
     { to: routes.home, text: "Home" },
     { to: routes.about, text: "About" },
-    { to: routes.login, text: "Login" },
-    { to: routes.register, text: "Register" },
     { to: routes.askQuestion, text: "Ask a Question" },
   ];
 
@@ -60,6 +59,7 @@ function Navbar() {
   const appBarSx = {
     paddingLeft: { xs: 0, md: 15 },
     paddingRight: { xs: 0, md: 15 },
+    height: appBarHeight,
   };
 
   return (
@@ -76,11 +76,17 @@ function Navbar() {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
-            Math CS Forum
-          </Typography>
+          <Box sx={{ flexGrow: 1, minWidth: "80px" }}>
+            <Link href={routes.home}>
+              <img
+                src={logoImage}
+                alt="logo"
+                style={{ width: "40px", height: "40px" }}
+              />
+            </Link>
+          </Box>
 
-          {!isMobile && <SearchBar />}
+          <SearchBar />
           {!isMobile && (
             <div>
               {pageProps.map(({ text, to }) => (
@@ -88,35 +94,24 @@ function Navbar() {
                   {text}
                 </Button>
               ))}
-
-              <IconButton
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
             </div>
           )}
+
+          <IconButton
+            href={routes.profile}
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={mobileMenuId}
+            aria-haspopup="true"
+            onClick={handleMobileMenuOpen}
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
         </Toolbar>
       </AppBar>
 
-      <Paper></Paper>
-
       {renderMobileMenu}
-      {isMobile && (
-        <Box
-          sx={{
-            borderRadius: 0,
-            backgroundColor: "primary.main",
-          }}
-        >
-          <SearchBar />
-        </Box>
-      )}
     </div>
   );
 }

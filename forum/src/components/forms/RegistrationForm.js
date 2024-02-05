@@ -24,14 +24,7 @@ import Container from "@mui/material/Container";
 import routes from "../../routes";
 import CssBaseline from "@mui/material/CssBaseline";
 
-const FormComponent = () => {
-  const onSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
-  };
-
+const FormComponent = ({ onSubmit }) => {
   return (
     <Container component={"main"} maxWidth={"xs"} sx={{ height: "100vh" }}>
       <CssBaseline />
@@ -97,12 +90,12 @@ const FormComponent = () => {
               />
 
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <Field name="birthday" fullWidth margin={"normal"}>
+                <Field name="birthDate" fullWidth margin={"normal"}>
                   {() => (
                     <DatePicker
                       label="Birthday"
-                      value={values.birthday}
-                      onChange={(date) => setFieldValue("birthday", date)}
+                      value={values.birthDate}
+                      onChange={(date) => setFieldValue("birthDate", date)}
                       slotProps={{
                         textField: {
                           variant: "outlined",
@@ -138,7 +131,7 @@ const FormComponent = () => {
         </Formik>
 
         <Link href={routes.login} variant="body2">
-          {"Already have an account? Sign in here."}
+          Already have an account? Sign in here.
         </Link>
       </Box>
     </Container>

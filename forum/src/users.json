@@ -1,0 +1,1002 @@
+[
+    {
+        "userId": 1,
+        "firstName": "James",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "James1@example.com",
+        "birthDate": "1960-1-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 2,
+        "firstName": "Linda",
+        "lastName": "Garcia",
+        "password": "password123",
+        "email": "Linda2@example.com",
+        "birthDate": "1989-9-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 3,
+        "firstName": "Linda",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Linda3@example.com",
+        "birthDate": "1985-5-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 4,
+        "firstName": "Mary",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Mary4@example.com",
+        "birthDate": "1983-4-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 5,
+        "firstName": "Linda",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "Linda5@example.com",
+        "birthDate": "1960-2-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 6,
+        "firstName": "Linda",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "Linda6@example.com",
+        "birthDate": "1991-11-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 7,
+        "firstName": "James",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "James7@example.com",
+        "birthDate": "1987-11-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 8,
+        "firstName": "Linda",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "Linda8@example.com",
+        "birthDate": "1983-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 9,
+        "firstName": "Mary",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "Mary9@example.com",
+        "birthDate": "1961-6-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 10,
+        "firstName": "Jennifer",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "Jennifer10@example.com",
+        "birthDate": "1977-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 11,
+        "firstName": "Jennifer",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "Jennifer11@example.com",
+        "birthDate": "1952-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 12,
+        "firstName": "Linda",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "Linda12@example.com",
+        "birthDate": "1986-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 13,
+        "firstName": "Patricia",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Patricia13@example.com",
+        "birthDate": "1998-10-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 14,
+        "firstName": "Jennifer",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "Jennifer14@example.com",
+        "birthDate": "1989-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 15,
+        "firstName": "Mary",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "Mary15@example.com",
+        "birthDate": "1986-2-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 16,
+        "firstName": "James",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "James16@example.com",
+        "birthDate": "1955-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 17,
+        "firstName": "Michael",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Michael17@example.com",
+        "birthDate": "1992-5-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 18,
+        "firstName": "John",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "John18@example.com",
+        "birthDate": "2000-4-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 19,
+        "firstName": "Mary",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "Mary19@example.com",
+        "birthDate": "1964-3-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 20,
+        "firstName": "James",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "James20@example.com",
+        "birthDate": "1973-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 21,
+        "firstName": "James",
+        "lastName": "Garcia",
+        "password": "password123",
+        "email": "James21@example.com",
+        "birthDate": "1952-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 22,
+        "firstName": "Jennifer",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Jennifer22@example.com",
+        "birthDate": "1997-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 23,
+        "firstName": "Robert",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Robert23@example.com",
+        "birthDate": "1965-3-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 24,
+        "firstName": "Patricia",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "Patricia24@example.com",
+        "birthDate": "1950-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 25,
+        "firstName": "John",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "John25@example.com",
+        "birthDate": "1955-10-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 26,
+        "firstName": "Patricia",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "Patricia26@example.com",
+        "birthDate": "1978-10-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 27,
+        "firstName": "Linda",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Linda27@example.com",
+        "birthDate": "1985-11-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 28,
+        "firstName": "Michael",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Michael28@example.com",
+        "birthDate": "1986-11-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 29,
+        "firstName": "Jennifer",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Jennifer29@example.com",
+        "birthDate": "1994-6-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 30,
+        "firstName": "Robert",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Robert30@example.com",
+        "birthDate": "1967-1-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 31,
+        "firstName": "Michael",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "Michael31@example.com",
+        "birthDate": "1976-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 32,
+        "firstName": "Mary",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Mary32@example.com",
+        "birthDate": "1982-5-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 33,
+        "firstName": "Michael",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "Michael33@example.com",
+        "birthDate": "1986-11-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 34,
+        "firstName": "John",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "John34@example.com",
+        "birthDate": "1954-10-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 35,
+        "firstName": "James",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "James35@example.com",
+        "birthDate": "1976-2-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 36,
+        "firstName": "Robert",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Robert36@example.com",
+        "birthDate": "1954-3-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 37,
+        "firstName": "Jennifer",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "Jennifer37@example.com",
+        "birthDate": "1968-12-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 38,
+        "firstName": "Michael",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "Michael38@example.com",
+        "birthDate": "1969-5-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 39,
+        "firstName": "Patricia",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "Patricia39@example.com",
+        "birthDate": "1968-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 40,
+        "firstName": "Linda",
+        "lastName": "Garcia",
+        "password": "password123",
+        "email": "Linda40@example.com",
+        "birthDate": "1980-5-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 41,
+        "firstName": "John",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "John41@example.com",
+        "birthDate": "1973-12-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 42,
+        "firstName": "Mary",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "Mary42@example.com",
+        "birthDate": "1975-10-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 43,
+        "firstName": "Robert",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "Robert43@example.com",
+        "birthDate": "1999-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 44,
+        "firstName": "Michael",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Michael44@example.com",
+        "birthDate": "1950-10-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 45,
+        "firstName": "Robert",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Robert45@example.com",
+        "birthDate": "1984-5-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 46,
+        "firstName": "Linda",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "Linda46@example.com",
+        "birthDate": "1972-9-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 47,
+        "firstName": "Patricia",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Patricia47@example.com",
+        "birthDate": "1955-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 48,
+        "firstName": "Jennifer",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Jennifer48@example.com",
+        "birthDate": "1961-4-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 49,
+        "firstName": "Jennifer",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Jennifer49@example.com",
+        "birthDate": "1989-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 50,
+        "firstName": "John",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "John50@example.com",
+        "birthDate": "1993-9-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 51,
+        "firstName": "Linda",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Linda51@example.com",
+        "birthDate": "1973-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 52,
+        "firstName": "Jennifer",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "Jennifer52@example.com",
+        "birthDate": "1986-2-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 53,
+        "firstName": "John",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "John53@example.com",
+        "birthDate": "1955-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 54,
+        "firstName": "John",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "John54@example.com",
+        "birthDate": "1997-5-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 55,
+        "firstName": "Jennifer",
+        "lastName": "Garcia",
+        "password": "password123",
+        "email": "Jennifer55@example.com",
+        "birthDate": "1980-5-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 56,
+        "firstName": "Michael",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Michael56@example.com",
+        "birthDate": "1959-11-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 57,
+        "firstName": "Patricia",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "Patricia57@example.com",
+        "birthDate": "1981-5-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 58,
+        "firstName": "John",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "John58@example.com",
+        "birthDate": "1972-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 59,
+        "firstName": "Mary",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "Mary59@example.com",
+        "birthDate": "1999-11-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 60,
+        "firstName": "Robert",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "Robert60@example.com",
+        "birthDate": "1961-4-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 61,
+        "firstName": "Jennifer",
+        "lastName": "Garcia",
+        "password": "password123",
+        "email": "Jennifer61@example.com",
+        "birthDate": "1960-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 62,
+        "firstName": "John",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "John62@example.com",
+        "birthDate": "1979-12-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 63,
+        "firstName": "Linda",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "Linda63@example.com",
+        "birthDate": "1993-1-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 64,
+        "firstName": "Patricia",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "Patricia64@example.com",
+        "birthDate": "1970-9-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 65,
+        "firstName": "James",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "James65@example.com",
+        "birthDate": "1976-1-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 66,
+        "firstName": "Jennifer",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Jennifer66@example.com",
+        "birthDate": "1966-9-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 67,
+        "firstName": "Patricia",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "Patricia67@example.com",
+        "birthDate": "2000-4-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 68,
+        "firstName": "James",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "James68@example.com",
+        "birthDate": "1953-3-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 69,
+        "firstName": "Linda",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Linda69@example.com",
+        "birthDate": "1984-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 70,
+        "firstName": "Jennifer",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Jennifer70@example.com",
+        "birthDate": "1986-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 71,
+        "firstName": "Jennifer",
+        "lastName": "Garcia",
+        "password": "password123",
+        "email": "Jennifer71@example.com",
+        "birthDate": "1960-2-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 72,
+        "firstName": "Patricia",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Patricia72@example.com",
+        "birthDate": "1951-3-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 73,
+        "firstName": "Linda",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Linda73@example.com",
+        "birthDate": "1996-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 74,
+        "firstName": "Mary",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Mary74@example.com",
+        "birthDate": "1957-4-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 75,
+        "firstName": "John",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "John75@example.com",
+        "birthDate": "1975-2-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 76,
+        "firstName": "James",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "James76@example.com",
+        "birthDate": "1962-11-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 77,
+        "firstName": "Michael",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "Michael77@example.com",
+        "birthDate": "1960-4-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 78,
+        "firstName": "Linda",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "Linda78@example.com",
+        "birthDate": "1984-11-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 79,
+        "firstName": "Jennifer",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "Jennifer79@example.com",
+        "birthDate": "1971-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 80,
+        "firstName": "Mary",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "Mary80@example.com",
+        "birthDate": "1980-9-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 81,
+        "firstName": "John",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "John81@example.com",
+        "birthDate": "1992-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 82,
+        "firstName": "Jennifer",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "Jennifer82@example.com",
+        "birthDate": "1994-6-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 83,
+        "firstName": "Robert",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "Robert83@example.com",
+        "birthDate": "1981-12-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 84,
+        "firstName": "Michael",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "Michael84@example.com",
+        "birthDate": "1984-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 85,
+        "firstName": "Michael",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "Michael85@example.com",
+        "birthDate": "1955-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 86,
+        "firstName": "Patricia",
+        "lastName": "Jones",
+        "password": "password123",
+        "email": "Patricia86@example.com",
+        "birthDate": "1953-4-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 87,
+        "firstName": "Michael",
+        "lastName": "Johnson",
+        "password": "password123",
+        "email": "Michael87@example.com",
+        "birthDate": "1969-1-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 88,
+        "firstName": "Jennifer",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "Jennifer88@example.com",
+        "birthDate": "2000-2-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 89,
+        "firstName": "James",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "James89@example.com",
+        "birthDate": "1963-2-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 90,
+        "firstName": "Michael",
+        "lastName": "Miller",
+        "password": "password123",
+        "email": "Michael90@example.com",
+        "birthDate": "1981-10-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 91,
+        "firstName": "James",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "James91@example.com",
+        "birthDate": "1983-6-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 92,
+        "firstName": "James",
+        "lastName": "Garcia",
+        "password": "password123",
+        "email": "James92@example.com",
+        "birthDate": "2000-9-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 93,
+        "firstName": "Jennifer",
+        "lastName": "Brown",
+        "password": "password123",
+        "email": "Jennifer93@example.com",
+        "birthDate": "1981-4-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 94,
+        "firstName": "Patricia",
+        "lastName": "Williams",
+        "password": "password123",
+        "email": "Patricia94@example.com",
+        "birthDate": "1958-3-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 95,
+        "firstName": "James",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "James95@example.com",
+        "birthDate": "1968-4-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 96,
+        "firstName": "Patricia",
+        "lastName": "Garcia",
+        "password": "password123",
+        "email": "Patricia96@example.com",
+        "birthDate": "1952-12-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 97,
+        "firstName": "Patricia",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "Patricia97@example.com",
+        "birthDate": "1997-7-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 98,
+        "firstName": "James",
+        "lastName": "Garcia",
+        "password": "password123",
+        "email": "James98@example.com",
+        "birthDate": "1973-6-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 99,
+        "firstName": "James",
+        "lastName": "Davis",
+        "password": "password123",
+        "email": "James99@example.com",
+        "birthDate": "2000-1-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    },
+    {
+        "userId": 100,
+        "firstName": "Mary",
+        "lastName": "Smith",
+        "password": "password123",
+        "email": "Mary100@example.com",
+        "birthDate": "1985-8-01",
+        "role": "user",
+        "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
+    }
+]

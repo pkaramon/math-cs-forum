@@ -5,7 +5,6 @@ const MarkdownEditor = ({ value, setValue, onClickedPreview }) => {
   const options = useMemo(
     () => ({
       spellChecker: true,
-      autofocus: true,
       toolbar: [
         {
           name: "render",

@@ -6,20 +6,18 @@ import {
   CardContent,
   Divider,
   Typography,
-  useMediaQuery,
-  useTheme,
 } from "@mui/material";
 import backgroundImage from "../img/pi.png";
-import routes from "../routes"; // adjust the path as needed
+import routes from "../routes";
+import { useAuth } from "../auth/AuthContext";
 
-const Jumbotron = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
+const HomePage = () => {
+  const { isAuthenticated } = useAuth();
   return (
     <Box
       sx={{
-        height: isMobile ? "50vh" : "93.34vh",
+        height: "100vh",
+        width: "100vw",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -27,6 +25,9 @@ const Jumbotron = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: { lg: "fixed" },
+        position: "absolute",
+        top: 0,
+        right: 0,
       }}
     >
       <Card sx={{ maxWidth: 500, backgroundColor: "white" }} elevation={24}>
@@ -42,9 +43,11 @@ const Jumbotron = () => {
             individuals here.
           </Typography>
           <Divider sx={{ my: 2 }} />
-          <Button variant="contained" color="primary" href={routes.login}>
-            Login
-          </Button>
+          {!isAuthenticated && (
+            <Button variant="contained" color="primary" href={routes.login}>
+              Login
+            </Button>
+          )}
           <Button
             variant="outlined"
             color="primary"
@@ -59,4 +62,4 @@ const Jumbotron = () => {
   );
 };
 
-export default Jumbotron;
+export default HomePage;

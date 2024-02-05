@@ -1,34 +1,82 @@
 import "./App.css";
-import { ThemeProvider, Typography } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
-import RegistrationForm from "./components/forms/RegistrationForm";
-import LoginForm from "./components/forms/LoginForm";
 import React from "react";
 import theme from "./materialUITheme";
 import ResetPassword from "./components/forms/ResetPassword";
 import routes from "./routes";
-import Jumbotron from "./components/Jumbotron";
-import AskQuestionForm from "./components/forms/AskQuestionForm";
+import HomePage from "./pages/HomePage";
+import SearchQuestionsPage from "./pages/SearchQuestionsPage";
+import QuestionPage from "./pages/QuestionPage";
+import { QuestionServiceProvider } from "./context/QuestionServiceContext";
+import AboutPage from "./pages/AboutPage";
+import PublicProfilePage from "./pages/PublicProfilePage";
+import { UserServiceProvider } from "./context/UserServiceContext";
+import NotFoundPage from "./pages/NotFoundPage";
+import RequireAuth from "./auth/RequireAuth";
+import * as roles from "./auth/roles";
+import UserProfilePage from "./pages/UserProfilePage";
+import LoginPage from "./pages/LoginPage";
+import { AuthContextProvider } from "./auth/AuthContext";
+import EditUserDetailsPage from "./pages/EditUserDetailsPage";
+import RegistrationPage from "./pages/RegistrationPage";
+import AskQuestionPage from "./pages/AskQuestionPage";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path={"/"} element={<Layout />}>
-            <Route path={"/"} element={<Jumbotron />} />
-            <Route
-              path={routes.about}
-              element={<Typography variant={"body1"}>About</Typography>}
-            />
-            <Route path={routes.askQuestion} element={<AskQuestionForm />} />
-          </Route>
-          <Route path={routes.login} element={<LoginForm />} />
-          <Route path={routes.register} element={<RegistrationForm />} />
-          <Route path={routes.resetPassword} element={<ResetPassword />} />
-        </Routes>
-      </BrowserRouter>
+      <QuestionServiceProvider>
+        <UserServiceProvider>
+          <AuthContextProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path={routes.login} element={<LoginPage />} />
+                <Route path={routes.register} element={<RegistrationPage />} />
+                <Route
+                  path={routes.resetPassword}
+                  element={<ResetPassword />}
+                />
+
+                <Route path={"/"} element={<Layout />}>
+                  <Route path={"/"} element={<HomePage />} />
+                  <Route
+                    path={routes.searchQuestion}
+                    element={<SearchQuestionsPage />}
+                  />
+                  <Route path={routes.about} element={<AboutPage />} />
+
+                  <Route
+                    path={"/"}
+                    element={<RequireAuth roles={[roles.USER, roles.ADMIN]} />}
+                  >
+                    <Route
+                      path={routes.askQuestion}
+                      element={<AskQuestionPage />}
+                    />
+                    <Route
+                      path={routes.profile}
+                      element={<UserProfilePage />}
+                    />
+                    <Route
+                      path={routes.editUserDetails}
+                      element={<EditUserDetailsPage />}
+                    />
+                  </Route>
+
+                  <Route path={routes.question} element={<QuestionPage />} />
+                  <Route
+                    path={routes.publicUserProfile}
+                    element={<PublicProfilePage />}
+                  />
+
+                  <Route path={routes.notFound} element={<NotFoundPage />} />
+                </Route>
+              </Routes>
+            </BrowserRouter>
+          </AuthContextProvider>
+        </UserServiceProvider>
+      </QuestionServiceProvider>
     </ThemeProvider>
   );
 }
