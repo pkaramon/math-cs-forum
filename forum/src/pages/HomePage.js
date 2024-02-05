@@ -9,8 +9,10 @@ import {
 } from "@mui/material";
 import backgroundImage from "../img/pi.png";
 import routes from "../routes";
+import { useAuth } from "../auth/AuthContext";
 
 const HomePage = () => {
+  const { isAuthenticated } = useAuth();
   return (
     <Box
       sx={{
@@ -41,9 +43,11 @@ const HomePage = () => {
             individuals here.
           </Typography>
           <Divider sx={{ my: 2 }} />
-          <Button variant="contained" color="primary" href={routes.login}>
-            Login
-          </Button>
+          {!isAuthenticated && (
+            <Button variant="contained" color="primary" href={routes.login}>
+              Login
+            </Button>
+          )}
           <Button
             variant="outlined"
             color="primary"

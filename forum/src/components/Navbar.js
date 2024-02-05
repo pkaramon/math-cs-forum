@@ -40,8 +40,6 @@ function Navbar() {
   const pageProps = [
     { to: routes.home, text: "Home" },
     { to: routes.about, text: "About" },
-    { to: routes.login, text: "Login" },
-    { to: routes.register, text: "Register" },
     { to: routes.askQuestion, text: "Ask a Question" },
   ];
 

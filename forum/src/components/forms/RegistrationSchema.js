@@ -11,7 +11,7 @@ const RegistrationSchema = Yup.object().shape({
     [Yup.ref("password"), null],
     "Passwords must match",
   ),
-  birthday: Yup.date().required("Required").nullable(),
+  birthDate: Yup.date().required("Required").nullable(),
   acceptTerms: Yup.bool().oneOf(
     [true],
     "You must accept the terms and conditions.",
@@ -32,7 +32,7 @@ export const initialValues = {
   email: "",
   password: "",
   repeatPassword: "",
-  birthday: null,
+  birthDate: null,
   acceptTerms: false,
 };
 

@@ -6,6 +6,7 @@ class FakeQuestionService {
       ...question,
       addedAt: new Date(question.addedAt),
       modifiedAt: new Date(question.modifiedAt),
+      authorId: question.author.authorId,
       answers: question.answers.map((answer) => ({
         ...answer,
         addedAt: new Date(answer.addedAt),
@@ -99,6 +100,29 @@ class FakeQuestionService {
   async getQuestionById(id) {
     await this.wait(200);
     return this.questions.find((question) => question.id === id);
+  }
+
+  async addQuestion(token, userId, questionData) {
+    await this.wait(200);
+    const newQuestion = {
+      id: 100 * this.questions.length + 1,
+      title: questionData.title,
+      question: questionData.question,
+      addedAt: new Date(),
+      modifiedAt: new Date(),
+      tags: questionData.tags,
+      authorId: userId,
+      author: {
+        authorId: userId,
+        firstName: "John", // TODO FIX
+        lastName: "Doe", // TODO FIX
+      },
+      views: 0,
+      numberOfAnswers: 0,
+      answers: [],
+    };
+    this.questions.push(newQuestion);
+    return newQuestion;
   }
 
   async wait(milliseconds) {

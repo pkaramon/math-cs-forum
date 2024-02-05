@@ -66,6 +66,27 @@ class FakeUserService {
     };
   }
 
+  async register({ firstName, lastName, email, password, birthDate }) {
+    await this.wait(500);
+    const user = {
+      userId: this.users.length + 1,
+      firstName,
+      lastName,
+      email,
+      password,
+      birthDate: birthDate.toISOString(),
+      role: "user",
+      about: "",
+    };
+    this.users.push(user);
+
+    return {
+      userId: user.userId,
+      role: user.role,
+      token: "1234",
+    };
+  }
+
   async getUserDetails(token, userId) {
     await this.wait(1000);
     const user = this.users.find((user) => user.userId === userId);

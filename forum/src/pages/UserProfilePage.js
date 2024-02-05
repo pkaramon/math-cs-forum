@@ -19,14 +19,22 @@ import routes, { createPublicProfileRoute } from "../routes";
 import { useQuestionService } from "../context/QuestionServiceContext";
 import QuestionsList from "../components/QuestionsList/QuestionsList";
 import ProfileAnswersList from "../components/ProfileAnswersList";
+import { useNavigate } from "react-router-dom";
 
 export const UserProfilePage = () => {
-  const { userId, role, token } = useAuth();
+  const { userId, role, token, clearAuthData } = useAuth();
   const userService = useUserService();
+  const navigate = useNavigate();
+
   const questionsService = useQuestionService();
   const [userDetails, setUserDetails] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
+
+  const logout = () => {
+    clearAuthData();
+    navigate(routes.home);
+  };
 
   useEffect(() => {
     if (userId) {
@@ -42,7 +50,6 @@ export const UserProfilePage = () => {
     }
   }, [userId, userService, token]);
 
-  console.log(answers);
   if (!userDetails) {
     return <LoadingIndicator isLoading={true} />;
   }
@@ -67,6 +74,12 @@ export const UserProfilePage = () => {
           <Grid item>
             <Button variant="outlined" href={createPublicProfileRoute(userId)}>
               Public Profile
+            </Button>
+          </Grid>
+
+          <Grid item>
+            <Button variant="contained" onClick={() => logout()}>
+              Logout
             </Button>
           </Grid>
 
@@ -104,7 +117,11 @@ export const UserProfilePage = () => {
         <Typography variant={"h5"} sx={{ my: 2 }}>
           Questions
         </Typography>
-        <QuestionsList questions={questions} />
+        {questions.length === 0 ? (
+          <Typography variant={"body1"}>No questions found</Typography>
+        ) : (
+          <QuestionsList questions={questions} />
+        )}
       </CardContent>
 
       <Divider sx={{ my: 2 }} />
@@ -112,7 +129,11 @@ export const UserProfilePage = () => {
         <Typography variant={"h5"} sx={{ my: 2 }}>
           Answers
         </Typography>
-        <ProfileAnswersList answersData={answers} />
+        {answers.length === 0 ? (
+          <Typography variant={"body1"}>No answers found</Typography>
+        ) : (
+          <ProfileAnswersList answersData={answers} />
+        )}
       </CardContent>
     </Card>
   );

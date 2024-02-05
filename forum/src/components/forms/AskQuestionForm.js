@@ -14,14 +14,7 @@ import FormField from "./FormField";
 import AskQuestionSchema, { initialValues } from "./AskQuestionSchema";
 import MarkdownField from "./MarkdownField";
 
-const AskQuestionForm = () => {
-  const onSubmit = (values, { setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 400);
-  };
-
+const AskQuestionForm = ({ onSubmit }) => {
   const handleKeyDownInTagInput = (e, values, setFieldValue) => {
     if (e.key === "Enter" && e.target.value !== "") {
       e.preventDefault();

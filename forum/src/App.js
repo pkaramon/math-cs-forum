@@ -2,13 +2,11 @@ import "./App.css";
 import { ThemeProvider } from "@mui/material";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
-import RegistrationForm from "./components/forms/RegistrationForm";
 import React from "react";
 import theme from "./materialUITheme";
 import ResetPassword from "./components/forms/ResetPassword";
 import routes from "./routes";
 import HomePage from "./pages/HomePage";
-import AskQuestionForm from "./components/forms/AskQuestionForm";
 import SearchQuestionsPage from "./pages/SearchQuestionsPage";
 import QuestionPage from "./pages/QuestionPage";
 import { QuestionServiceProvider } from "./context/QuestionServiceContext";
@@ -22,6 +20,8 @@ import UserProfilePage from "./pages/UserProfilePage";
 import LoginPage from "./pages/LoginPage";
 import { AuthContextProvider } from "./auth/AuthContext";
 import EditUserDetailsPage from "./pages/EditUserDetailsPage";
+import RegistrationPage from "./pages/RegistrationPage";
+import AskQuestionPage from "./pages/AskQuestionPage";
 
 function App() {
   return (
@@ -32,7 +32,7 @@ function App() {
             <BrowserRouter>
               <Routes>
                 <Route path={routes.login} element={<LoginPage />} />
-                <Route path={routes.register} element={<RegistrationForm />} />
+                <Route path={routes.register} element={<RegistrationPage />} />
                 <Route
                   path={routes.resetPassword}
                   element={<ResetPassword />}
@@ -48,11 +48,11 @@ function App() {
 
                   <Route
                     path={"/"}
-                    element={<RequireAuth roles={[roles.USER]} />}
+                    element={<RequireAuth roles={[roles.USER, roles.ADMIN]} />}
                   >
                     <Route
                       path={routes.askQuestion}
-                      element={<AskQuestionForm />}
+                      element={<AskQuestionPage />}
                     />
                     <Route
                       path={routes.profile}

@@ -19,9 +19,12 @@ import RenderMarkdown from "../components/RenderMarkdown";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import AnswersList from "../components/AnswersList";
 import { createPublicProfileRoute } from "../routes";
+import { useAuth } from "../auth/AuthContext";
+import AnswerForm from "../components/forms/AnswerForm";
 
 const QuestionPage = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const questionService = useQuestionService();
   const { id: idStr } = useParams();
   const id = Number.parseInt(idStr, 10);
@@ -123,6 +126,15 @@ const QuestionPage = () => {
         </CardContent>
       </Card>
       <AnswersList answers={questionData.answers} />
+
+      <Divider sx={{ my: 2 }} />
+      {isAuthenticated ? (
+        <AnswerForm />
+      ) : (
+        <Typography paragraph>
+          You need to login in order to post an answer.
+        </Typography>
+      )}
     </Box>
   );
 };
