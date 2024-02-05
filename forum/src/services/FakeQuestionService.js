@@ -1,7 +1,7 @@
 import questionsJson from "../questions.json";
 import { users } from "./FakeUserService";
 
-export const questions = questionsJson.map((question) => ({
+export let questions = questionsJson.map((question) => ({
   ...question,
   addedAt: new Date(question.addedAt),
   modifiedAt: new Date(question.modifiedAt),
@@ -262,6 +262,25 @@ class FakeQuestionService {
 
     answer.dislikes++;
     return answer;
+  }
+
+  async deleteQuestion(token, userId, questionId) {
+    await this.wait(200);
+    questions = questions.filter((question) => question.id !== questionId);
+  }
+
+  async deleteAnswer(token, userId, answerId) {
+    await this.wait(200);
+    questions = questions.map((question) => ({
+      ...question,
+      answers: question.answers.filter(
+        (answer) => answer.answerId !== answerId,
+      ),
+      numberOfAnswers: question.answers.filter(
+        (answer) => answer.answerId !== answerId,
+      ).length,
+    }));
+    console.log(questions.filter((q) => q.id === 99));
   }
 }
 

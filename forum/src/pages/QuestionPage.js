@@ -18,14 +18,18 @@ import NothingFound from "../components/NothingFound";
 import RenderMarkdown from "../components/RenderMarkdown";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import AnswersList from "../components/AnswersList";
-import { createPublicProfileRoute, createQuestionRoute } from "../routes";
+import routes, {
+  createPublicProfileRoute,
+  createQuestionRoute,
+} from "../routes";
 import { useAuth } from "../auth/AuthContext";
 import AnswerForm from "../components/forms/AnswerForm";
 import useSnackbar from "../hooks/useSnackbar";
+import DeleteButton from "../components/DeleteButton";
 
 const QuestionPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, token, userId } = useAuth();
+  const { isAuthenticated, token, userId, isAdmin } = useAuth();
   const questionService = useQuestionService();
   const { id: idStr } = useParams();
   const id = Number.parseInt(idStr, 10);
@@ -97,6 +101,12 @@ const QuestionPage = () => {
       });
   };
 
+  const deleteQuestion = () => {
+    questionService.deleteQuestion(token, userId, questionData.id).then(() => {
+      showSnackbarThenRedirect("Question deleted.", routes.searchQuestion);
+    });
+  };
+
   return (
     <Box sx={{ margin: "auto", maxWidth: "800px", p: 2 }}>
       <SnackbarComponent />
@@ -110,10 +120,10 @@ const QuestionPage = () => {
               <Chip key={index} label={tag} variant="outlined" />
             ))}
           </Stack>
-          <Divider />
+          <Divider sx={{ my: 2 }} />
 
           <RenderMarkdown content={questionData.question} />
-          <Divider />
+          <Divider sx={{ my: 2 }} />
           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
             Asked by {questionData.author.firstName}{" "}
             {questionData.author.lastName} on {addedAt}
@@ -175,11 +185,17 @@ const QuestionPage = () => {
               </Typography>
             </IconButton>
           </Stack>
+          {isAdmin && (
+            <>
+              <Divider sx={{ my: 2 }} />
+              <DeleteButton onClick={deleteQuestion}>
+                Delete Question
+              </DeleteButton>
+            </>
+          )}
         </CardContent>
       </Card>
       <AnswersList answers={questionData.answers} />
-
-      <Divider sx={{ my: 2 }} />
       {isAuthenticated ? (
         <AnswerForm onSubmit={handleAddingAnswer} />
       ) : (

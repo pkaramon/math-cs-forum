@@ -996,7 +996,8 @@
         "password": "password123",
         "email": "Patricia100@example.com",
         "birthDate": "1955-3-01",
-        "role": "user",
+        "role": "admin",
         "about": "I'm a software engineer with a passion for machine learning and data analysis. I'm also a big fan of functional programming and I'm currently learning Haskell."
     }
+
 ]

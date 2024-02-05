@@ -18,14 +18,16 @@ import { createPublicProfileRoute } from "../routes";
 import { useQuestionService } from "../context/QuestionServiceContext";
 import { useAuth } from "../auth/AuthContext";
 import useSnackbar from "../hooks/useSnackbar";
+import DeleteButton from "./DeleteButton";
 
 const AnswerCard = ({ answerData }) => {
   const [answer, setAnswer] = useState(answerData);
 
   const navigate = useNavigate();
-  const { isAuthenticated, userId, token } = useAuth();
+  const { isAuthenticated, userId, isAdmin, token } = useAuth();
   const questionService = useQuestionService();
-  const { showSnackbar, SnackbarComponent } = useSnackbar();
+  const { showSnackbar, SnackbarComponent, showSnackbarThenRedirect } =
+    useSnackbar();
 
   const likeAnswer = () => {
     if (!isAuthenticated) {
@@ -49,6 +51,12 @@ const AnswerCard = ({ answerData }) => {
       .then((answer) => {
         setAnswer({ ...answer });
       });
+  };
+
+  const deleteAnswer = () => {
+    questionService.deleteAnswer(token, userId, answer.answerId).then(() => {
+      showSnackbarThenRedirect("Answer deleted.", 0);
+    });
   };
 
   return (
@@ -100,10 +108,16 @@ const AnswerCard = ({ answerData }) => {
             }}
           >
             <ThumbDownAltOutlined />
-
             <Typography sx={{ marginLeft: 1 }}>{answer.dislikes}</Typography>
           </IconButton>
         </Stack>
+
+        {isAdmin && (
+          <>
+            <Divider sx={{ my: 2 }} />
+            <DeleteButton onClick={deleteAnswer}>Delete answer</DeleteButton>
+          </>
+        )}
       </CardContent>
     </Card>
   );
