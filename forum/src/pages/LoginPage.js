@@ -12,18 +12,13 @@ const LoginPage = () => {
   const [alert, setAlert] = useState(null);
 
   const handleSubmit = (values) => {
-    userService.authenticate(values.email, values.password).then((user) => {
-      if (user) {
-        setAuth({
-          token: user.token,
-          userId: user.userId,
-          role: user.role,
-        });
+    userService
+      .authenticate(values.email, values.password)
+      .then((userAuthData) => {
+        setAuth({ token: userAuthData.token });
         navigate(routes.profile);
-      } else {
-        setAlert("Invalid email or password");
-      }
-    });
+      })
+      .catch((err) => setAlert(err.message));
   };
 
   return <LoginForm handleSubmit={handleSubmit} alert={alert} />;

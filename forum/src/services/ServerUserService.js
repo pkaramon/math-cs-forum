@@ -25,6 +25,19 @@ class ServerUserService {
       throw new Error(err.response.data.message);
     }
   }
+
+  async authenticate(email, password) {
+    try {
+      const data = {
+        email,
+        password,
+      };
+      const response = await this.http.post("/login", data);
+      return response.data;
+    } catch (err) {
+      throw new Error(err.response.data.message);
+    }
+  }
 }
 
 export default ServerUserService;
