@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Box, Button, Typography } from "@mui/material";
 import MarkdownField from "./MarkdownField";
 
-const initialValues = {
+const answerSchemaInitialValues = {
   answer: "",
 };
 
@@ -11,11 +11,15 @@ const AnswerSchema = Yup.object().shape({
   answer: Yup.string().required("Answer is required"),
 });
 
-const AnswerForm = ({ onSubmit }) => {
+const AnswerForm = ({
+  onSubmit,
+  initialValues = answerSchemaInitialValues,
+  title,
+}) => {
   return (
     <Box sx={{ mt: 2 }}>
       <Typography variant="h6" gutterBottom>
-        Your Answer
+        {title}
       </Typography>
 
       <Formik

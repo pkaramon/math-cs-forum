@@ -14,7 +14,10 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import CommentOutlinedIcon from "@mui/icons-material/CommentOutlined";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import React from "react";
-import { createPublicProfileRoute, createQuestionRoute } from "../../routes";
+import {
+  createPublicProfileRoute,
+  createQuestionRoute,
+} from "../../routing/routes";
 
 const QuestionCard = ({ question }) => {
   const navigate = useNavigate();
@@ -52,6 +55,7 @@ const QuestionCard = ({ question }) => {
         </Box>
         <Stack
           direction="row"
+          flexWrap={"wrap"}
           spacing={1}
           alignItems="center"
           sx={{ marginTop: 2 }}

@@ -22,7 +22,7 @@ import RegistrationSchema, {
 } from "./RegistrationSchema";
 import FormField from "./FormField";
 import Container from "@mui/material/Container";
-import routes from "../../routes";
+import routes from "../../routing/routes";
 import CssBaseline from "@mui/material/CssBaseline";
 
 const FormComponent = ({ onSubmit, alert }) => {

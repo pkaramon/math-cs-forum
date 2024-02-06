@@ -2,7 +2,7 @@ import RegistrationForm from "../components/forms/RegistrationForm";
 import { useUserService } from "../context/UserServiceContext";
 import { Snackbar } from "@mui/material";
 import { useState } from "react";
-import routes from "../routes";
+import routes from "../routing/routes";
 import { useNavigate } from "react-router-dom";
 
 export const RegistrationPage = () => {

@@ -4,7 +4,7 @@ import { useUserService } from "../context/UserServiceContext";
 import LoadingIndicator from "../components/LoadingIndicator";
 import EditUserDetailsForm from "../components/forms/EditUserDetailsForm";
 import dayjs from "dayjs";
-import routes from "../routes";
+import routes from "../routing/routes";
 import useSnackbar from "../hooks/useSnackbar";
 
 const EditUserDetailsPage = () => {

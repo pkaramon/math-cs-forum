@@ -70,12 +70,7 @@ def modify_answer(answer_id):
 
     if answer is None:
         return (
-            jsonify(
-                {
-                    "message": "Answer not found or you do not have permission to modify it"
-                }
-            ),
-            404,
+            jsonify({"message": "Answer not found or you do not have permission to modify it"}), 404,
         )
 
     data = request.get_json()
@@ -177,6 +172,14 @@ def search_answers():
 
     answers_data = [create_answer_data(answer) for answer in answers_query.all()]
     return jsonify(answers_data), 200
+
+
+def get_answer(answer_id):
+    answer = Answer.query.get(answer_id)
+    if answer is None:
+        return jsonify({'message': 'Answer not found'}), 404
+
+    return jsonify(create_answer_data(answer)), 200
 
 
 def get_all_questions():

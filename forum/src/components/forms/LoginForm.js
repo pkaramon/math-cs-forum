@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import routes from "../../routes";
+import routes from "../../routing/routes";
 import { Form, Formik } from "formik";
 import LoginSchema, { initialValues } from "./LoginSchema";
 import FormField from "./FormField";

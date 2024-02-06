@@ -4,7 +4,6 @@ import { useUserService } from "../context/UserServiceContext";
 import {
   Avatar,
   Button,
-  Card,
   CardContent,
   Divider,
   Grid,
@@ -15,11 +14,12 @@ import {
 } from "@mui/material";
 import { deepOrange } from "@mui/material/colors";
 import LoadingIndicator from "../components/LoadingIndicator";
-import routes, { createPublicProfileRoute } from "../routes";
+import routes, { createPublicProfileRoute } from "../routing/routes";
 import { useQuestionService } from "../context/QuestionServiceContext";
 import QuestionsList from "../components/QuestionsList/QuestionsList";
 import ProfileAnswersList from "../components/ProfileAnswersList";
 import { useNavigate } from "react-router-dom";
+import PageCard from "../components/PageCard";
 
 export const UserProfilePage = () => {
   const { userId, role, token, clearAuthData } = useAuth();
@@ -55,7 +55,7 @@ export const UserProfilePage = () => {
   }
 
   return (
-    <Card sx={{ maxWidth: "md", mx: "auto", mt: 10, mb: 2 }} elevation={12}>
+    <PageCard>
       <CardContent>
         <Grid container spacing={2} alignItems="center">
           <Grid item>
@@ -71,6 +71,9 @@ export const UserProfilePage = () => {
               {userDetails.email}
             </Typography>
           </Grid>
+        </Grid>
+
+        <Grid container spacing={2} sx={{ mt: 2 }}>
           <Grid item>
             <Button variant="outlined" href={createPublicProfileRoute(userId)}>
               Public Profile
@@ -89,6 +92,7 @@ export const UserProfilePage = () => {
             </Button>
           </Grid>
         </Grid>
+
         <Divider sx={{ my: 2 }} />
         <List>
           <ListItem>
@@ -113,7 +117,7 @@ export const UserProfilePage = () => {
       </CardContent>
 
       <Divider sx={{ my: 2 }} />
-      <CardContent>
+      <CardContent sx={{ p: 0, m: 0 }}>
         <Typography variant={"h5"} sx={{ my: 2 }}>
           Questions
         </Typography>
@@ -135,7 +139,7 @@ export const UserProfilePage = () => {
           <ProfileAnswersList answersData={answers} />
         )}
       </CardContent>
-    </Card>
+    </PageCard>
   );
 };
 

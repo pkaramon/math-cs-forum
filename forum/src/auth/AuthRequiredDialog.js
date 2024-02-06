@@ -6,7 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useLocation, useNavigate } from "react-router-dom";
-import routes from "../routes";
+import routes from "../routing/routes";
 
 const AlertDialog = ({ onAgree, onDisagree, title, text }) => {
   const navigate = useNavigate();

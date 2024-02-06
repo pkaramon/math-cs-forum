@@ -1,7 +1,7 @@
 import { alpha, InputBase, styled } from "@mui/material";
 import { Search as SearchIcon } from "@mui/icons-material";
 import React, { useState } from "react";
-import { createSearchQuestionRoute } from "../routes";
+import { createSearchQuestionRoute } from "../routing/routes";
 import { useNavigate } from "react-router-dom";
 
 const SearchBar = () => {

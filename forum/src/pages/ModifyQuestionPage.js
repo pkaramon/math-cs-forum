@@ -2,22 +2,27 @@ import QuestionForm from "../components/forms/QuestionForm";
 import { useAuth } from "../auth/AuthContext";
 import { useQuestionService } from "../context/QuestionServiceContext";
 import useSnackbar from "../hooks/useSnackbar";
-import { createQuestionRoute } from "../routes";
-import { useParams } from "react-router-dom";
+import routes, { createQuestionRoute } from "../routing/routes";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export const ModifyQuestionPage = () => {
   const { questionId } = useParams();
-  const { token } = useAuth();
+  const { token, userId } = useAuth();
   const questionService = useQuestionService();
   const { showSnackbar, showSnackbarThenRedirect, SnackbarComponent } =
     useSnackbar();
   const [initialValues, setInitialValues] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     questionService
       .getQuestionById(questionId)
       .then((question) => {
+        if (question.author.authorId !== userId) {
+          navigate(routes.notFound);
+          return;
+        }
         setInitialValues({
           title: question.title,
           question: question.question,
@@ -25,18 +30,23 @@ export const ModifyQuestionPage = () => {
           tagInput: "",
         });
       })
-      .catch((err) => {
+      .catch(() => {
         showSnackbar("Could not fetch question data");
       });
   }, []);
 
   const onSubmit = (values) => {
-    questionService.modifyQuestion(token, questionId, values).then(() => {
-      showSnackbarThenRedirect(
-        "Successfully modified question",
-        createQuestionRoute(questionId),
-      );
-    });
+    questionService
+      .modifyQuestion(token, questionId, values)
+      .then(() => {
+        showSnackbarThenRedirect(
+          "Successfully modified question",
+          createQuestionRoute(questionId),
+        );
+      })
+      .catch((err) => {
+        showSnackbar(err.message);
+      });
   };
 
   return (

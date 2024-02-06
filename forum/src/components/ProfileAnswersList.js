@@ -1,5 +1,5 @@
 import { Link, List, ListItem, ListItemText } from "@mui/material";
-import { createQuestionRoute } from "../routes";
+import { createQuestionRoute } from "../routing/routes";
 import React from "react";
 
 function ProfileAnswersList({ answersData }) {

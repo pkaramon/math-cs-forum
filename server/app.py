@@ -7,7 +7,7 @@ from flask_cors import CORS
 from models import db
 from questions_routes import add_question, add_answer, modify_question, modify_answer, search_questions, \
     get_all_questions, get_all_answers, like_question, dislike_question, like_answer, dislike_answer, delete_question, \
-    delete_answer, get_question, search_answers, get_number_of_questions_matching
+    delete_answer, get_question, search_answers, get_number_of_questions_matching, get_answer
 from users_routes import register, login, protected_route, delete_user, modify_user, get_user_data, get_all_users, \
     mail, reset_password_request, change_password, modify_user_details, get_user_details, get_public_profile_info
 from utils import register_error_handlers, jwt_manager, SECRET_KEY
@@ -51,6 +51,7 @@ app.add_url_rule('/change_password/', 'change_password', change_password, method
 # questions
 app.add_url_rule('/add_question', 'add_question', add_question, methods=['POST'])
 app.add_url_rule('/get_question/<int:question_id>', 'get_question', get_question, methods=['GET'])
+app.add_url_rule('/get_answer/<int:answer_id>', 'get_answer', get_answer, methods=['GET'])
 app.add_url_rule('/questions/<int:question_id>/add_answer', 'add_answer', add_answer, methods=['POST'])
 app.add_url_rule('/modify_question/<int:question_id>', 'modify_question', modify_question, methods=['PUT'])
 app.add_url_rule('/modify_answer/<int:answer_id>', 'modify_answer', modify_answer, methods=['PUT'])

@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import backgroundImage from "../img/pi.png";
-import routes from "../routes";
+import routes from "../routing/routes";
 import { useAuth } from "../auth/AuthContext";
 
 const HomePage = () => {

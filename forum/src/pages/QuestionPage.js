@@ -22,7 +22,7 @@ import AnswersList from "../components/AnswersList";
 import routes, {
   createModifyQuestionRoute,
   createPublicProfileRoute,
-} from "../routes";
+} from "../routing/routes";
 import { useAuth } from "../auth/AuthContext";
 import AnswerForm from "../components/forms/AnswerForm";
 import useSnackbar from "../hooks/useSnackbar";
@@ -123,7 +123,13 @@ const QuestionPage = () => {
   const canUserModifyQuestion = questionData?.author?.authorId === userId;
 
   return (
-    <Box sx={{ margin: "auto", maxWidth: "800px", p: 2 }}>
+    <Box
+      sx={{
+        margin: "auto",
+        maxWidth: "800px",
+        p: { sm: 2, xs: 1 },
+      }}
+    >
       <SnackbarComponent />
       <Card raised sx={{ mb: 5 }}>
         <CardContent>
@@ -209,9 +215,7 @@ const QuestionPage = () => {
                 sx={{ marginTop: 2, justifyContent: "flex-end" }}
               >
                 {canUserDeleteQuestion && (
-                  <DeleteButton onClick={deleteQuestion}>
-                    Delete Question
-                  </DeleteButton>
+                  <DeleteButton onClick={deleteQuestion}>Delete</DeleteButton>
                 )}
                 {canUserModifyQuestion && (
                   <Button
@@ -228,7 +232,7 @@ const QuestionPage = () => {
       </Card>
       <AnswersList answers={questionData.answers} />
       {isAuthenticated ? (
-        <AnswerForm onSubmit={handleAddingAnswer} />
+        <AnswerForm onSubmit={handleAddingAnswer} title={"Your answer"} />
       ) : (
         <Typography paragraph sx={{ my: 2 }}>
           You need to login in order to post an answer.

@@ -50,14 +50,23 @@ class ServerQuestionService {
     };
 
     try {
-      const response = await this.http.put(
-        `/modify_question/${questionId}`,
-        data,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
-      );
-      return response.data["question_id"];
+      await this.http.put(`/modify_question/${questionId}`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch (err) {
+      console.log(err);
+      throw new Error(err.response.data.message);
+    }
+  }
+
+  async modifyAnswer(token, answerId, answerData) {
+    const data = {
+      answer: answerData.answer,
+    };
+    try {
+      await this.http.put(`/modify_answer/${answerId}`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     } catch (err) {
       console.log(err);
       throw new Error(err.response.data.message);
@@ -153,6 +162,18 @@ class ServerQuestionService {
       );
     } catch (err) {
       console.log(err);
+      throw new Error(err.response.data.message);
+    }
+  }
+
+  async getAnswerById(answerId) {
+    try {
+      const response = await this.http.get(`/get_answer/${answerId}`);
+      return fromAnswersResponseData(response.data);
+    } catch (err) {
+      if (err?.response?.status === 404) {
+        return null;
+      }
       throw new Error(err.response.data.message);
     }
   }

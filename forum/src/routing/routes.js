@@ -12,6 +12,7 @@ const routes = {
   editUserDetails: "/edit-user-details",
   notFound: "*",
   modifyQuestion: "/modify-question/:questionId",
+  modifyAnswer: "/modify-answer/:answerId",
 };
 
 export const createSearchQuestionRoute = (query) => {
@@ -28,6 +29,10 @@ export const createPublicProfileRoute = (userId) => {
 
 export const createModifyQuestionRoute = (questionId) => {
   return routes.modifyQuestion.replace(":questionId", questionId);
+};
+
+export const createModifyAnswerRoute = (answerId) => {
+  return routes.modifyAnswer.replace(":answerId", answerId);
 };
 
 export default routes;

@@ -94,7 +94,13 @@ const SearchQuestionsPage = () => {
 
   const someQuestionsFound = questions.length > 0;
   return (
-    <Box sx={{ maxWidth: "800px", margin: "auto", padding: 2 }}>
+    <Box
+      sx={{
+        margin: "auto",
+        maxWidth: "md",
+        p: { sm: 2, xs: 1 },
+      }}
+    >
       <Paper sx={{ mb: 3, p: 4 }} elevation={24}>
         <SearchQuestionForm
           onSearch={handleSearch}

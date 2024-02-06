@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Button,
   Card,
   CardContent,
   Chip,
@@ -14,7 +15,10 @@ import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import { ThumbDownAltOutlined } from "@mui/icons-material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { createPublicProfileRoute } from "../routes";
+import {
+  createModifyAnswerRoute,
+  createPublicProfileRoute,
+} from "../routing/routes";
 import { useQuestionService } from "../context/QuestionServiceContext";
 import { useAuth } from "../auth/AuthContext";
 import useSnackbar from "../hooks/useSnackbar";
@@ -56,6 +60,8 @@ const AnswerCard = ({ answerData, updateAnswerData }) => {
   };
 
   const canDeleteAnswer = isAdmin || userId === answerData.author.authorId;
+  const canModifyAnswer = userId === answerData.author.authorId;
+
   const deleteAnswer = () => {
     questionService
       .deleteAnswer(token, answerData.answerId)
@@ -122,10 +128,27 @@ const AnswerCard = ({ answerData, updateAnswerData }) => {
           </IconButton>
         </Stack>
 
-        {canDeleteAnswer && (
+        {(canDeleteAnswer || canModifyAnswer) && (
           <>
             <Divider sx={{ my: 2 }} />
-            <DeleteButton onClick={deleteAnswer}>Delete answer</DeleteButton>
+
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ marginTop: 2, justifyContent: "flex-end" }}
+            >
+              {canDeleteAnswer && (
+                <DeleteButton onClick={deleteAnswer}>Delete</DeleteButton>
+              )}
+              {canModifyAnswer && (
+                <Button
+                  variant={"outlined"}
+                  href={createModifyAnswerRoute(answerData.answerId)}
+                >
+                  Modify
+                </Button>
+              )}
+            </Stack>
           </>
         )}
       </CardContent>

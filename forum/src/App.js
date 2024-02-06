@@ -5,7 +5,7 @@ import Layout from "./pages/Layout";
 import React from "react";
 import theme from "./materialUITheme";
 import ResetPassword from "./components/forms/ResetPassword";
-import routes from "./routes";
+import routes from "./routing/routes";
 import HomePage from "./pages/HomePage";
 import SearchQuestionsPage from "./pages/SearchQuestionsPage";
 import QuestionPage from "./pages/QuestionPage";
@@ -23,6 +23,7 @@ import EditUserDetailsPage from "./pages/EditUserDetailsPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import AskQuestionPage from "./pages/AskQuestionPage";
 import ModifyQuestionPage from "./pages/ModifyQuestionPage";
+import ModifyAnswerPage from "./pages/ModifyAnswerPage";
 
 function App() {
   return (
@@ -67,6 +68,10 @@ function App() {
                     <Route
                       path={routes.modifyQuestion}
                       element={<ModifyQuestionPage />}
+                    />
+                    <Route
+                      path={routes.modifyAnswer}
+                      element={<ModifyAnswerPage />}
                     />
                   </Route>
 

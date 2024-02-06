@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-import { LinkBehavior } from "./router";
+import { LinkBehavior } from "./routing/router";
 
 export const appBarHeight = {
   xs: "56px",

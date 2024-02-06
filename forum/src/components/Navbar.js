@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import routes from "../routes";
+import routes from "../routing/routes";
 import SearchBar from "./SearchBar";
 import { appBarHeight } from "../materialUITheme";
 import logoImage from "../img/logo192.png";

@@ -1,6 +1,6 @@
 import LoginForm from "../components/forms/LoginForm";
 import { useAuth } from "../auth/AuthContext";
-import routes from "../routes";
+import routes from "../routing/routes";
 import { useNavigate } from "react-router-dom";
 import { useUserService } from "../context/UserServiceContext";
 import { useState } from "react";
