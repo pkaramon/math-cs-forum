@@ -115,6 +115,20 @@ class ServerUserService {
       throw new Error(err.response.data.message);
     }
   }
+
+  async sendResetPasswordEmail(email) {
+    try {
+      const response = await this.http.post(`/reset_password_request/${email}`);
+      return {
+        message: response.data.message,
+      };
+    } catch (err) {
+      if (err?.response?.status === 404) {
+        return { message: "User with this email does not exist." };
+      }
+      throw new Error(err.response.data.message);
+    }
+  }
 }
 
 export default ServerUserService;

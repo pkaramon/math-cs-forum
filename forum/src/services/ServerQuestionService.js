@@ -73,6 +73,17 @@ class ServerQuestionService {
     }
   }
 
+  async viewQuestion(token, questionId) {
+    try {
+      await this.http.post(`/view_question/${questionId}`, null, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch (err) {
+      console.log(err);
+      throw new Error(err.response.data.message);
+    }
+  }
+
   async getQuestionById(questionId) {
     try {
       const response = await this.http.get(`/get_question/${questionId}`);

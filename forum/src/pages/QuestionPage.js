@@ -75,6 +75,10 @@ const QuestionPage = () => {
       .then((question) => {
         if (question) {
           setQuestionData(question);
+          questionService
+            .viewQuestion(token, question.id)
+            .then(() => {})
+            .catch(() => {});
         } else {
           setQuestionData(null);
         }

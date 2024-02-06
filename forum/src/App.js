@@ -24,6 +24,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import AskQuestionPage from "./pages/AskQuestionPage";
 import ModifyQuestionPage from "./pages/ModifyQuestionPage";
 import ModifyAnswerPage from "./pages/ModifyAnswerPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 
 function App() {
   return (
@@ -38,6 +39,11 @@ function App() {
                 <Route
                   path={routes.resetPassword}
                   element={<ResetPassword />}
+                />
+
+                <Route
+                  path={routes.forgotPassword}
+                  element={<ForgotPasswordPage />}
                 />
 
                 <Route path={"/"} element={<Layout />}>

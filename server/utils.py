@@ -39,7 +39,7 @@ def send_email(receiver_email, message):
         msg['To'] = receiver_email
         msg['Subject'] = 'Password Reset'
 
-        msg.attach(MIMEText(message, 'plain'))
+        msg.attach(MIMEText(message, 'html'))
 
         server = smtplib.SMTP('smtp.gmail.com', 587)
         server.starttls()

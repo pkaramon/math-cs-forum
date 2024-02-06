@@ -266,16 +266,12 @@ def get_all_users():
 # NOWA WERSJA
 def reset_password_request(email):
     user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify(message='User not found'), 404
 
     token = generate_reset_token(email, user.id)
-
-    # ten url najprawdopodobniej do zmiany
-    # Tez nie wiedzialem czy dokladnie to miales na mysli
-    # Ale no wysyla to maila do konkretnej strony wraz z tokenem 
-    # I za pomoca tego tokenu mozna potem w change password zmienic haslo
-    reset_url = f'localhost:3000/reset_password?token={token}'
-
-    message = f'Click the following link to reset your password: {reset_url}'
+    reset_url = f'http://localhost:3000/reset_password?token={token}'
+    message = f'Click <a href="{reset_url}">here</a> to reset your password.'
 
     try:
 
@@ -295,11 +291,13 @@ def change_password():
     new_password = request.json.get('new_password')
     user_to_modify = User.query.filter_by(email=get_jwt().get('email')).first()
 
+    if not user_to_modify:
+        return jsonify(message='User not found'), 404
+
     if not new_password:
         return jsonify(message='New password is required'), 400
 
     hashed_password = ph.hash(new_password)
-
     try:
         user_to_modify.password = hashed_password
         db.session.commit()

@@ -63,7 +63,7 @@ function LoginForm({ handleSubmit, alert }) {
 
           <Grid container>
             <Grid item xs>
-              <Link href={routes.resetPassword} variant="body2">
+              <Link href={routes.forgotPassword} variant="body2">
                 Forgot password?
               </Link>
             </Grid>

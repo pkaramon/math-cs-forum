@@ -3,7 +3,6 @@ const routes = {
   about: "/about",
   login: "/login",
   register: "/register",
-  resetPassword: "/reset-password",
   askQuestion: "/ask-question",
   searchQuestion: "/search",
   question: "/question/:id",
@@ -13,6 +12,8 @@ const routes = {
   notFound: "*",
   modifyQuestion: "/modify-question/:questionId",
   modifyAnswer: "/modify-answer/:answerId",
+  forgotPassword: "/forgot-password",
+  resetPassword: "/reset-password",
 };
 
 export const createSearchQuestionRoute = (query) => {

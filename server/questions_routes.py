@@ -4,7 +4,7 @@ from flask import jsonify, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from sqlalchemy.sql import func
 
-from models import db, Question, Answer, QuestionLike, User, AnswerLike
+from models import db, Question, Answer, QuestionLike, User, AnswerLike, QuestionView
 from models_util import create_question_data, create_answer_data
 
 
@@ -393,3 +393,25 @@ def delete_answer(answer_id):
     db.session.commit()
 
     return jsonify({"message": "Answer deleted successfully"}), 200
+
+
+@jwt_required()
+def view_question(question_id):
+    current_user_id = get_jwt_identity()
+    question = Question.query.get(question_id)
+
+    if not question:
+        return jsonify({"message": "Question not found"}), 404
+
+    existing_view = QuestionView.query.filter_by(
+        user_id=current_user_id, question_id=question_id
+    ).first()
+
+    if not existing_view:
+        db.session.add(
+            QuestionView(user_id=current_user_id, question_id=question_id)
+        )
+        question.views += 1
+        db.session.commit()
+
+    return jsonify({"message": "Question viewed successfully", "views": question.views}), 200
