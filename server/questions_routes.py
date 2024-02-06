@@ -1,9 +1,10 @@
-from flask import jsonify, request
-from models import db, Question, Answer, QuestionLike, User, AnswerLike
-from sqlalchemy.sql import func
-from flask_jwt_extended import jwt_required, get_jwt_identity
 from datetime import datetime
 
+from flask import jsonify, request
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from sqlalchemy.sql import func
+
+from models import db, Question, Answer, QuestionLike, User, AnswerLike
 from models_util import create_question_data, create_answer_data
 
 
@@ -146,6 +147,25 @@ def search_questions():
     return jsonify(questions_data), 200
 
 
+def get_number_of_questions_matching():
+    query = request.args.get('query', '')
+    user_id = request.args.get('user_id', None)
+    tags = request.args.get('tags', '').split(',') if request.args.get('tags') else []
+
+    questions_query = Question.query
+    if user_id:
+        questions_query = questions_query.filter(Question.author_id == user_id)
+
+    if query:
+        questions_query = questions_query.filter(
+            Question.title.contains(query) | Question.question.contains(query)
+        )
+    if tags:
+        for tag in tags:
+            questions_query = questions_query.filter(Question.tags.contains(tag))
+    return jsonify({"count": questions_query.count()}), 200
+
+
 def search_answers():
     user_id = request.args.get('user_id', None)
     answers_query = Answer.query
@@ -210,9 +230,13 @@ def like_question(question_id):
         user_id=current_user_id, question_id=question_id
     ).first()
 
+    message = "Question liked successfully"
     if existing_reaction:
         if existing_reaction.is_like:
-            return jsonify({"message": "User has already liked this question"}), 400
+            db.session.delete(existing_reaction)
+            question.likes -= 1
+            db.session.commit()
+            message = "Removed like from the question"
         else:
             existing_reaction.is_like = True
             question.likes += 1
@@ -224,15 +248,13 @@ def like_question(question_id):
         question.likes += 1
 
     db.session.commit()
-
-    return jsonify({"message": "Question liked successfully"}), 200
+    return jsonify({"message": message, "likes": question.likes, "dislikes": question.dislikes}), 200
 
 
 @jwt_required()
 def dislike_question(question_id):
     current_user_id = get_jwt_identity()
     question = Question.query.get(question_id)
-
     if not question:
         return jsonify({"message": "Question not found"}), 404
 
@@ -240,9 +262,12 @@ def dislike_question(question_id):
         user_id=current_user_id, question_id=question_id
     ).first()
 
+    message = "Question disliked successfully"
     if existing_reaction:
         if not existing_reaction.is_like:
-            return jsonify({"message": "User has already disliked this question"}), 400
+            db.session.delete(existing_reaction)
+            question.dislikes -= 1
+            message = "Removed dislike from the question"
         else:
             existing_reaction.is_like = False
             question.dislikes += 1
@@ -257,7 +282,7 @@ def dislike_question(question_id):
 
     db.session.commit()
 
-    return jsonify({"message": "Question disliked successfully"}), 200
+    return jsonify({"message": message, "likes": question.likes, "dislikes": question.dislikes}), 200
 
 
 @jwt_required()
@@ -272,9 +297,12 @@ def like_answer(answer_id):
         user_id=current_user_id, answer_id=answer_id
     ).first()
 
+    message = "Answer liked successfully"
     if existing_like:
         if existing_like.is_like:
-            return jsonify({"message": "You have already liked this answer"}), 400
+            db.session.delete(existing_like)
+            answer.likes -= 1
+            message = "Removed like from the answer"
         else:
             existing_like.is_like = True
             answer.likes += 1
@@ -287,7 +315,7 @@ def like_answer(answer_id):
 
     db.session.commit()
 
-    return jsonify({"message": "Answer liked successfully"}), 200
+    return jsonify({"message": message, "likes": answer.likes, "dislikes": answer.dislikes}), 200
 
 
 @jwt_required()
@@ -302,9 +330,12 @@ def dislike_answer(answer_id):
         user_id=current_user_id, answer_id=answer_id
     ).first()
 
+    message = "Answer disliked successfully"
     if existing_like:
         if not existing_like.is_like:
-            return jsonify({"message": "You have already disliked this answer"}), 400
+            db.session.delete(existing_like)
+            answer.dislikes -= 1
+            message = "Removed dislike from the answer"
         else:
             existing_like.is_like = False
             answer.dislikes += 1
@@ -317,7 +348,7 @@ def dislike_answer(answer_id):
 
     db.session.commit()
 
-    return jsonify({"message": "Answer disliked successfully"}), 200
+    return jsonify({"message": message, "likes": answer.likes, "dislikes": answer.dislikes}), 200
 
 
 @jwt_required()
@@ -328,7 +359,6 @@ def delete_question(question_id):
     if not question:
         return jsonify({"message": "Question not found"}), 404
 
-    # Check if the current user is either the author of the question or an admin
     if (
             question.author_id != current_user_id
             and not User.query.get(current_user_id).role == "admin"
@@ -360,5 +390,3 @@ def delete_answer(answer_id):
     db.session.commit()
 
     return jsonify({"message": "Answer deleted successfully"}), 200
-
-

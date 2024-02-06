@@ -16,9 +16,18 @@ const sortOptions = [
 ];
 
 const AnswersList = ({ answers }) => {
+  const [answersList, setAnswersList] = useState(answers);
   const [sortType, setSortType] = useState(sortOptions[0].value);
 
-  answers.sort((a, b) => {
+  const updateAnswerData = (answerId, newAnswerData) => {
+    const index = answersList.findIndex(
+      (answer) => answer.answerId === answerId,
+    );
+    answersList[index] = newAnswerData;
+    setAnswersList([...answersList]);
+  };
+
+  answersList.sort((a, b) => {
     if (sortType === "likes") {
       return b.likes - a.likes;
     }
@@ -31,7 +40,7 @@ const AnswersList = ({ answers }) => {
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography variant={"h5"}>{answers.length} Answers</Typography>
+        <Typography variant={"h5"}>{answersList.length} Answers</Typography>
         <FormControl>
           <InputLabel>Sort By</InputLabel>
           <Select
@@ -52,8 +61,12 @@ const AnswersList = ({ answers }) => {
         </FormControl>
       </Box>
 
-      {answers.map((answer) => (
-        <AnswerCard key={answer.answerId} answerData={answer} />
+      {answersList.map((answer) => (
+        <AnswerCard
+          key={answer.answerId}
+          answerData={answer}
+          updateAnswerData={updateAnswerData}
+        />
       ))}
     </Box>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Snackbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -8,9 +8,9 @@ const useSnackbar = () => {
 
   const navigate = useNavigate();
 
-  const showSnackbar = (msg, options = {}) => {
+  const showSnackbar = useCallback((msg, options = {}) => {
     setSnackBarProps({ open: true, message: msg, ...options });
-  };
+  }, []);
 
   const showSnackbarThenRedirect = (msg, path, options = {}) => {
     setSnackBarProps({ open: true, message: msg, ...options });

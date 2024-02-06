@@ -12,7 +12,7 @@ import RenderMarkdown from "./RenderMarkdown";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import { ThumbDownAltOutlined } from "@mui/icons-material";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { createPublicProfileRoute } from "../routes";
 import { useQuestionService } from "../context/QuestionServiceContext";
@@ -20,14 +20,16 @@ import { useAuth } from "../auth/AuthContext";
 import useSnackbar from "../hooks/useSnackbar";
 import DeleteButton from "./DeleteButton";
 
-const AnswerCard = ({ answerData }) => {
-  const [answer, setAnswer] = useState(answerData);
-
+const AnswerCard = ({ answerData, updateAnswerData }) => {
   const navigate = useNavigate();
-  const { isAuthenticated, userId, isAdmin, token } = useAuth();
+  const { isAuthenticated, isAdmin, token } = useAuth();
   const questionService = useQuestionService();
   const { showSnackbar, SnackbarComponent, showSnackbarThenRedirect } =
     useSnackbar();
+
+  const updateAnswersList = (likes, dislikes) => {
+    updateAnswerData(answerData.answerId, { ...answerData, likes, dislikes });
+  };
 
   const likeAnswer = () => {
     if (!isAuthenticated) {
@@ -35,9 +37,9 @@ const AnswerCard = ({ answerData }) => {
       return;
     }
     questionService
-      .likeAnswer(token, userId, answer.answerId)
-      .then((answer) => {
-        setAnswer({ ...answer });
+      .likeAnswer(token, answerData.answerId)
+      .then(({ likes, dislikes }) => {
+        updateAnswersList(likes, dislikes);
       });
   };
 
@@ -47,23 +49,28 @@ const AnswerCard = ({ answerData }) => {
       return;
     }
     questionService
-      .dislikeAnswer(token, userId, answer.answerId)
-      .then((answer) => {
-        setAnswer({ ...answer });
+      .dislikeAnswer(token, answerData.answerId)
+      .then(({ likes, dislikes }) => {
+        updateAnswersList(likes, dislikes);
       });
   };
 
   const deleteAnswer = () => {
-    questionService.deleteAnswer(token, userId, answer.answerId).then(() => {
-      showSnackbarThenRedirect("Answer deleted.", 0);
-    });
+    questionService
+      .deleteAnswer(token, answerData.answerId)
+      .then(() => {
+        showSnackbarThenRedirect("Answer deleted.", 0);
+      })
+      .catch(() => {
+        showSnackbar("Could not delete answer");
+      });
   };
 
   return (
     <Card elevation={2} sx={{ mt: 2 }}>
       <SnackbarComponent />
       <CardContent>
-        <RenderMarkdown content={answer.answer} />
+        <RenderMarkdown content={answerData.answer} />
         <Divider />
 
         <Stack
@@ -75,19 +82,19 @@ const AnswerCard = ({ answerData }) => {
           <IconButton aria-label="likes" size="small">
             <CalendarIcon fontSize="inherit" />
             <Typography variant="body2" sx={{ marginLeft: 0.5 }}>
-              {answer.addedAt.toLocaleString()}
+              {answerData.addedAt.toLocaleString()}
             </Typography>
           </IconButton>
           <Chip
             onClick={() =>
-              navigate(createPublicProfileRoute(answer.author.authorId))
+              navigate(createPublicProfileRoute(answerData.author.authorId))
             }
             avatar={
               <Avatar sx={{ marginLeft: "auto", width: 24, height: 24 }}>
-                {answer.author.firstName.charAt(0)}
+                {answerData.author.firstName.charAt(0)}
               </Avatar>
             }
-            label={`${answer.author.firstName} ${answer.author.lastName}`}
+            label={`${answerData.author.firstName} ${answerData.author.lastName}`}
           />
         </Stack>
 
@@ -99,7 +106,7 @@ const AnswerCard = ({ answerData }) => {
             }}
           >
             <ThumbUpAltOutlinedIcon />
-            <Typography sx={{ marginLeft: 1 }}>{answer.likes}</Typography>
+            <Typography sx={{ marginLeft: 1 }}>{answerData.likes}</Typography>
           </IconButton>
           <IconButton
             aria-label="dislike answer"
@@ -108,7 +115,9 @@ const AnswerCard = ({ answerData }) => {
             }}
           >
             <ThumbDownAltOutlined />
-            <Typography sx={{ marginLeft: 1 }}>{answer.dislikes}</Typography>
+            <Typography sx={{ marginLeft: 1 }}>
+              {answerData.dislikes}
+            </Typography>
           </IconButton>
         </Stack>
 

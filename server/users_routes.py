@@ -7,7 +7,7 @@ from flask_mail import Mail
 
 from models import db, User, Question, Answer
 from models_util import create_question_data, create_answer_data
-from utils import generate_token, verify_password, ph, generate_random_password, send_email, generate_reset_token
+from utils import generate_token, verify_password, ph, send_email, generate_reset_token
 
 mail = Mail()
 
@@ -42,7 +42,7 @@ def register():
     except ValueError:
         return jsonify(message='Invalid birthday format. Please provide the birthday in MM/DD/YYYY format.'), 400
 
-    except Exception as e:
+    except Exception:
         db.session.rollback()
         return jsonify(message='Failed to register user. Please try again.'), 500
 
@@ -56,7 +56,7 @@ def login():
         if verify_password(user.password, password):
             token = generate_token(user.id, user.role)
             return jsonify(token=token), 200
-    except Exception as e:
+    except Exception:
         return jsonify(message='Wrong email or password'), 401
 
 

@@ -1,14 +1,27 @@
 import axios from "axios";
-import FakeQuestionService from "./FakeQuestionService";
 import { fromAnswersResponseData, fromQuestionResponseData } from "./util";
 
-class ServerQuestionService extends FakeQuestionService {
+class ServerQuestionService {
   constructor() {
-    super();
     this.url = "http://localhost:5000/";
     this.http = axios.create({
       baseURL: this.url,
     });
+  }
+
+  async getNumberOfQuestionsMatching({ query, tags }) {
+    try {
+      const response = await this.http.get(
+        "/get_number_of_questions_matching",
+        {
+          params: { query, tags: tags.join(",") },
+        },
+      );
+      return response.data.count;
+    } catch (err) {
+      console.log(err);
+      throw new Error(err.response.data.message);
+    }
   }
 
   async addQuestion(token, questionData) {
@@ -118,6 +131,59 @@ class ServerQuestionService extends FakeQuestionService {
       );
     } catch (err) {
       console.log(err);
+      throw new Error(err.response.data.message);
+    }
+  }
+
+  async likeQuestion(token, questionId) {
+    return await this.likeOrDislikeRequest(token, "like_question", questionId);
+  }
+
+  async dislikeQuestion(token, questionId) {
+    return await this.likeOrDislikeRequest(
+      token,
+      "dislike_question",
+      questionId,
+    );
+  }
+
+  async likeAnswer(token, answerId) {
+    return await this.likeOrDislikeRequest(token, "like_answer", answerId);
+  }
+
+  async dislikeAnswer(token, answerId) {
+    return await this.likeOrDislikeRequest(token, "dislike_answer", answerId);
+  }
+
+  async likeOrDislikeRequest(token, url, entityId) {
+    try {
+      const response = await this.http.post(`/${url}/${entityId}`, null, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return {
+        likes: response.data.likes,
+        dislikes: response.data.dislikes,
+        message: response.data.message,
+      };
+    } catch (err) {
+      throw new Error(err.response.data.message);
+    }
+  }
+
+  async deleteQuestion(token, questionId) {
+    return await this.deleteEntity(token, "delete_question", questionId);
+  }
+
+  async deleteAnswer(token, answerId) {
+    return await this.deleteEntity(token, "delete_answer", answerId);
+  }
+
+  async deleteEntity(token, url, entityId) {
+    try {
+      await this.http.delete(`/${url}/${entityId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch (err) {
       throw new Error(err.response.data.message);
     }
   }

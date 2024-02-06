@@ -164,21 +164,8 @@ class FakeQuestionService {
     });
   }
 
-  async findAllQuestionsForUser(userId) {
-    await this.wait(200);
-    return questions.filter((question) => question.author.id === userId);
-  }
-
-  async findAllAnswersForUser(userId) {
-    await this.wait(200);
-    return questions
-      .map((question) =>
-        question.answers.filter((answer) => answer.author.id === userId),
-      )
-      .flat();
-  }
-
-  async likeQuestion(token, userId, questionId) {
+  async likeQuestion(token, questionId) {
+    const userId = Number.parseInt(token, 10);
     await this.wait(200);
     const like = questionLikes.find(
       (like) => like.userId === userId && like.questionId === questionId,
@@ -197,7 +184,8 @@ class FakeQuestionService {
     return 1;
   }
 
-  async dislikeQuestion(token, userId, questionId) {
+  async dislikeQuestion(token, questionId) {
+    const userId = Number.parseInt(token, 10);
     await this.wait(200);
     const dislike = questionDislikes.find(
       (dislike) =>
@@ -218,7 +206,8 @@ class FakeQuestionService {
     return 1;
   }
 
-  async likeAnswer(token, userId, answerId) {
+  async likeAnswer(token, answerId) {
+    const userId = Number.parseInt(token, 10);
     await this.wait(200);
     const like = answerLikes.find(
       (like) => like.userId === userId && like.answerId === answerId,
@@ -242,7 +231,8 @@ class FakeQuestionService {
     return answer;
   }
 
-  async dislikeAnswer(token, userId, answerId) {
+  async dislikeAnswer(token, answerId) {
+    const userId = Number.parseInt(token, 10);
     await this.wait(200);
     const dislike = answerDislikes.find(
       (dislike) => dislike.userId === userId && dislike.answerId === answerId,
@@ -266,12 +256,12 @@ class FakeQuestionService {
     return answer;
   }
 
-  async deleteQuestion(token, userId, questionId) {
+  async deleteQuestion(token, questionId) {
     await this.wait(200);
     questions = questions.filter((question) => question.id !== questionId);
   }
 
-  async deleteAnswer(token, userId, answerId) {
+  async deleteAnswer(token, answerId) {
     await this.wait(200);
     questions = questions.map((question) => ({
       ...question,

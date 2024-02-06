@@ -18,7 +18,7 @@ import NothingFound from "../components/NothingFound";
 import RenderMarkdown from "../components/RenderMarkdown";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import AnswersList from "../components/AnswersList";
-import { createPublicProfileRoute, createQuestionRoute } from "../routes";
+import routes, { createPublicProfileRoute } from "../routes";
 import { useAuth } from "../auth/AuthContext";
 import AnswerForm from "../components/forms/AnswerForm";
 import useSnackbar from "../hooks/useSnackbar";
@@ -37,29 +37,31 @@ const QuestionPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const likeQuestion = () => {
-    // if (!isAuthenticated) {
-    //   showSnackbar("You need to login in order to like a question.");
-    //   return;
-    // }
-    // questionService.likeQuestion(token, userId, id).then((change) => {
-    //   setQuestionData((prev) => ({
-    //     ...prev,
-    //     likes: prev.likes + change,
-    //   }));
-    // });
+    if (!isAuthenticated) {
+      showSnackbar("You need to login in order to like a question.");
+      return;
+    }
+    questionService.likeQuestion(token, id).then(({ likes, dislikes }) => {
+      setQuestionData((prev) => ({
+        ...prev,
+        likes,
+        dislikes,
+      }));
+    });
   };
 
   const dislikeQuestion = () => {
-    // if (!isAuthenticated) {
-    //   showSnackbar("You need to login in order to dislike a question.");
-    //   return;
-    // }
-    // questionService.dislikeQuestion(token, userId, id).then((change) => {
-    //   setQuestionData((prev) => ({
-    //     ...prev,
-    //     dislikes: prev.dislikes + change,
-    //   }));
-    // });
+    if (!isAuthenticated) {
+      showSnackbar("You need to login in order to dislike a question.");
+      return;
+    }
+    questionService.dislikeQuestion(token, id).then(({ likes, dislikes }) => {
+      setQuestionData((prev) => ({
+        ...prev,
+        likes,
+        dislikes,
+      }));
+    });
   };
 
   useEffect(() => {
@@ -77,7 +79,7 @@ const QuestionPage = () => {
         showSnackbar(err.message);
       })
       .finally(() => setIsLoading(false));
-  }, [id, questionService]);
+  }, [id, questionService, showSnackbar]);
 
   if (isLoading) {
     return <LoadingIndicator isLoading={true} />;
@@ -104,9 +106,12 @@ const QuestionPage = () => {
   };
 
   const deleteQuestion = () => {
-    // questionService.deleteQuestion(token, userId, questionData.id).then(() => {
-    //   showSnackbarThenRedirect("Question deleted.", routes.searchQuestion);
-    // });
+    questionService
+      .deleteQuestion(token, questionData.id)
+      .then(() => {
+        showSnackbarThenRedirect("Question deleted.", routes.searchQuestion);
+      })
+      .catch(() => showSnackbar("Could not delete question"));
   };
 
   return (

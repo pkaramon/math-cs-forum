@@ -13,7 +13,7 @@ const AnswerSchema = Yup.object().shape({
 
 const AnswerForm = ({ onSubmit }) => {
   return (
-    <Box>
+    <Box sx={{ mt: 2 }}>
       <Typography variant="h6" gutterBottom>
         Your Answer
       </Typography>

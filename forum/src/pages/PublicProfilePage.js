@@ -40,8 +40,8 @@ const PublicProfilePage = () => {
   }
 
   return (
-    <Container maxWidth="md" sx={{ mt: 10 }}>
-      <Card>
+    <Container maxWidth="md" sx={{ mt: 10, mb: 5 }}>
+      <Card elevation={12}>
         <CardContent>
           <Box display="flex" alignItems="center" mb={2}>
             <Avatar sx={{ mr: 2, bgcolor: "secondary.main" }}>
@@ -83,7 +83,6 @@ const PublicProfilePage = () => {
           ) : (
             <Typography color="textSecondary">No recent questions.</Typography>
           )}
-          <Divider sx={{ my: 2 }} />
 
           <Typography variant="h6" gutterBottom>
             Newest Answers

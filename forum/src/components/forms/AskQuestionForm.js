@@ -45,11 +45,15 @@ const AskQuestionForm = ({ onSubmit }) => {
                 Ask a Question
               </Typography>
               <FormField property={"title"} label={"Title"} />
-              <Typography variant="body1">Question</Typography>
+              <Typography variant="body1" sx={{ my: 2 }}>
+                Question
+              </Typography>
 
               <MarkdownField fieldName={"question"} />
               <Box sx={{ my: 2 }}>
-                <Typography variant="body1">Tags</Typography>
+                <Typography variant="body1" sx={{ my: 2 }}>
+                  Tags
+                </Typography>
                 <FieldArray
                   name="tags"
                   render={() => (
