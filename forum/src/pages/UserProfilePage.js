@@ -42,11 +42,9 @@ export const UserProfilePage = () => {
         setUserDetails(user);
       });
       questionsService.search({ userId: userId }).then((questions) => {
-        console.log(questions);
         setQuestions(questions);
       });
       questionsService.searchAnswers({ userId }).then((answers) => {
-        console.log(answers);
         setAnswers(answers);
       });
     }

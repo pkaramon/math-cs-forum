@@ -11,6 +11,7 @@ const routes = {
   profile: "/profile",
   editUserDetails: "/edit-user-details",
   notFound: "*",
+  modifyQuestion: "/modify-question/:questionId",
 };
 
 export const createSearchQuestionRoute = (query) => {
@@ -23,6 +24,10 @@ export const createQuestionRoute = (id) => {
 
 export const createPublicProfileRoute = (userId) => {
   return routes.publicUserProfile.replace(":userId", userId);
+};
+
+export const createModifyQuestionRoute = (questionId) => {
+  return routes.modifyQuestion.replace(":questionId", questionId);
 };
 
 export default routes;

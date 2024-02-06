@@ -42,6 +42,28 @@ class ServerQuestionService {
     }
   }
 
+  async modifyQuestion(token, questionId, questionData) {
+    const data = {
+      title: questionData.title,
+      question: questionData.question,
+      tags: questionData.tags.join(","),
+    };
+
+    try {
+      const response = await this.http.put(
+        `/modify_question/${questionId}`,
+        data,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      return response.data["question_id"];
+    } catch (err) {
+      console.log(err);
+      throw new Error(err.response.data.message);
+    }
+  }
+
   async getQuestionById(questionId) {
     try {
       const response = await this.http.get(`/get_question/${questionId}`);

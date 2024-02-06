@@ -22,6 +22,7 @@ import { AuthContextProvider } from "./auth/AuthContext";
 import EditUserDetailsPage from "./pages/EditUserDetailsPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import AskQuestionPage from "./pages/AskQuestionPage";
+import ModifyQuestionPage from "./pages/ModifyQuestionPage";
 
 function App() {
   return (
@@ -61,6 +62,11 @@ function App() {
                     <Route
                       path={routes.editUserDetails}
                       element={<EditUserDetailsPage />}
+                    />
+
+                    <Route
+                      path={routes.modifyQuestion}
+                      element={<ModifyQuestionPage />}
                     />
                   </Route>
 

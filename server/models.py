@@ -33,6 +33,7 @@ class Question(db.Model):
     views = db.Column(db.Integer, default=0)
 
     author = db.relationship("User", backref=db.backref("questions", lazy=True))
+    question_likes = db.relationship("QuestionLike",  cascade='all, delete')
 
 
 class Answer(db.Model):
@@ -46,8 +47,11 @@ class Answer(db.Model):
     modified_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     likes = db.Column(db.Integer, default=0)
     dislikes = db.Column(db.Integer, default=0)
+
     author = db.relationship("User", backref=db.backref("answers", lazy=True))
-    question = db.relationship("Question", backref=db.backref("answers", lazy=True))
+    question = db.relationship("Question", backref=db.backref("answers", lazy=True, cascade='all, delete'))
+
+    answer_likes = db.relationship("AnswerLike",  cascade='all, delete')
 
 
 class QuestionLike(db.Model):
@@ -55,7 +59,8 @@ class QuestionLike(db.Model):
     
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), primary_key=True)
     question_id = db.Column(db.Integer, db.ForeignKey("questions.id"), primary_key=True)
-    is_like = db.Column(db.Boolean)  
+    is_like = db.Column(db.Boolean)
+
 
 
 class AnswerLike(db.Model):

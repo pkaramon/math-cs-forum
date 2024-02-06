@@ -22,7 +22,7 @@ import DeleteButton from "./DeleteButton";
 
 const AnswerCard = ({ answerData, updateAnswerData }) => {
   const navigate = useNavigate();
-  const { isAuthenticated, isAdmin, token } = useAuth();
+  const { isAuthenticated, isAdmin, userId, token } = useAuth();
   const questionService = useQuestionService();
   const { showSnackbar, SnackbarComponent, showSnackbarThenRedirect } =
     useSnackbar();
@@ -55,6 +55,7 @@ const AnswerCard = ({ answerData, updateAnswerData }) => {
       });
   };
 
+  const canDeleteAnswer = isAdmin || userId === answerData.author.authorId;
   const deleteAnswer = () => {
     questionService
       .deleteAnswer(token, answerData.answerId)
@@ -121,7 +122,7 @@ const AnswerCard = ({ answerData, updateAnswerData }) => {
           </IconButton>
         </Stack>
 
-        {isAdmin && (
+        {canDeleteAnswer && (
           <>
             <Divider sx={{ my: 2 }} />
             <DeleteButton onClick={deleteAnswer}>Delete answer</DeleteButton>

@@ -4,6 +4,7 @@ import { useQuestionService } from "../context/QuestionServiceContext";
 import {
   Avatar,
   Box,
+  Button,
   Card,
   CardContent,
   Chip,
@@ -18,7 +19,10 @@ import NothingFound from "../components/NothingFound";
 import RenderMarkdown from "../components/RenderMarkdown";
 import VisibilityOutlinedIcon from "@mui/icons-material/VisibilityOutlined";
 import AnswersList from "../components/AnswersList";
-import routes, { createPublicProfileRoute } from "../routes";
+import routes, {
+  createModifyQuestionRoute,
+  createPublicProfileRoute,
+} from "../routes";
 import { useAuth } from "../auth/AuthContext";
 import AnswerForm from "../components/forms/AnswerForm";
 import useSnackbar from "../hooks/useSnackbar";
@@ -26,7 +30,7 @@ import DeleteButton from "../components/DeleteButton";
 
 const QuestionPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, token, isAdmin } = useAuth();
+  const { isAuthenticated, token, isAdmin, userId } = useAuth();
   const questionService = useQuestionService();
   const { id: idStr } = useParams();
   const id = Number.parseInt(idStr, 10);
@@ -105,6 +109,8 @@ const QuestionPage = () => {
       });
   };
 
+  const canUserDeleteQuestion =
+    isAdmin || questionData?.author?.authorId === userId;
   const deleteQuestion = () => {
     questionService
       .deleteQuestion(token, questionData.id)
@@ -113,6 +119,8 @@ const QuestionPage = () => {
       })
       .catch(() => showSnackbar("Could not delete question"));
   };
+
+  const canUserModifyQuestion = questionData?.author?.authorId === userId;
 
   return (
     <Box sx={{ margin: "auto", maxWidth: "800px", p: 2 }}>
@@ -192,12 +200,28 @@ const QuestionPage = () => {
               </Typography>
             </IconButton>
           </Stack>
-          {isAdmin && (
+          {(canUserDeleteQuestion || canUserModifyQuestion) && (
             <>
               <Divider sx={{ my: 2 }} />
-              <DeleteButton onClick={deleteQuestion}>
-                Delete Question
-              </DeleteButton>
+              <Stack
+                direction="row"
+                spacing={1}
+                sx={{ marginTop: 2, justifyContent: "flex-end" }}
+              >
+                {canUserDeleteQuestion && (
+                  <DeleteButton onClick={deleteQuestion}>
+                    Delete Question
+                  </DeleteButton>
+                )}
+                {canUserModifyQuestion && (
+                  <Button
+                    variant={"outlined"}
+                    href={createModifyQuestionRoute(questionData.id)}
+                  >
+                    Modify
+                  </Button>
+                )}
+              </Stack>
             </>
           )}
         </CardContent>
@@ -206,7 +230,7 @@ const QuestionPage = () => {
       {isAuthenticated ? (
         <AnswerForm onSubmit={handleAddingAnswer} />
       ) : (
-        <Typography paragraph>
+        <Typography paragraph sx={{ my: 2 }}>
           You need to login in order to post an answer.
         </Typography>
       )}

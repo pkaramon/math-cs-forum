@@ -1,4 +1,4 @@
-import AskQuestionForm from "../components/forms/AskQuestionForm";
+import QuestionForm from "../components/forms/QuestionForm";
 import { useAuth } from "../auth/AuthContext";
 import { useQuestionService } from "../context/QuestionServiceContext";
 import useSnackbar from "../hooks/useSnackbar";
@@ -20,7 +20,7 @@ export const AskQuestionPage = () => {
   return (
     <>
       <SnackbarComponent />
-      <AskQuestionForm onSubmit={onSubmit} />
+      <QuestionForm onSubmit={onSubmit} title="Ask a question" />
     </>
   );
 };

@@ -11,10 +11,16 @@ import {
   Typography,
 } from "@mui/material";
 import FormField from "./FormField";
-import AskQuestionSchema, { initialValues } from "./AskQuestionSchema";
+import QuestionSchema, {
+  initialValues as questionInitialValues,
+} from "./QuestionSchema";
 import MarkdownField from "./MarkdownField";
 
-const AskQuestionForm = ({ onSubmit }) => {
+const QuestionForm = ({
+  onSubmit,
+  initialValues = questionInitialValues,
+  title = "",
+}) => {
   const handleKeyDownInTagInput = (e, values, setFieldValue) => {
     if (e.key === "Enter" && e.target.value !== "") {
       e.preventDefault();
@@ -37,12 +43,12 @@ const AskQuestionForm = ({ onSubmit }) => {
         <Formik
           initialValues={initialValues}
           onSubmit={onSubmit}
-          validationSchema={AskQuestionSchema}
+          validationSchema={QuestionSchema}
         >
           {({ isValid, dirty, values, setFieldValue, errors, touched }) => (
             <Form>
               <Typography variant="h6" gutterBottom>
-                Ask a Question
+                {title}
               </Typography>
               <FormField property={"title"} label={"Title"} />
               <Typography variant="body1" sx={{ my: 2 }}>
@@ -103,4 +109,4 @@ const AskQuestionForm = ({ onSubmit }) => {
   );
 };
 
-export default AskQuestionForm;
+export default QuestionForm;
