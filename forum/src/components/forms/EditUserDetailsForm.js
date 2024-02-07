@@ -59,6 +59,7 @@ const EditUserDetailsForm = ({ initialValues, onSubmit }) => {
                     label={"About"}
                     placeholder={"Tell us about yourself"}
                     variant={"outlined"}
+                    margin={"normal"}
                   />
                 )}
               </FormField>
