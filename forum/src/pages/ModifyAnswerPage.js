@@ -27,7 +27,7 @@ const ModifyAnswerPage = () => {
         setAnswerData(answer);
       })
       .catch(() => showSnackbar("Could not load answer"));
-  }, []);
+  }, [answerId, navigate, questionService, showSnackbar, userId]);
 
   const onSubmit = (values) => {
     questionService

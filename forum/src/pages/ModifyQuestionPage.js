@@ -32,7 +32,7 @@ export const ModifyQuestionPage = () => {
       .catch(() => {
         showSnackbar("Could not fetch question data");
       });
-  }, []);
+  }, [navigate, questionId, questionService, showSnackbar, userId]);
 
   const onSubmit = (values) => {
     questionService
