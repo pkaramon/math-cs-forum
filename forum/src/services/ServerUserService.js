@@ -93,7 +93,6 @@ class ServerUserService {
         `/get_public_profile_info/${userId}`,
       );
       const user = response.data;
-      console.log("user", user);
       return new UserProfileData({
         userId: user["user_id"],
         firstName: user["firstname"],

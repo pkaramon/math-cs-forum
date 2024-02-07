@@ -4,7 +4,7 @@ export const initialValues = {
   search: "",
   tags: [],
   sortBy: "addedAt",
-  sortOrder: "asc",
+  sortOrder: "desc",
 };
 
 export const sortOptions = [

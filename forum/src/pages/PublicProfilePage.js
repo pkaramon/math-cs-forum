@@ -5,9 +5,7 @@ import routes, { createQuestionRoute } from "../routing/routes";
 import {
   Avatar,
   Box,
-  Card,
   CardContent,
-  Container,
   Divider,
   Link,
   List,
@@ -17,6 +15,7 @@ import {
 } from "@mui/material";
 import LoadingIndicator from "../components/LoadingIndicator";
 import ProfileAnswersList from "../components/ProfileAnswersList";
+import PageCard from "../components/PageCard";
 
 const PublicProfilePage = () => {
   const { userId: userIdStr } = useParams();
@@ -40,61 +39,59 @@ const PublicProfilePage = () => {
   }
 
   return (
-    <Container maxWidth="md" sx={{ mt: 10, mb: 5 }}>
-      <Card elevation={12}>
-        <CardContent>
-          <Box display="flex" alignItems="center" mb={2}>
-            <Avatar sx={{ mr: 2, bgcolor: "secondary.main" }}>
-              {userProfileData.firstName.charAt(0)}
-            </Avatar>
-            <Typography variant="h5">
-              {`${userProfileData.firstName} ${userProfileData.lastName}`}
-            </Typography>
-          </Box>
+    <PageCard>
+      <CardContent>
+        <Box display="flex" alignItems="center" mb={2}>
+          <Avatar sx={{ mr: 2, bgcolor: "secondary.main" }}>
+            {userProfileData.firstName.charAt(0)}
+          </Avatar>
+          <Typography variant="h5">
+            {`${userProfileData.firstName} ${userProfileData.lastName}`}
+          </Typography>
+        </Box>
 
-          <Typography paragraph>
-            {`${userProfileData.totalQuestions} total questions, ${userProfileData.totalAnswers} total answers`}
-          </Typography>
-          <Divider sx={{ mb: 2 }} />
-          <Typography variant="h6" gutterBottom>
-            About
-          </Typography>
-          <Typography paragraph>{userProfileData.about}</Typography>
+        <Typography paragraph>
+          {`${userProfileData.totalQuestions} total questions, ${userProfileData.totalAnswers} total answers`}
+        </Typography>
+        <Divider sx={{ mb: 2 }} />
+        <Typography variant="h6" gutterBottom>
+          About
+        </Typography>
+        <Typography paragraph>{userProfileData.about}</Typography>
 
-          <Divider sx={{ mb: 2 }} />
-          <Typography variant="h6" gutterBottom>
-            Newest Questions
-          </Typography>
-          {userProfileData.newestQuestions.length > 0 ? (
-            <List>
-              {userProfileData.newestQuestions.map((question) => (
-                <ListItem key={question.id} divider>
-                  <ListItemText
-                    primary={
-                      <Link href={createQuestionRoute(question.id)}>
-                        {question.title}
-                      </Link>
-                    }
-                    secondary={`Views: ${question.views}, Answers: ${question.numberOfAnswers}`}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          ) : (
-            <Typography color="textSecondary">No recent questions.</Typography>
-          )}
+        <Divider sx={{ mb: 2 }} />
+        <Typography variant="h6" gutterBottom>
+          Newest Questions
+        </Typography>
+        {userProfileData.newestQuestions.length > 0 ? (
+          <List>
+            {userProfileData.newestQuestions.map((question) => (
+              <ListItem key={question.id} divider>
+                <ListItemText
+                  primary={
+                    <Link href={createQuestionRoute(question.id)}>
+                      {question.title}
+                    </Link>
+                  }
+                  secondary={`Views: ${question.views}, Answers: ${question.numberOfAnswers}`}
+                />
+              </ListItem>
+            ))}
+          </List>
+        ) : (
+          <Typography color="textSecondary">No recent questions.</Typography>
+        )}
 
-          <Typography variant="h6" gutterBottom>
-            Newest Answers
-          </Typography>
-          {userProfileData.newestAnswers.length > 0 ? (
-            <ProfileAnswersList answersData={userProfileData.newestAnswers} />
-          ) : (
-            <Typography color="textSecondary">No recent answers.</Typography>
-          )}
-        </CardContent>
-      </Card>
-    </Container>
+        <Typography variant="h6" gutterBottom>
+          Newest Answers
+        </Typography>
+        {userProfileData.newestAnswers.length > 0 ? (
+          <ProfileAnswersList answersData={userProfileData.newestAnswers} />
+        ) : (
+          <Typography color="textSecondary">No recent answers.</Typography>
+        )}
+      </CardContent>
+    </PageCard>
   );
 };
 
