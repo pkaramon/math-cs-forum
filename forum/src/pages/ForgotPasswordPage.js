@@ -4,7 +4,7 @@ import useSnackbar from "../hooks/useSnackbar";
 
 const ForgotPasswordPage = () => {
   const userService = useUserService();
-  const { showSnackbar, SnackbarComponent } = useSnackbar();
+  const { showSnackbar } = useSnackbar();
   const handleSubmit = (values, { setSubmitting }) => {
     userService
       .sendResetPasswordEmail(values.email)
@@ -21,7 +21,6 @@ const ForgotPasswordPage = () => {
   };
   return (
     <>
-      <SnackbarComponent />
       <ForgotPasswordForm onSubmit={handleSubmit} />
     </>
   );

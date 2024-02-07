@@ -7,7 +7,7 @@ import { createQuestionRoute } from "../routing/routes";
 export const AskQuestionPage = () => {
   const { token } = useAuth();
   const questionService = useQuestionService();
-  const { showSnackbarThenRedirect, SnackbarComponent } = useSnackbar();
+  const { showSnackbarThenRedirect } = useSnackbar();
 
   const onSubmit = (values) => {
     questionService.addQuestion(token, values).then((questionId) => {
@@ -17,12 +17,7 @@ export const AskQuestionPage = () => {
       );
     });
   };
-  return (
-    <>
-      <SnackbarComponent />
-      <QuestionForm onSubmit={onSubmit} title="Ask a question" />
-    </>
-  );
+  return <QuestionForm onSubmit={onSubmit} title="Ask a question" />;
 };
 
 export default AskQuestionPage;

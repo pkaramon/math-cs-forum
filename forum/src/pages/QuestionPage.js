@@ -35,8 +35,7 @@ const QuestionPage = () => {
   const questionService = useQuestionService();
   const { id: idStr } = useParams();
   const id = Number.parseInt(idStr, 10);
-  const { SnackbarComponent, showSnackbar, showSnackbarThenRedirect } =
-    useSnackbar();
+  const { showSnackbar, showSnackbarThenRedirect } = useSnackbar();
 
   const [questionData, setQuestionData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -145,7 +144,6 @@ const QuestionPage = () => {
         p: { sm: 2, xs: 1 },
       }}
     >
-      <SnackbarComponent />
       <Card raised sx={{ mb: 5 }}>
         <CardContent>
           <Typography variant="h5" component="div" gutterBottom>

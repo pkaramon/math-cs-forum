@@ -10,8 +10,7 @@ function ResetPasswordPage() {
   const [alert, setAlert] = useState(null);
   const { token } = useParams();
   const userService = useUserService();
-  const { showSnackbarThenRedirect, showSnackbar, SnackbarComponent } =
-    useSnackbar();
+  const { showSnackbarThenRedirect, showSnackbar } = useSnackbar();
 
   const handleSubmit = (values, { setSubmitting }) => {
     setSubmitting(false);
@@ -39,7 +38,6 @@ function ResetPasswordPage() {
 
   return (
     <>
-      <SnackbarComponent />
       <ResetPasswordForm alert={alert} onSubmit={handleSubmit} />
     </>
   );

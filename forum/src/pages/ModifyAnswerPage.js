@@ -12,8 +12,7 @@ const ModifyAnswerPage = () => {
   const { token, userId } = useAuth();
   const navigate = useNavigate();
   const questionService = useQuestionService();
-  const { showSnackbarThenRedirect, showSnackbar, SnackbarComponent } =
-    useSnackbar();
+  const { showSnackbarThenRedirect, showSnackbar } = useSnackbar();
 
   const [answerData, setAnswerData] = useState(null);
 
@@ -44,7 +43,6 @@ const ModifyAnswerPage = () => {
 
   return (
     <>
-      <SnackbarComponent />
       <PageCard>
         {answerData !== null && (
           <AnswerForm

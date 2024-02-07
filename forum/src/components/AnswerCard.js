@@ -30,8 +30,7 @@ const AnswerCard = ({ answerData, updateAnswerData }) => {
   const { isAuthenticated, isAdmin, userId, token } = useAuth();
   const { openModal } = useConfirmDialog();
   const questionService = useQuestionService();
-  const { showSnackbar, SnackbarComponent, showSnackbarThenRedirect } =
-    useSnackbar();
+  const { showSnackbar, showSnackbarThenRedirect } = useSnackbar();
 
   const updateAnswersList = (likes, dislikes) => {
     updateAnswerData(answerData.answerId, { ...answerData, likes, dislikes });
@@ -98,7 +97,6 @@ const AnswerCard = ({ answerData, updateAnswerData }) => {
 
   return (
     <Card elevation={2} sx={{ mt: 2 }}>
-      <SnackbarComponent />
       <CardContent>
         <RenderMarkdown content={answerData.answer} />
         <Divider />

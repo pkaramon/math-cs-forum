@@ -26,6 +26,7 @@ import ModifyQuestionPage from "./pages/ModifyQuestionPage";
 import ModifyAnswerPage from "./pages/ModifyAnswerPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import { ConfirmDialogProvider } from "./hooks/useConfirmDialog";
+import { SnackbarProvider } from "./hooks/useSnackbar";
 
 function App() {
   return (
@@ -35,68 +36,76 @@ function App() {
           <AuthContextProvider>
             <ConfirmDialogProvider>
               <BrowserRouter>
-                <Routes>
-                  <Route path={routes.login} element={<LoginPage />} />
-                  <Route
-                    path={routes.register}
-                    element={<RegistrationPage />}
-                  />
-                  <Route
-                    path={routes.resetPassword}
-                    element={<ResetPasswordPage />}
-                  />
-
-                  <Route
-                    path={routes.forgotPassword}
-                    element={<ForgotPasswordPage />}
-                  />
-
-                  <Route path={"/"} element={<Layout />}>
-                    <Route path={"/"} element={<HomePage />} />
+                <SnackbarProvider>
+                  <Routes>
+                    <Route path={routes.login} element={<LoginPage />} />
                     <Route
-                      path={routes.searchQuestion}
-                      element={<SearchQuestionsPage />}
+                      path={routes.register}
+                      element={<RegistrationPage />}
                     />
-                    <Route path={routes.about} element={<AboutPage />} />
+                    <Route
+                      path={routes.resetPassword}
+                      element={<ResetPasswordPage />}
+                    />
 
                     <Route
-                      path={"/"}
-                      element={
-                        <RequireAuth roles={[roles.USER, roles.ADMIN]} />
-                      }
-                    >
+                      path={routes.forgotPassword}
+                      element={<ForgotPasswordPage />}
+                    />
+
+                    <Route path={"/"} element={<Layout />}>
+                      <Route path={"/"} element={<HomePage />} />
                       <Route
-                        path={routes.askQuestion}
-                        element={<AskQuestionPage />}
+                        path={routes.searchQuestion}
+                        element={<SearchQuestionsPage />}
+                      />
+                      <Route path={routes.about} element={<AboutPage />} />
+
+                      <Route
+                        path={"/"}
+                        element={
+                          <RequireAuth roles={[roles.USER, roles.ADMIN]} />
+                        }
+                      >
+                        <Route
+                          path={routes.askQuestion}
+                          element={<AskQuestionPage />}
+                        />
+                        <Route
+                          path={routes.profile}
+                          element={<UserProfilePage />}
+                        />
+                        <Route
+                          path={routes.editUserDetails}
+                          element={<EditUserDetailsPage />}
+                        />
+
+                        <Route
+                          path={routes.modifyQuestion}
+                          element={<ModifyQuestionPage />}
+                        />
+                        <Route
+                          path={routes.modifyAnswer}
+                          element={<ModifyAnswerPage />}
+                        />
+                      </Route>
+
+                      <Route
+                        path={routes.question}
+                        element={<QuestionPage />}
                       />
                       <Route
-                        path={routes.profile}
-                        element={<UserProfilePage />}
-                      />
-                      <Route
-                        path={routes.editUserDetails}
-                        element={<EditUserDetailsPage />}
+                        path={routes.publicUserProfile}
+                        element={<PublicProfilePage />}
                       />
 
                       <Route
-                        path={routes.modifyQuestion}
-                        element={<ModifyQuestionPage />}
-                      />
-                      <Route
-                        path={routes.modifyAnswer}
-                        element={<ModifyAnswerPage />}
+                        path={routes.notFound}
+                        element={<NotFoundPage />}
                       />
                     </Route>
-
-                    <Route path={routes.question} element={<QuestionPage />} />
-                    <Route
-                      path={routes.publicUserProfile}
-                      element={<PublicProfilePage />}
-                    />
-
-                    <Route path={routes.notFound} element={<NotFoundPage />} />
-                  </Route>
-                </Routes>
+                  </Routes>
+                </SnackbarProvider>
               </BrowserRouter>
             </ConfirmDialogProvider>
           </AuthContextProvider>

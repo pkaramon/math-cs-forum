@@ -11,7 +11,7 @@ const EditUserDetailsPage = () => {
   const { userId, token } = useAuth();
   const userService = useUserService();
   const [userDetails, setUserDetails] = useState(null);
-  const { showSnackbarThenRedirect, SnackbarComponent } = useSnackbar();
+  const { showSnackbarThenRedirect } = useSnackbar();
 
   useEffect(() => {
     userService.getUserDetails(token).then((userDetails) => {
@@ -41,8 +41,6 @@ const EditUserDetailsPage = () => {
 
   return (
     <>
-      <SnackbarComponent />
-
       <EditUserDetailsForm
         initialValues={{
           firstName: userDetails.firstName,

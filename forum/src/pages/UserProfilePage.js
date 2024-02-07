@@ -29,7 +29,7 @@ export const UserProfilePage = () => {
   const [userDetails, setUserDetails] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
-  const { showSnackbarThenRedirect, SnackbarComponent } = useSnackbar();
+  const { showSnackbarThenRedirect } = useSnackbar();
 
   const logout = () => {
     showSnackbarThenRedirect(
@@ -60,7 +60,6 @@ export const UserProfilePage = () => {
 
   return (
     <PageCard>
-      <SnackbarComponent />
       <CardContent>
         <Grid container spacing={2} alignItems="center">
           <Grid item>

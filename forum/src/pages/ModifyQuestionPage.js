@@ -10,8 +10,7 @@ export const ModifyQuestionPage = () => {
   const { questionId } = useParams();
   const { token, userId } = useAuth();
   const questionService = useQuestionService();
-  const { showSnackbar, showSnackbarThenRedirect, SnackbarComponent } =
-    useSnackbar();
+  const { showSnackbar, showSnackbarThenRedirect } = useSnackbar();
   const [initialValues, setInitialValues] = useState(null);
   const navigate = useNavigate();
 
@@ -51,7 +50,6 @@ export const ModifyQuestionPage = () => {
 
   return (
     <>
-      <SnackbarComponent />
       {initialValues !== null && (
         <QuestionForm
           onSubmit={onSubmit}

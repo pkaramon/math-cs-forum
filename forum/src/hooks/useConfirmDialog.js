@@ -41,10 +41,7 @@ export const ConfirmDialogProvider = ({ children }) => {
     setModalData({ title, content, onAgree: onAgreeWithClose, onDisagree });
   };
 
-  const value = {
-    openModal,
-  };
-
+  const value = { openModal };
   return (
     <ConfirmDialogContext.Provider value={value}>
       <Dialog

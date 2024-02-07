@@ -1,15 +1,18 @@
-import { useCallback, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 import { Snackbar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const useSnackbar = () => {
-  const [open, setOpen] = useState(false);
-  const [snackBarProps, setSnackBarProps] = useState({});
+const SnackbarContext = createContext({});
 
+export const SnackbarProvider = ({ children }) => {
+  const [snackBarProps, setSnackBarProps] = useState({});
   const navigate = useNavigate();
 
   const showSnackbar = useCallback((msg, options = {}) => {
     setSnackBarProps({ open: true, message: msg, ...options });
+    setTimeout(() => {
+      setSnackBarProps((props) => ({ ...props, open: false }));
+    }, 1500);
   }, []);
 
   const showSnackbarThenRedirect = (
@@ -19,7 +22,6 @@ const useSnackbar = () => {
     after = () => {},
   ) => {
     setSnackBarProps({ open: true, message: msg, ...options });
-    setOpen(true);
     setTimeout(() => {
       setSnackBarProps((props) => ({ ...props, open: false }));
       navigate(path);
@@ -27,16 +29,21 @@ const useSnackbar = () => {
     }, 1500);
   };
 
-  const SnackbarComponent = () => (
-    <Snackbar
-      open={open}
-      autoHideDuration={6000}
-      onClose={() => setOpen(false)}
-      {...snackBarProps}
-    />
+  return (
+    <SnackbarContext.Provider
+      value={{
+        showSnackbar,
+        showSnackbarThenRedirect,
+      }}
+    >
+      {children}
+      <Snackbar autoHideDuration={1000} {...snackBarProps} />
+    </SnackbarContext.Provider>
   );
+};
 
-  return { showSnackbar, SnackbarComponent, showSnackbarThenRedirect };
+const useSnackbar = () => {
+  return useContext(SnackbarContext);
 };
 
 export default useSnackbar;
