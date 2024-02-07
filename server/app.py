@@ -57,6 +57,8 @@ app.add_url_rule('/search_questions', 'search_questions', questions_routes.searc
 app.add_url_rule('/search_answers', 'search_answers', questions_routes.search_answers, methods=['GET'])
 app.add_url_rule('/get_number_of_questions_matching', 'get_number_of_questions_matching',
                  questions_routes.get_number_of_questions_matching, methods=['GET'])
+app.add_url_rule('/toggle_verified_answer/<int:answer_id>', 'toggle_verified_answer',
+                 questions_routes.toggle_verified_answer, methods=['POST'])
 
 app.add_url_rule('/get_all_questions', 'get_all_questions', questions_routes.get_all_questions, methods=['GET'])
 app.add_url_rule('/get_all_answers/<int:question_id>', 'get_all_answers', questions_routes.get_all_answers,

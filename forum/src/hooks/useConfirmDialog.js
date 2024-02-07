@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
@@ -6,9 +6,10 @@ import DialogActions from "@mui/material/DialogActions";
 import { Button } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 
-export default function useConfirmDialog() {
-  const [open, setOpen] = useState(true);
+const ConfirmDialogContext = createContext({});
 
+export const ConfirmDialogProvider = ({ children }) => {
+  const [open, setOpen] = useState(true);
   const [modalData, setModalData] = useState({
     title: "",
     content: "",
@@ -22,9 +23,28 @@ export default function useConfirmDialog() {
     setOpen(false);
   };
 
-  const ModalComponent = () => {
-    console.log("re render");
-    return (
+  const value = {
+    openModal: ({
+      title,
+      content,
+      onAgree,
+      onDisagree = () => {
+        setOpen(false);
+      },
+    }) => {
+      const onAgreeWithClose = async () => {
+        await onAgree();
+        setOpen(false);
+      };
+
+      setOpen(true);
+
+      setModalData({ title, content, onAgree: onAgreeWithClose, onDisagree });
+    },
+  };
+
+  return (
+    <ConfirmDialogContext.Provider value={value}>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -44,27 +64,13 @@ export default function useConfirmDialog() {
           </Button>
         </DialogActions>
       </Dialog>
-    );
-  };
 
-  return {
-    openModal: ({
-      title,
-      content,
-      onAgree,
-      onDisagree = () => {
-        setOpen(false);
-      },
-    }) => {
-      const onAgreeWithClose = async () => {
-        await onAgree();
-        setOpen(false);
-      };
+      {children}
+    </ConfirmDialogContext.Provider>
+  );
+};
 
-      setOpen(true);
-
-      setModalData({ title, content, onAgree: onAgreeWithClose, onDisagree });
-    },
-    ModalComponent,
-  };
-}
+const useConfirmDialog = () => {
+  return useContext(ConfirmDialogContext);
+};
+export default useConfirmDialog;

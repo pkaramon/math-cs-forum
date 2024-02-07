@@ -415,3 +415,20 @@ def view_question(question_id):
         db.session.commit()
 
     return jsonify({"message": "Question viewed successfully", "views": question.views}), 200
+
+
+@jwt_required()
+def toggle_verified_answer(answer_id):
+    current_user_id = get_jwt_identity()
+    answer = Answer.query.get(answer_id)
+
+    if not answer:
+        return jsonify({"message": "Answer not found"}), 404
+
+    if not User.query.get(current_user_id).role == "admin":
+        return jsonify({"message": "Unauthorized action"}), 403
+
+    answer.verified = not answer.verified
+    db.session.commit()
+
+    return jsonify({"message": "Answer verification status toggled successfully", "verified": answer.verified}), 200

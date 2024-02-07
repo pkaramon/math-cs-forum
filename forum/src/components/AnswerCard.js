@@ -12,7 +12,7 @@ import {
 import RenderMarkdown from "./RenderMarkdown";
 import { CalendarIcon } from "@mui/x-date-pickers";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
-import { ThumbDownAltOutlined } from "@mui/icons-material";
+import { Done, ThumbDownAltOutlined } from "@mui/icons-material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -73,6 +73,21 @@ const AnswerCard = ({ answerData, updateAnswerData }) => {
       });
   };
 
+  const canVerifyAnswer = isAdmin;
+  const verifyAnswer = () => {
+    questionService
+      .toggleAnswerVerification(token, answerData.answerId)
+      .then(({ verified }) => {
+        const msg = verified
+          ? "Answer verified"
+          : "Removed verification from the answer";
+        showSnackbarThenRedirect(msg, 0);
+      })
+      .catch(() => {
+        showSnackbar("Could not verify answer");
+      });
+  };
+
   return (
     <Card elevation={2} sx={{ mt: 2 }}>
       <SnackbarComponent />
@@ -85,7 +100,16 @@ const AnswerCard = ({ answerData, updateAnswerData }) => {
           spacing={1}
           alignItems="center"
           sx={{ marginTop: 2 }}
+          flexWrap={"wrap"}
         >
+          {answerData.verified && (
+            <Chip
+              avatar={<Done style={{ color: "white" }} />}
+              label={`Verified`}
+              color={"success"}
+            />
+          )}
+
           <IconButton aria-label="likes" size="small">
             <CalendarIcon fontSize="inherit" />
             <Typography variant="body2" sx={{ marginLeft: 0.5 }}>
@@ -140,6 +164,13 @@ const AnswerCard = ({ answerData, updateAnswerData }) => {
               {canDeleteAnswer && (
                 <DeleteButton onClick={deleteAnswer}>Delete</DeleteButton>
               )}
+
+              {canVerifyAnswer && (
+                <Button variant={"outlined"} onClick={verifyAnswer}>
+                  {answerData.verified ? "Remove verified" : "Verify"}
+                </Button>
+              )}
+
               {canModifyAnswer && (
                 <Button
                   variant={"outlined"}

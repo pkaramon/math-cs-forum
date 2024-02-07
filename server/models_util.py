@@ -15,7 +15,6 @@ def create_question_data(question):
         "dislikes": question.dislikes,
         "author_id": question.author_id,
         "views": question.views,
-        # "approved": question.approved,
         "author": {
             "author_id": author.id,
             "firstname": author.firstname,
@@ -39,6 +38,7 @@ def create_answer_data(answer):
         "question_id": answer.question_id,
         "likes": answer.likes,
         "dislikes": answer.dislikes,
+        "verified": answer.verified,
         "question_title": Question.query.get(answer.question_id).title,
         "author": {
             "author_id": author.id,

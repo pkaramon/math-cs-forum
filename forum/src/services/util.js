@@ -30,6 +30,7 @@ export function fromAnswersResponseData(data) {
     addedAt: new Date(data["added_at"]),
     questionId: data["question_id"],
     questionTitle: data["question_title"],
+    verified: data["verified"],
     author: {
       authorId: data["author"]["author_id"],
       firstName: data["author"]["firstname"],

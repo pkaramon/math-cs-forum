@@ -241,6 +241,21 @@ class ServerQuestionService {
       throw new Error(err.response.data.message);
     }
   }
+
+  async toggleAnswerVerification(token, answerId) {
+    try {
+      const response = await this.http.post(
+        `/toggle_verified_answer/${answerId}`,
+        null,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        },
+      );
+      return response.data;
+    } catch (err) {
+      throw new Error(err.response.data.message);
+    }
+  }
 }
 
 export default ServerQuestionService;

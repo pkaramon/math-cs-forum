@@ -40,7 +40,8 @@ function Navbar() {
   const pageProps = [
     { to: routes.home, text: "Home" },
     { to: routes.about, text: "About" },
-    { to: routes.askQuestion, text: "Ask a Question" },
+    { to: routes.askQuestion, text: "Ask question" },
+    { to: routes.searchQuestion, text: "Search" },
   ];
 
   const mobileMenuId = "primary-search-account-menu-mobile";

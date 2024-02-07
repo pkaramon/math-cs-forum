@@ -48,6 +48,7 @@ class Answer(db.Model):
     modified_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     likes = db.Column(db.Integer, default=0)
     dislikes = db.Column(db.Integer, default=0)
+    verified = db.Column(db.Boolean, default=False)
 
     author = db.relationship("User", backref=db.backref("answers", lazy=True))
     question = db.relationship("Question", backref=db.backref("answers", lazy=True, cascade='all, delete'))
