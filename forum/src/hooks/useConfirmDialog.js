@@ -9,7 +9,7 @@ import Dialog from "@mui/material/Dialog";
 const ConfirmDialogContext = createContext({});
 
 export const ConfirmDialogProvider = ({ children }) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [modalData, setModalData] = useState({
     title: "",
     content: "",
@@ -23,24 +23,26 @@ export const ConfirmDialogProvider = ({ children }) => {
     setOpen(false);
   };
 
-  const value = {
-    openModal: ({
-      title,
-      content,
-      onAgree,
-      onDisagree = () => {
-        setOpen(false);
-      },
-    }) => {
-      const onAgreeWithClose = async () => {
-        await onAgree();
-        setOpen(false);
-      };
-
-      setOpen(true);
-
-      setModalData({ title, content, onAgree: onAgreeWithClose, onDisagree });
+  const openModal = ({
+    title,
+    content,
+    onAgree,
+    onDisagree = () => {
+      setOpen(false);
     },
+  }) => {
+    const onAgreeWithClose = async () => {
+      await onAgree();
+      setOpen(false);
+    };
+
+    setOpen(true);
+
+    setModalData({ title, content, onAgree: onAgreeWithClose, onDisagree });
+  };
+
+  const value = {
+    openModal,
   };
 
   return (

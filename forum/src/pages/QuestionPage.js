@@ -27,6 +27,7 @@ import { useAuth } from "../auth/AuthContext";
 import AnswerForm from "../components/forms/AnswerForm";
 import useSnackbar from "../hooks/useSnackbar";
 import DeleteButton from "../components/DeleteButton";
+import useConfirmDialog from "../hooks/useConfirmDialog";
 
 const QuestionPage = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const QuestionPage = () => {
 
   const [questionData, setQuestionData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const { openModal } = useConfirmDialog();
 
   const likeQuestion = () => {
     if (!isAuthenticated) {
@@ -87,7 +89,7 @@ const QuestionPage = () => {
         showSnackbar(err.message);
       })
       .finally(() => setIsLoading(false));
-  }, [id, questionService, showSnackbar]);
+  }, [id, questionService, showSnackbar, token]);
 
   if (isLoading) {
     return <LoadingIndicator isLoading={true} />;
@@ -116,12 +118,21 @@ const QuestionPage = () => {
   const canUserDeleteQuestion =
     isAdmin || questionData?.author?.authorId === userId;
   const deleteQuestion = () => {
-    questionService
-      .deleteQuestion(token, questionData.id)
-      .then(() => {
-        showSnackbarThenRedirect("Question deleted.", routes.searchQuestion);
-      })
-      .catch(() => showSnackbar("Could not delete question"));
+    openModal({
+      title: "Delete question",
+      content: "Are you sure you want to delete this question?",
+      onAgree: () => {
+        questionService
+          .deleteQuestion(token, questionData.id)
+          .then(() => {
+            showSnackbarThenRedirect(
+              "Question deleted.",
+              routes.searchQuestion,
+            );
+          })
+          .catch(() => showSnackbar("Could not delete question"));
+      },
+    });
   };
 
   const canUserModifyQuestion = questionData?.author?.authorId === userId;

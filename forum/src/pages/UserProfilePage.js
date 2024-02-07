@@ -18,22 +18,26 @@ import routes, { createPublicProfileRoute } from "../routing/routes";
 import { useQuestionService } from "../context/QuestionServiceContext";
 import QuestionsList from "../components/QuestionsList/QuestionsList";
 import ProfileAnswersList from "../components/ProfileAnswersList";
-import { useNavigate } from "react-router-dom";
 import PageCard from "../components/PageCard";
+import useSnackbar from "../hooks/useSnackbar";
 
 export const UserProfilePage = () => {
   const { userId, role, token, clearAuthData } = useAuth();
   const userService = useUserService();
-  const navigate = useNavigate();
 
   const questionsService = useQuestionService();
   const [userDetails, setUserDetails] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
+  const { showSnackbarThenRedirect, SnackbarComponent } = useSnackbar();
 
   const logout = () => {
-    clearAuthData();
-    navigate(routes.home);
+    showSnackbarThenRedirect(
+      "You have been logged out successfully.",
+      routes.home,
+      {},
+      clearAuthData,
+    );
   };
 
   useEffect(() => {
@@ -56,6 +60,7 @@ export const UserProfilePage = () => {
 
   return (
     <PageCard>
+      <SnackbarComponent />
       <CardContent>
         <Grid container spacing={2} alignItems="center">
           <Grid item>

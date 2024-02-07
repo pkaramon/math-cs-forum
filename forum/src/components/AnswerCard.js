@@ -23,10 +23,12 @@ import { useQuestionService } from "../context/QuestionServiceContext";
 import { useAuth } from "../auth/AuthContext";
 import useSnackbar from "../hooks/useSnackbar";
 import DeleteButton from "./DeleteButton";
+import useConfirmDialog from "../hooks/useConfirmDialog";
 
 const AnswerCard = ({ answerData, updateAnswerData }) => {
   const navigate = useNavigate();
   const { isAuthenticated, isAdmin, userId, token } = useAuth();
+  const { openModal } = useConfirmDialog();
   const questionService = useQuestionService();
   const { showSnackbar, SnackbarComponent, showSnackbarThenRedirect } =
     useSnackbar();
@@ -63,14 +65,20 @@ const AnswerCard = ({ answerData, updateAnswerData }) => {
   const canModifyAnswer = userId === answerData.author.authorId;
 
   const deleteAnswer = () => {
-    questionService
-      .deleteAnswer(token, answerData.answerId)
-      .then(() => {
-        showSnackbarThenRedirect("Answer deleted.", 0);
-      })
-      .catch(() => {
-        showSnackbar("Could not delete answer");
-      });
+    openModal({
+      title: "Delete answer",
+      content: "Are you sure you want to delete this answer?",
+      onAgree: () => {
+        questionService
+          .deleteAnswer(token, answerData.answerId)
+          .then(() => {
+            showSnackbarThenRedirect("Answer deleted.", 0);
+          })
+          .catch(() => {
+            showSnackbar("Could not delete answer");
+          });
+      },
+    });
   };
 
   const canVerifyAnswer = isAdmin;

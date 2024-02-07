@@ -12,13 +12,19 @@ const useSnackbar = () => {
     setSnackBarProps({ open: true, message: msg, ...options });
   }, []);
 
-  const showSnackbarThenRedirect = (msg, path, options = {}) => {
+  const showSnackbarThenRedirect = (
+    msg,
+    path,
+    options = {},
+    after = () => {},
+  ) => {
     setSnackBarProps({ open: true, message: msg, ...options });
     setOpen(true);
     setTimeout(() => {
       setSnackBarProps((props) => ({ ...props, open: false }));
       navigate(path);
-    }, 2000);
+      after();
+    }, 1500);
   };
 
   const SnackbarComponent = () => (
