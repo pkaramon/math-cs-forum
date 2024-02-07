@@ -15,6 +15,7 @@ def create_question_data(question):
         "dislikes": question.dislikes,
         "author_id": question.author_id,
         "views": question.views,
+        # "approved": question.approved,
         "author": {
             "author_id": author.id,
             "firstname": author.firstname,

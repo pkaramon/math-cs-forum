@@ -4,8 +4,7 @@ import useSnackbar from "../hooks/useSnackbar";
 
 const ForgotPasswordPage = () => {
   const userService = useUserService();
-  const { showSnackbarThenRedirect, showSnackbar, SnackbarComponent } =
-    useSnackbar();
+  const { showSnackbar, SnackbarComponent } = useSnackbar();
   const handleSubmit = (values, { setSubmitting }) => {
     userService
       .sendResetPasswordEmail(values.email)
@@ -13,7 +12,8 @@ const ForgotPasswordPage = () => {
         showSnackbar(message);
       })
       .catch(() => {
-        showSnackbar("Could not send reset password email");
+        const msg = "Could not send reset password email";
+        showSnackbar(msg);
       })
       .finally(() => {
         setSubmitting(false);

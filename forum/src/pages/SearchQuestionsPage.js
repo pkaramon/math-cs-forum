@@ -136,6 +136,10 @@ export default SearchQuestionsPage;
 
 const PAGE_SIZE = 10;
 const TAG_OPTIONS = [
+  { value: "math", label: "math" },
+  { value: "integral", label: "integral" },
+  { value: "equation", label: "equation" },
+  { value: "geometry", label: "geometry" },
   { value: "programming", label: "programming" },
   { value: "machine learning", label: "machine learning" },
 ];

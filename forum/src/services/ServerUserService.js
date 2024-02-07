@@ -129,6 +129,19 @@ class ServerUserService {
       throw new Error(err.response.data.message);
     }
   }
+
+  async resetPassword(token, password) {
+    try {
+      const response = await this.http.post(
+        `/change_password`,
+        { new_password: password },
+        { headers: { Authorization: `Bearer ${token}` } },
+      );
+      return response.data.message;
+    } catch (err) {
+      throw new Error(err.response.data.message);
+    }
+  }
 }
 
 export default ServerUserService;

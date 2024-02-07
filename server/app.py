@@ -43,7 +43,7 @@ app.add_url_rule('/get_all_users', 'get_all_users', users_routes.get_all_users, 
 app.add_url_rule('/reset_password_request/<string:email>', 'reset_password_request',
                  users_routes.reset_password_request,
                  methods=['POST'])
-app.add_url_rule('/change_password/', 'change_password', users_routes.change_password, methods=['POST'])
+app.add_url_rule('/change_password', 'change_password', users_routes.change_password, methods=['POST'])
 
 # questions
 app.add_url_rule('/add_question', 'add_question', questions_routes.add_question, methods=['POST'])

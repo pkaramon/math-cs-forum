@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
 import React from "react";
 import theme from "./materialUITheme";
-import ResetPassword from "./components/forms/ResetPassword";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 import routes from "./routing/routes";
 import HomePage from "./pages/HomePage";
 import SearchQuestionsPage from "./pages/SearchQuestionsPage";
@@ -38,7 +38,7 @@ function App() {
                 <Route path={routes.register} element={<RegistrationPage />} />
                 <Route
                   path={routes.resetPassword}
-                  element={<ResetPassword />}
+                  element={<ResetPasswordPage />}
                 />
 
                 <Route

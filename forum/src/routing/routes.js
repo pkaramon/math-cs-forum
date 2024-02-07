@@ -13,7 +13,7 @@ const routes = {
   modifyQuestion: "/modify-question/:questionId",
   modifyAnswer: "/modify-answer/:answerId",
   forgotPassword: "/forgot-password",
-  resetPassword: "/reset-password",
+  resetPassword: "/reset-password/:token",
 };
 
 export const createSearchQuestionRoute = (query) => {

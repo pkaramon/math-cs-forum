@@ -270,7 +270,7 @@ def reset_password_request(email):
         return jsonify(message='User not found'), 404
 
     token = generate_reset_token(email, user.id)
-    reset_url = f'http://localhost:3000/reset_password?token={token}'
+    reset_url = f'http://localhost:3000/reset-password/{token}'
     message = f'Click <a href="{reset_url}">here</a> to reset your password.'
 
     try:

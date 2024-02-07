@@ -96,9 +96,6 @@ export const UserProfilePage = () => {
         <Divider sx={{ my: 2 }} />
         <List>
           <ListItem>
-            <ListItemText primary="User ID" secondary={userId} />
-          </ListItem>
-          <ListItem>
             <ListItemText primary="Role" secondary={role} />
           </ListItem>
           <ListItem>
@@ -117,6 +114,7 @@ export const UserProfilePage = () => {
       </CardContent>
 
       <Divider sx={{ my: 2 }} />
+
       <CardContent sx={{ p: 0, m: 0 }}>
         <Typography variant={"h5"} sx={{ my: 2 }}>
           Questions
@@ -129,7 +127,7 @@ export const UserProfilePage = () => {
       </CardContent>
 
       <Divider sx={{ my: 2 }} />
-      <CardContent>
+      <CardContent sx={{ p: 0, m: 0 }}>
         <Typography variant={"h5"} sx={{ my: 2 }}>
           Answers
         </Typography>
