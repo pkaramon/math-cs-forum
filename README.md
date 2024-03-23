@@ -1,4 +1,4 @@
-# Math CS Forum Project Overview
+# Math CS Forum 📐💻 Project  Overview
 
 **Math CS Forum**—a community platform designed for enthusiasts, students, and professionals in mathematics and
 computer science.
@@ -53,5 +53,5 @@ Here's a sneak peek into our platform's main features. Add your screenshots or v
 
 ## 📜 License
 
-The Math CS Forum is open source under the MIT license. We believe in the power of open collaboration. For more details, see the LICENSE file in our project repository.
+The Math CS Forum is open source under the MIT license.
 
