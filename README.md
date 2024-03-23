@@ -26,8 +26,6 @@ This project was created by a team of three students from AGH UST:
 
 ## 📸 Interface Highlights
 
-Here's a sneak peek into our platform's main features. Add your screenshots or visual representations below to guide the viewer through your project's capabilities.
-
 ### Homepage
 ![Homepage](./images/homepage.png)
 
